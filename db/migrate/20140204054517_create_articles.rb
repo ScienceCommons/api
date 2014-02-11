@@ -1,5 +1,6 @@
 class CreateArticles < ActiveRecord::Migration
   def change
+
     create_table :articles do |t|
       t.string :doi, null: false
       t.integer :journal_id

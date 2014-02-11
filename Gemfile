@@ -47,3 +47,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem 'ar-octopus', path: '/Users/attachments/hacking/open-source/octopus/'

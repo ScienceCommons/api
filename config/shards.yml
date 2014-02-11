@@ -1,0 +1,29 @@
+octopus:
+  environments:
+    - development
+    - test
+    - production
+  development:
+    s1:
+      adapter: postgresql
+      encoding: unicode
+      database: science_commons_development
+      pool: 5
+      username: postgres
+      password: postgres
+  test:
+    s1:
+      adapter: postgresql
+      encoding: unicode
+      database: science_commons_test
+      pool: 5
+      username: postgres
+      password: postgres
+  production:
+    s1:
+      adapter: postgresql
+      encoding: unicode
+      database: science_commons_api_production
+      pool: 5
+      username: science_commons_api
+      password: postgresql

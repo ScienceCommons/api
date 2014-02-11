@@ -1,3 +1,10 @@
+PATH
+  remote: /Users/attachments/hacking/open-source/octopus
+  specs:
+    ar-octopus (0.8.1)
+      activerecord (>= 3.2.0)
+      activesupport (>= 3.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -126,6 +133,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ar-octopus!
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
