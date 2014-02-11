@@ -17,10 +17,14 @@ ActiveRecord::Schema.define(version: 20140204054517) do
   enable_extension "plpgsql"
 
   create_table "articles", force: true do |t|
-    t.string   "doi"
+    t.string   "doi",                            null: false
     t.integer  "journal_id"
     t.date     "publication_date"
     t.string   "abstract"
+    t.float    "repeatability",    default: 0.0
+    t.float    "materials",        default: 0.0
+    t.float    "quality_of_stats", default: 0.0
+    t.float    "disclosure",       default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
