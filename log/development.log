@@ -73,3 +73,43 @@ Started GET "/" for 127.0.0.1 at 2014-02-03 21:37:56 -0800
 Processing by Rails::WelcomeController#index as HTML
   Rendered /Users/attachments/.rvm/gems/ruby-2.0.0-p353@global/gems/railties-4.0.0/lib/rails/templates/rails/welcome/index.html.erb (0.1ms)
 Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (28.4ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) [0m
+  [1m[35m (4.3ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateArticles (20140204054517)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (7.4ms)[0m  [1mCREATE TABLE "articles" ("id" serial primary key, "doi" character varying(255), "journal_id" integer, "publication_date" date, "abstract" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (0.8ms)[0m  CREATE UNIQUE INDEX "index_articles_on_doi" ON "articles" ("doi")
+  [1m[36m (0.9ms)[0m  [1mCREATE INDEX "index_articles_on_journal_id" ON "articles" ("journal_id")[0m
+  [1m[35m (0.9ms)[0m  CREATE INDEX "index_articles_on_publication_date" ON "articles" ("publication_date")
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20140204054517"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36m (114.9ms)[0m  [1mDROP DATABASE IF EXISTS "science_commons_test"[0m
+  [1m[35m (272.0ms)[0m  CREATE DATABASE "science_commons_test" ENCODING = 'unicode'
+  [1m[36mSQL (2.0ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (8.8ms)[0m  CREATE TABLE "articles" ("id" serial primary key, "doi" character varying(255), "journal_id" integer, "publication_date" date, "abstract" character varying(255), "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.2ms)[0m  [1mCREATE UNIQUE INDEX "index_articles_on_doi" ON "articles" USING btree ("doi")[0m
+  [1m[35m (0.9ms)[0m  CREATE INDEX "index_articles_on_journal_id" ON "articles" USING btree ("journal_id")
+  [1m[36m (1.1ms)[0m  [1mCREATE INDEX "index_articles_on_publication_date" ON "articles" USING btree ("publication_date")[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140204054517')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (4.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mArticle Load (5.5ms)[0m  [1mSELECT "articles".* FROM "articles" ORDER BY "articles"."id" ASC LIMIT 1[0m
+  [1m[35mArticle Load (0.9ms)[0m  SELECT "articles".* FROM "articles" ORDER BY "articles"."id" ASC LIMIT 1
+
+
+Started GET "/" for 127.0.0.1 at 2014-02-08 16:18:07 -0800
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/attachments/.rvm/gems/ruby-1.9.3-p484/gems/railties-4.0.0/lib/rails/templates/rails/welcome/index.html.erb (5.4ms)
+Completed 200 OK in 55ms (Views: 23.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-02-08 16:18:07 -0800
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/attachments/.rvm/gems/ruby-1.9.3-p484/gems/railties-4.0.0/lib/rails/templates/rails/welcome/index.html.erb (0.1ms)
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.0ms)

@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ScienceCommonsApi::Application.load_tasks
+PaperSearchApi::Application.load_tasks

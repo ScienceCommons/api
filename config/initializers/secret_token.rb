@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-ScienceCommonsApi::Application.config.secret_key_base = 'd410eb964ae4915ce2b72ef8036c0a3b9b84974d55d68c29099f721504396f32e877d8c3dfb654bd5fdfc627026ca288afa84206b76cc9ebaf446191a6a335b4'
+PaperSearchApi::Application.config.secret_key_base = 'd410eb964ae4915ce2b72ef8036c0a3b9b84974d55d68c29099f721504396f32e877d8c3dfb654bd5fdfc627026ca288afa84206b76cc9ebaf446191a6a335b4'
