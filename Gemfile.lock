@@ -1,20 +1,3 @@
-PATH
-  remote: /Users/attachments/hacking/open-source/octopus
-  specs:
-    ar-octopus (0.8.1)
-      activerecord (>= 3.2.0)
-      activesupport (>= 3.2.0)
-
-PATH
-  remote: /Users/attachments/hacking/open-source/rack-oauth2
-  specs:
-    rack-oauth2 (1.0.7)
-      activesupport (>= 2.3)
-      attr_required (>= 0.0.5)
-      httpclient (>= 2.2.0.2)
-      multi_json (>= 1.3.6)
-      rack (>= 1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,9 +25,12 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    ar-octopus (0.8.1)
+      activerecord (>= 3.2.0)
+      activesupport (>= 3.2.0)
     arel (4.0.1)
     atomic (1.1.14)
-    attr_required (0.0.5)
+    attr_required (1.0.0)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -57,7 +43,7 @@ GEM
     erubis (2.7.0)
     execjs (2.0.2)
     hike (1.2.3)
-    httpclient (2.3.2)
+    httpclient (2.3.4.1)
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -75,6 +61,12 @@ GEM
     pg (0.17.1)
     polyglot (0.3.3)
     rack (1.5.2)
+    rack-oauth2 (1.0.7)
+      activesupport (>= 2.3)
+      attr_required (>= 0.0.5)
+      httpclient (>= 2.2.0.2)
+      multi_json (>= 1.3.6)
+      rack (>= 1.1)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.0)
@@ -134,8 +126,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.1)
-      coffee-rails
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -145,15 +135,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ar-octopus!
+  ar-octopus
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
   pg
-  rack-oauth2!
+  rack-oauth2
   rails (= 4.0.0)
   rspec-rails (~> 3.0.0.beta)
   sass-rails (~> 4.0.0)
   sdoc
-  turbolinks
   uglifier (>= 1.3.0)

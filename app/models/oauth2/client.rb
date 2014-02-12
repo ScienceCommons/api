@@ -1,11 +1,11 @@
-class OAuth2::Client < ActiveRecord::Base
+class Oauth2::Client < ActiveRecord::Base
   has_many :access_tokens
   has_many :refresh_tokens
 
   before_validation :setup, :on => :create
-  validates :name, :website, :redirect_uri, :account, :secret, :presence => true
-  validates :identifier, :presence => true, :uniqueness => true
-
+  validates :secret, :presence => true
+  validates :identifier, :name, :presence => true, :uniqueness => true
+  
   private
 
   def setup

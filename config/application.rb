@@ -25,10 +25,12 @@ module PaperSearchApi
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     
+    config.autoload_paths << File.join(Rails.root, 'lib')
+
     # OAuth2 Resource Server
     require 'rack/oauth2'
-    config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Rack::OAuth2 Sample Protected Resources' do |req|
-      AccessToken.valid.find_by_token(req.access_token) || req.invalid_token!
+    config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Rack::OAuth2 Article Search API' do |req|
+        Oauth2::AccessToken.valid.find_by_token(req.access_token) || req.invalid_token!
     end
   end
 end

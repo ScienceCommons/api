@@ -54,14 +54,9 @@ PaperSearchApi::Application.routes.draw do
   #     resources :products
   #   end
 
-
-  resource  :articles, :only => :index
-  root :to => 'articles#index'
+  resources :articles, :only => :index
 
   # OAuth 2.0 Specific Resources.
-  resources :clients, :only => [:show, :new, :create]
-  resources :authorizations, :only => :create
-  match 'oauth2/authorize', :to => 'authorizations#new'
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
   resource :session, :only => :new
 end

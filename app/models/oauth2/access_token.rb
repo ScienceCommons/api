@@ -1,4 +1,4 @@
-class OAuth2::AccessToken < ActiveRecord::Base
+class Oauth2::AccessToken < ActiveRecord::Base
   include Oauth2Token
   self.default_lifetime = 15.minutes
   belongs_to :refresh_token

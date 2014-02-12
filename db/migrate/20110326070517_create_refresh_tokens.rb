@@ -6,6 +6,8 @@ class CreateRefreshTokens < ActiveRecord::Migration
       t.datetime :expires_at
       t.timestamps
     end
+
+    add_index :refresh_tokens, :token, :unique => true
   end
 
   def self.down
