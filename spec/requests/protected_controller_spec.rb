@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Protected Resource' do
+describe 'Protected Controller Behavior' do
 
   let(:client) do
     Oauth2::Client.create(name: 'testclient').tap do |c|
