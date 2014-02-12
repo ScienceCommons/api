@@ -47,3 +47,4 @@ end
 
 gem 'ar-octopus'
 gem 'rack-oauth2'
+gem 'oauth2'
