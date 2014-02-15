@@ -11,11 +11,14 @@ PaperSearchApi::Application.load_tasks
 # this task will get called before resque:pool:setup
 # and preload the rails environment in the pool manager
 task "resque:pool:setup" do
-  # close any sockets or files in pool manager
-  ActiveRecord::Base.connection.disconnect!
-  Resque::Pool.after_prefork do
+
+  defined?(ActiveRecord::Base) and
+    ActiveRecord::Base.connection.disconnect!
+
+  Resque::Pool.after_fork do
     ActiveRecord::Base.connection_proxy.instance_variable_get(:@shards).each do |shard, connection_pool|
       connection_pool.disconnect!
     end
   end
+
 end
