@@ -53,4 +53,5 @@ gem 'resque'
 gem 'resque-retry'
 gem 'resque-pool'
 gem 'dotenv-rails'
+gem "statsd-ruby"
 gem 'unicorn'
