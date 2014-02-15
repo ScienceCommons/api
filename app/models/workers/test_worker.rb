@@ -1,9 +1,13 @@
 class Workers::TestWorker < Workers::BaseJob
-  @backoff_strategy = [0, 30, 60, 300, 900, 3600, 10800]
+  extend Resque::Plugins::ExponentialBackoff
+  
+  @backoff_strategy = [0, 5, 10]
 
   @queue = :test
 
    def self.perform(value)
     p value
+    p Oauth2::Client.first
+    raise "fail job"
    end
 end

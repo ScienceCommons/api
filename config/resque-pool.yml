@@ -1,2 +1,2 @@
 ---
-'*': <%= WORKER_CONCURRENCY %>
+'*': 5
