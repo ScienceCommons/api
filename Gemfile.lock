@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/getsentry/raven-ruby.git
+  revision: 2d03001ae655b4a19214aceb7e0d041b7e9185cb
+  specs:
+    sentry-raven (0.7.1)
+      faraday (>= 0.7.6)
+      hashie (>= 1.1.0)
+      uuidtools
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,6 +56,7 @@ GEM
     execjs (2.0.2)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
+    hashie (2.0.5)
     hike (1.2.3)
     httpclient (2.3.4.1)
     i18n (0.6.9)
@@ -184,6 +194,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuidtools (2.1.4)
     vegas (0.1.11)
       rack (>= 1.0.0)
 
@@ -207,6 +218,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0.0.beta)
   sass-rails (~> 4.0.0)
   sdoc
+  sentry-raven!
   statsd-ruby
   uglifier (>= 1.3.0)
   unicorn
