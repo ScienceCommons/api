@@ -1,3 +1,4 @@
+# Resque.enqueue_in(10.seconds, Workers::TestWorker, "Hello World!")
 class Workers::TestWorker < Workers::BaseJob
   extend Resque::Plugins::ExponentialBackoff
   
