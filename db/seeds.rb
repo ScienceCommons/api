@@ -8,3 +8,7 @@
 client = Oauth2::Client.create({
   name: 'papercollab'
 })
+
+client = Oauth2::Client.create({
+  name: 'www'
+})
