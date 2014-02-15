@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # Handle sharding, currently we don't
   # shard, but it will be a nice to have.
   def select_shard(&block)
-    Octopus.using(:s1, &block)
+    Octopus.using(:master, &block)
   end
 
   def authenticate!
