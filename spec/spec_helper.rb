@@ -45,3 +45,36 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+# Delete and recreate ES index.
+def reset_index
+  $index.delete rescue nil
+
+  $es.refresh
+
+  $index.create({
+    :settings => {
+      :number_of_shards => 1,
+      :number_of_replicas => 0
+    }
+  })
+
+  # Why do both? Doesn't hurt, and it fixes some races
+  $es.refresh
+  $index.refresh
+    
+  # Sometimes the index isn't instantly available
+  (0..40).each do
+    idx_metadata = $es.cluster.request(:get, :state)[:metadata][:indices][$index.name]
+    i_state =  idx_metadata[:state]
+    
+    break if i_state == 'open'
+    
+    if attempts_left < 1
+        raise "Bad index state! #{i_state}. Metadata: #{idx_metadata}" 
+    end
+
+    sleep 0.1
+  end
+
+end
