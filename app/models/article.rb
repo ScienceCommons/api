@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
 
-  include ElasticSearchHelpers
+  extend ElasticSearchHelpers
 
   validates_uniqueness_of :doi
   validates_presence_of :doi

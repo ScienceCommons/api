@@ -67,7 +67,7 @@ describe Article do
     it "can perform full-text search within abstract" do
       article.index
       $index.refresh
-      article.search('Hello')
+      Article.search('Hello')
       p article
     end
 

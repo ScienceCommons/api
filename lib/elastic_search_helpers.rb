@@ -5,7 +5,7 @@ module ElasticSearchHelpers
   #
   # http://stackoverflow.com/questions/16205341/symbols-in-query-string-for-elasticsearch
   #
-  def self.sanitize_query(str)
+  def sanitize_query(str)
     # Escape special characters
     # http://lucene.apache.org/core/old_versioned_docs/versions/2_9_1/queryparsersyntax.html#Escaping Special Characters
     escaped_characters = Regexp.escape('\\+-&|!(){}[]^~*?:\/')
@@ -32,7 +32,7 @@ module ElasticSearchHelpers
 
     # perform an elasticsearch query, scoped to the users id.
     begin
-      res = $index.type(self.class.table_name).search({ size: 12, query: {
+      res = $index.type(table_name).search({ size: 12, query: {
           "bool" => {
             "must" => [
               # This pattern can be used to support
