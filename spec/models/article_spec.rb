@@ -68,6 +68,15 @@ describe Article do
       article.index
       $index.refresh
       article.search('Hello')
+      p article
+    end
+
+    it "does not tokenize, and can search by DOI" do
+=begin
+      article.index
+      $index.refresh
+      article.search('Hello')
+=end
     end
   end
 

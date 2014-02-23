@@ -29,6 +29,6 @@ describe 'Protected Controller Behavior' do
   it "should return a 200 if valid auth header is provided" do
     get '/articles', nil, { 'Authorization' => "Bearer #{valid_token}" }
     response.status.should == 200
-    response.body.should =~ /hello world/
+    response.body.should =~ /\[]/
   end
 end
