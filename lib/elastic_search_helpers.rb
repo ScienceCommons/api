@@ -51,7 +51,7 @@ module ElasticSearchHelpers
       if query_sanitized
         raise e
       else
-        query = ElasticSearchHelpers.sanitize_query(query)
+        query = sanitize_query(query)
         query_sanitized = true
         retry
       end
