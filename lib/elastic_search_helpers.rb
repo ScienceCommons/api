@@ -1,4 +1,5 @@
 module ElasticSearchHelpers
+  
   # sanitize a search query for Lucene. Useful if the original
   # query raises an exception, due to bad adherence to DSL.
   # Taken from here:
@@ -28,7 +29,7 @@ module ElasticSearchHelpers
   def search(query, opts={})
 
     query_sanitized = false
-    opts[:sort] = opts[:sort] || [{_score: 'desc'}]
+    opts[:sort] = opts[:sort] || { _score: 'desc' }
 
     # perform an elasticsearch query, scoped to the users id.
     begin
@@ -57,24 +58,16 @@ module ElasticSearchHelpers
       end
     end
 
-    res
-=begin
-    # allow methods like find_collection to override the
-    # result set of profiles that is returned.
-    if block_given?
-      yield res
-    else
-      res.results.map do |result|
-
-        # ignore missing profiles when performing a search.
-        begin
-          profiles.find(result.profile_id) unless result.profile_id.blank?
-        rescue Mongoid::Errors::DocumentNotFound
-          next # just move to the next result.
-        end
-
-      end.compact
-    end
-=end
+    self.where("id IN (?)", res.results.map(&:id)).
+      order(order_for_active_record(opts))
   end
+
+  # Creates an order string that can
+  # be passed to ActiveRecord.
+  def order_for_active_record(opts)
+    unless opts[:sort].keys.first == :_score
+      "#{opts[:sort].keys.first.to_s} #{opts[:sort].values.first.to_s}"
+    end
+  end
+
 end

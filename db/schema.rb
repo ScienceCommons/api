@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20140204054517) do
 
   create_table "articles", force: true do |t|
     t.string   "doi",                            null: false
+    t.string   "title",                          null: false
     t.integer  "journal_id"
     t.date     "publication_date"
     t.string   "abstract"
