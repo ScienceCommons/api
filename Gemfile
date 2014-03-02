@@ -32,7 +32,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
   gem 'webmock'
-  gem 'vcr'
+  gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
 # Use ActiveModel has_secure_password
