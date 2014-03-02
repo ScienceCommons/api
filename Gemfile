@@ -31,6 +31,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 # Use ActiveModel has_secure_password
@@ -57,3 +59,5 @@ gem "statsd-ruby"
 gem 'unicorn'
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
 gem 'stretcher'
+gem 'will_paginate', '~> 3.0'
+gem 'faraday'

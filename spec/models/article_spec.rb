@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Article do
 
+  before(:all) { WebMock.disable! }
+  after(:all) { WebMock.enable! }
+
   describe "doi" do
     it "should not allow two articles with the same DOI to be created" do
       Article.create(doi: '123banana', title: 'hello world')
