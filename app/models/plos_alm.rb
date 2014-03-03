@@ -16,8 +16,8 @@ class PlosAlm
       if Article.exists?(doi: article_struct['doi'])
         # This is where we would start to populate
         # article level metrics from PLOS ALM, as of
-        # right now, we are only using PLOS ALM to
-        # seed our DB.
+        # right now we are only using PLOS ALM to
+        # seed DOIs.
       else
         # We've never seen an article with this DOI.
         create_article(article_struct)
@@ -52,6 +52,15 @@ class PlosAlm
     raise 'http error' unless @response.status == 200
 
     OpenStruct.new( JSON.parse(@response.body) )
+  end
+
+  # enqueues workers to update metric data
+  # for each page returned by the PLOS ALM API.
+  def enqueue_plos_alm_update_workers
+    load_meta
+    (1..total_pages).each_with_index do |index|
+      Resque.enqueue(Workers::PlosAlmUpdateWorker, index)
+    end
   end
 
 end

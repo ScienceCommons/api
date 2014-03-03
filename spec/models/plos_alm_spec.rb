@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe PlosAlm do
 
+  before(:each) { Article.any_instance.stub(:index) }
+
   describe "load_meta" do
     describe "loads pagination information" do
       VCR.use_cassette('plos_alm') do
@@ -29,7 +31,7 @@ describe PlosAlm do
     it "should not create an article if the doi already exists" do
       VCR.use_cassette('plos_alm') do
         # Create an article with a DOI that will be returned by plos alm.
-        Article.create(doi: '10.1371/journal.pone.0090521', title: 'Fake Title')
+        Article.create(doi: '10.1371/journal.pone.0055903', title: 'Fake Title')
 
         plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
 
@@ -44,17 +46,32 @@ describe PlosAlm do
       VCR.use_cassette('plos_alm') do
         plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
         plos_alm.update_articles # create all 50 articles.
-        Article.find_by_doi('10.1371/journal.pone.0087401').destroy # destroy one article.
+        Article.find_by_doi('10.1371/journal.pone.0055903').destroy # destroy one article.
 
         expect(Article).to receive(:create).
           with({
-            title: "Ultraweak Photon Emission as a Non-Invasive Health Assessment: A Systematic Review",
+            title: "Pleiotropic Effect of Common Variants at ABO Glycosyltranferase Locus in 9q32 on Plasma Levels of Pancreatic Lipase and Angiotensin Converting Enzyme",
             publication_date: Date.parse('Fri, 28 Feb 2014'),
-            doi: '10.1371/journal.pone.0087401'
+            doi: '10.1371/journal.pone.0055903'
           })
 
         plos_alm.update_articles # we should recreate the one article we destroyed.
       end
+    end
+  end
+
+  describe "enqueue_plos_alm_update_workers" do
+    it "should enqueue an alm update worker for each page" do
+      #  Resque.enqueue(Job, params)
+      VCR.use_cassette('plos_alm') do
+        plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
+        expect(Resque).to receive(:enqueue).
+          exactly(2266).times.
+          with(Workers::PlosAlmUpdateWorker, anything)
+
+        plos_alm.enqueue_plos_alm_update_workers
+      end
+
     end
   end
 

@@ -72,9 +72,7 @@ describe Article do
   context "searching" do
     before(:each) do
       reset_index
-      a1.index
-      a2.index
-      a3.index
+      [a1, a2, a3] # force indexing.
       $index.refresh
     end
     let(:a1) do
@@ -131,6 +129,10 @@ describe Article do
         articles = Article.search('*', sort: { title: 'asc'})
         articles.should == [a2, a3, a1]
       end
+
+    end
+
+    context "indexing" do
 
     end
 

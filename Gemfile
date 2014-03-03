@@ -31,6 +31,9 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0.beta'
+end
+
+group :test do
   gem 'webmock'
   gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end

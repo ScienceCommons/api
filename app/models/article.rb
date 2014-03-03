@@ -5,6 +5,8 @@ class Article < ActiveRecord::Base
   validates_uniqueness_of :doi
   validates_presence_of :doi, :title
 
+  after_save :index
+
   def index
     $index.type(Article.table_name).put(self.id, {
       id: self.id,
