@@ -2,6 +2,6 @@ class ArticlesController < ApplicationController
   before_filter :authenticate!
 
   def index
-    render json: {message: 'hello world!'}
+    render json: Article.search(params[:q] || '*')
   end
 end

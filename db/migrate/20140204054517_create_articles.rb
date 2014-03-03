@@ -3,9 +3,10 @@ class CreateArticles < ActiveRecord::Migration
 
     create_table :articles do |t|
       t.string :doi, null: false
+      t.text :title, null: false
       t.integer :journal_id
       t.date :publication_date
-      t.string :abstract, defaut: ''
+      t.text :abstract, defaut: ''
 
       # Aggregate metrics calculated for
       # articles.

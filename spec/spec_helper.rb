@@ -3,6 +3,12 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'webmock/rspec'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.hook_into :webmock # or :fakeweb
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -18,6 +24,11 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
+
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -44,4 +55,37 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+end
+
+# Delete and recreate ES index.
+def reset_index
+  $index.delete rescue nil
+
+  $es.refresh
+
+  $index.create({
+    :settings => {
+      :number_of_shards => 1,
+      :number_of_replicas => 0
+    }
+  })
+
+  # Why do both? Doesn't hurt, and it fixes some races
+  $es.refresh
+  $index.refresh
+    
+  # Sometimes the index isn't instantly available
+  (0..40).each do
+    idx_metadata = $es.cluster.request(:get, :state)[:metadata][:indices][$index.name]
+    i_state =  idx_metadata[:state]
+    
+    break if i_state == 'open'
+    
+    if attempts_left < 1
+        raise "Bad index state! #{i_state}. Metadata: #{idx_metadata}" 
+    end
+
+    sleep 0.1
+  end
+
 end

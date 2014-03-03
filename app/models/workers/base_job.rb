@@ -1,6 +1,10 @@
 # all of our jobs will inherit from this base job.
 # it provides retry logic and can eventually be
 # wired into statsd for anomaly detection.
+#
+# Example of enqueueing:
+#
+# Resque.enqueue_in(10.seconds, Workers::PlosAlmWorker, 1) 
 class Workers::BaseJob
   extend Resque::Plugins::Retry
 
