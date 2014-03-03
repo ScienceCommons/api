@@ -34,7 +34,6 @@ class PlosAlm
       doi: article_struct['doi'],
       title: article_struct['title']
     })
-
     # Enqueue a job to update article with abstract, author,
     # and other information.
     Resque.enqueue(Workers::PlosInfoWorker, article_struct['doi'])
