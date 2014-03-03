@@ -1,3 +1,4 @@
+# Pulls Article Level Metrics using PLOS ALM's API.
 class PlosAlm
   attr_accessor :total_pages, :article_count
 
@@ -28,11 +29,15 @@ class PlosAlm
   # Create an article, enqueue jobs that
   # update the article's initial data, e.g., abstract.
   def create_article(article_struct)
-    Article.create({
+    article = Article.create({
       publication_date: Date.parse(article_struct['publication_date']),
       doi: article_struct['doi'],
       title: article_struct['title']
     })
+
+    # Enqueue a job to update article with abstract, author,
+    # and other information.
+    Resque.enqueue(Workers::PlosInfoWorker, article_struct['doi'])
   end
   private :create_article
 
@@ -59,7 +64,7 @@ class PlosAlm
   def enqueue_plos_alm_update_workers
     load_meta
     (1..total_pages).each_with_index do |index|
-      Resque.enqueue(Workers::PlosAlmUpdateWorker, index)
+      Resque.enqueue(Workers::PlosAlmWorker, index)
     end
   end
 

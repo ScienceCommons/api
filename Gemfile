@@ -64,3 +64,4 @@ gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
 gem 'stretcher'
 gem 'will_paginate', '~> 3.0'
 gem 'faraday'
+gem 'nokogiri'

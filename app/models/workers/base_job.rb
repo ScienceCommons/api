@@ -4,7 +4,7 @@
 #
 # Example of enqueueing:
 #
-# Resque.enqueue_in(10.seconds, Workers::PlosAlmUpdateWorker, 1) 
+# Resque.enqueue_in(10.seconds, Workers::PlosAlmWorker, 1) 
 class Workers::BaseJob
   extend Resque::Plugins::Retry
 

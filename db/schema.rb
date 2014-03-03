@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(version: 20140204054517) do
 
   create_table "articles", force: true do |t|
     t.string   "doi",                            null: false
-    t.string   "title",                          null: false
+    t.text     "title",                          null: false
     t.integer  "journal_id"
     t.date     "publication_date"
-    t.string   "abstract"
+    t.text     "abstract"
     t.float    "repeatability",    default: 0.0
     t.float    "materials",        default: 0.0
     t.float    "quality_of_stats", default: 0.0

@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe PlosAlm do
 
-  before(:each) { Article.any_instance.stub(:index) }
+  before(:each) do 
+    Resque.stub(:enqueue)
+    Article.any_instance.stub(:index)
+  end
 
   describe "load_meta" do
     describe "loads pagination information" do
@@ -26,6 +29,17 @@ describe PlosAlm do
 
         plos_alm.update_articles
       end
+    end
+
+    it "should enqueue a plos info worker for each article created" do
+      VCR.use_cassette('plos_alm') do
+        plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
+
+        # all 50 articles are new, should create them.
+        expect(Resque).to receive(:enqueue).exactly(50).times
+
+        plos_alm.update_articles
+      end      
     end
 
     it "should not create an article if the doi already exists" do
@@ -67,7 +81,7 @@ describe PlosAlm do
         plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
         expect(Resque).to receive(:enqueue).
           exactly(2266).times.
-          with(Workers::PlosAlmUpdateWorker, anything)
+          with(Workers::PlosAlmWorker, anything)
 
         plos_alm.enqueue_plos_alm_update_workers
       end
