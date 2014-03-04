@@ -26,6 +26,9 @@ module PaperSearchApi
     # config.i18n.default_locale = :de
     I18n.enforce_available_locales = false
 
+    # GZIP our API results.
+    config.middleware.use Rack::Deflater
+
     # open up CORS for OAuth 2.0 API.
     # we should eventually audit this.
     config.action_dispatch.default_headers = {
