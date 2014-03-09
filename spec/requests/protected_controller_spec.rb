@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe 'Protected Controller Behavior' do
 
+  before(:all) { WebMock.disable! }
+  after(:all) { WebMock.enable! }
+
   let(:client) do
     Oauth2::Client.create(name: 'testclient').tap do |c|
       r = c.refresh_tokens.create
