@@ -3,7 +3,10 @@ require 'spec_helper'
 describe Article do
 
   before(:all) { WebMock.disable! }
-  after(:all) { WebMock.enable! }
+  after(:all) do 
+    reset_index
+    WebMock.enable!
+  end
 
   describe "doi" do
     it "should not allow two articles with the same DOI to be created" do
@@ -47,11 +50,10 @@ describe Article do
       before(:all) { reset_index }
 
       it "creates articles mapping" do
-        Article.create_mapping
-        $index.refresh
+        Article.put_mapping
 
         # Ensure that the mapping is created.
-        mapping = $index.get_mapping.
+        mapping = ElasticMapper.index.get_mapping.
           papersearch_test.articles
 
         mapping.should_not == nil
@@ -72,8 +74,9 @@ describe Article do
   context "searching" do
     before(:each) do
       reset_index
+      Article.put_mapping
       [a1, a2, a3] # force indexing.
-      $index.refresh
+      ElasticMapper.index.refresh
     end
     let(:a1) do
       Article.create(

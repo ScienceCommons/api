@@ -59,11 +59,14 @@ end
 
 # Delete and recreate ES index.
 def reset_index
-  $index.delete rescue nil
+  index = ElasticMapper.index
+  server = ElasticMapper.server
 
-  $es.refresh
+  index.delete rescue nil
 
-  $index.create({
+  server.refresh
+
+  index.create({
     :settings => {
       :number_of_shards => 1,
       :number_of_replicas => 0
@@ -71,12 +74,12 @@ def reset_index
   })
 
   # Why do both? Doesn't hurt, and it fixes some races
-  $es.refresh
-  $index.refresh
+  server.refresh
+  index.refresh
     
   # Sometimes the index isn't instantly available
   (0..40).each do
-    idx_metadata = $es.cluster.request(:get, :state)[:metadata][:indices][$index.name]
+    idx_metadata = server.cluster.request(:get, :state)[:metadata][:indices][index.name]
     i_state =  idx_metadata[:state]
     
     break if i_state == 'open'
