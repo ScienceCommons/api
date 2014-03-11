@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
 
   def index
     opts = {
-      from: params[:from] ? params[:from].to_i : 0
+      from: params[:from] ? params[:from].to_i : 0,
       size: params[:size] ? params[:size].to_i : 20
     }
 
