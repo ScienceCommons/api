@@ -16,9 +16,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate!
-    unless request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-      raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
-    end
+    #unless request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
+    #  raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
+    #end
   end
 
   # any controller can render a 401 unauthorized by
