@@ -3,8 +3,8 @@ class ArticlesController < ApplicationController
 
   def index
     opts = {
-      from: 0 || params[:from],
-      size: 20 || params[:size]
+      from: params[:from] ? params[:from].to_i : 0
+      size: params[:size] ? params[:size].to_i : 20
     }
 
     render json: Article.search(params[:q] || '*', opts)
