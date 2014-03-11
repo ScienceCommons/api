@@ -106,31 +106,31 @@ describe Article do
     it "can perform full-text search within abstract" do
       articles = Article.search('hello')
       
-      articles.count.should == 1
-      articles.first.should == a1
+      articles.documents.count.should == 1
+      articles.documents.first.should == a1
     end
 
     context "sorting" do
 
       it "by default, sorts by score" do
         articles = Article.search('world')
-        articles == [a1, a2]
+        articles.documents.should == [a1, a2]
       end
 
       it "can sort by date" do
         articles = Article.search('*', sort: { publication_date: 'desc'})
-        articles.should == [a3, a2, a1]
+        articles.documents.should == [a3, a2, a1]
 
         articles = Article.search('*', sort: { publication_date: 'asc'})
-        articles.should == [a1, a2, a3]
+        articles.documents.should == [a1, a2, a3]
       end
 
       it "can sort by title" do
         articles = Article.search('*', sort: { title: 'desc'})
-        articles.should == [a1, a3, a2]
+        articles.documents.should == [a1, a3, a2]
 
         articles = Article.search('*', sort: { title: 'asc'})
-        articles.should == [a2, a3, a1]
+        articles.documents.should == [a2, a3, a1]
       end
 
     end
