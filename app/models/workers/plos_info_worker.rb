@@ -6,7 +6,7 @@ class Workers::PlosInfoWorker < Workers::BaseJob
   
   @backoff_strategy = [0, 10, 60, 300, 1200]
 
-  @queue = :plos
+  @queue = :plos_info
 
    def self.perform(doi)
     PlosInfo.new(doi).update

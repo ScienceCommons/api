@@ -7,7 +7,7 @@ class Workers::PlosAlmWorker < Workers::BaseJob
   
   @backoff_strategy = [0, 10, 60, 300, 1200]
 
-  @queue = :plos
+  @queue = :plos_alm
 
    def self.perform(page)
       PlosAlm.new(page).update_articles
