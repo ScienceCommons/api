@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Article do
 
   before(:all) { WebMock.disable! }
-  after(:all) do 
+  after(:all) do
     reset_index
     WebMock.enable!
   end
@@ -53,8 +53,10 @@ describe Article do
         Article.put_mapping
 
         # Ensure that the mapping is created.
-        mapping = ElasticMapper.index.get_mapping.
-          papersearch_test.articles
+        mapping = ElasticMapper.index.get_mapping
+          .papersearch_test
+          .mappings
+          .articles
 
         mapping.should_not == nil
 
@@ -105,7 +107,7 @@ describe Article do
 
     it "can perform full-text search within abstract" do
       articles = Article.search('hello')
-      
+
       articles.documents.count.should == 1
       articles.documents.first.should == a1
     end
