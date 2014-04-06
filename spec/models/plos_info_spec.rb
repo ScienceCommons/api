@@ -33,7 +33,7 @@ describe PlosInfo do
           doi: '10.1371/journal.pone.0088432',
           title: 'Egocentric Fairness Perception'
         )
-        
+
         PlosInfo.new('10.1371/journal.pone.0088432').update
         article.reload
         article.abstract.should =~ /egocentric biases/
