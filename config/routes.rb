@@ -1,4 +1,10 @@
 PaperSearchApi::Application.routes.draw do
+  devise_for :users, :controllers => { :sessions => "sessions" }
+  devise_scope :user do
+    resources :sessions, :only => [:create, :destroy]
+  end
+  resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -39,7 +45,7 @@ PaperSearchApi::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
@@ -55,6 +61,7 @@ PaperSearchApi::Application.routes.draw do
   #   end
 
   resources :articles, :only => [:index, :show]
+  resources :sessions, :only => [:create, :destroy]
 
   # OAuth 2.0 Specific Resources.
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
