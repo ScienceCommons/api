@@ -70,7 +70,7 @@ describe Article do
 
         # Ensure that the mapping is created.
         mapping = ElasticMapper.index.get_mapping
-          .papersearch_test
+          .curatescience_test
           .mappings
           .articles
 
