@@ -25,6 +25,8 @@ class Article < ActiveRecord::Base
   end
 
   def authors
-    authors_denormalized.join(' ')
+    authors_denormalized.map do  |a|
+      "#{a[:first_name]} #{a[:middle_name]} #{a[:last_name]}"
+    end.join(' ')
   end
 end
