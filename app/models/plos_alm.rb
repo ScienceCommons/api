@@ -14,7 +14,7 @@ class PlosAlm
   # if necessary, creates the article.
   def update_articles
     load_page.data.each do |article_struct|
-      
+
       if Article.exists?(doi: article_struct['doi'])
         # This is where we would start to populate
         # article level metrics from PLOS ALM, as of
