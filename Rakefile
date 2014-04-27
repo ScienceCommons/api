@@ -20,6 +20,8 @@ task "resque:pool:setup" do
   ActiveRecord::Base.connection.disconnect!
   # and re-open them in the resque worker parent
   Resque::Pool.after_prefork do |job|
+    Resque.redis.client.reconnect
+
     ActiveRecord::Base.connection_proxy.instance_variable_get(:@shards).each do |shard, connection_pool|
       connection_pool.disconnect!
     end

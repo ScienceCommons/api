@@ -14,6 +14,7 @@ class PlosAlm
   # if necessary, creates the article.
   def update_articles
     load_page.data.each do |article_struct|
+      
       if Article.exists?(doi: article_struct['doi'])
         # This is where we would start to populate
         # article level metrics from PLOS ALM, as of
@@ -29,8 +30,11 @@ class PlosAlm
   # Create an article, enqueue jobs that
   # update the article's initial data, e.g., abstract.
   def create_article(article_struct)
+
+    date_parts = article_struct['issued']['date_parts']
+
     article = Article.create({
-      publication_date: Date.parse(article_struct['publication_date']),
+      publication_date: DateTime.new(date_parts[0], date_parts[1], date_parts[2]),
       doi: article_struct['doi'],
       title: article_struct['title']
     })
