@@ -16,16 +16,6 @@ describe PlosInfo do
     end
   end
 
-  describe "info" do
-    it "extracts appropriate fields from xml" do
-      VCR.use_cassette('plos_info') do
-        info = PlosInfo.new('10.1371/journal.pone.0088432').info
-
-        info[:abstract].should =~ /egocentric biases/
-      end
-    end
-  end
-
   describe "update" do
     it "updates article with fields extracted from XML" do
       VCR.use_cassette('plos_info') do
@@ -37,6 +27,17 @@ describe PlosInfo do
         PlosInfo.new('10.1371/journal.pone.0088432').update
         article.reload
         article.abstract.should =~ /egocentric biases/
+        article.authors_denormalized.should == [
+          {
+            first_name: 'Benoit',
+            middle_name: nil,
+            last_name: 'Bediou'
+          },
+          {
+            first_name: 'Klaus',
+            middle_name: 'R.',
+            last_name: 'Scherer'
+          }]
       end
     end
   end

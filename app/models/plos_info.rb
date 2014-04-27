@@ -12,13 +12,25 @@ class PlosInfo
   def update
     article = Article.find_by_doi(@doi)
     raise 'article not found' unless article
-    article.update(info)
+    update_article(article)
   end
 
   # extract additional article info from xml.
-  def info
+  def update_article(article)
     xml = get_xml
-    { abstract: xml.css('abstract').text }
+
+    article.abstract = xml.css('abstract').text
+
+    xml.css('contrib[contrib-type=author]').each do |node|
+      first_name, middle_name = node.css('given-names').text.split(' ')
+      article.add_author(
+        first_name,
+        middle_name,
+        node.css('surname').text
+      )
+    end
+
+    article.save
   end
 
   # fetch xml representation of article from PLOS.

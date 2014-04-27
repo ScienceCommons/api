@@ -44,6 +44,22 @@ describe Article do
     end
   end
 
+  context "author" do
+    describe "add_author" do
+      it "adds an author to the authors_denormalized field" do
+        article = Article.create(doi: '123banana', title: 'foo')
+        article.add_author('Ben', 'Ernest', 'Coe')
+        article.save!
+        article.authors_denormalized.first[:first_name]
+          .should == 'Ben'
+        article.authors_denormalized.first[:middle_name]
+          .should == 'Ernest'
+        article.authors_denormalized.first[:last_name]
+          .should == 'Coe'
+      end
+    end
+  end
+
   context "indexing" do
     describe "create_mapping" do
 
@@ -101,8 +117,12 @@ describe Article do
         title: 'B Article',
         doi: 'http://dx.doi.org/10.6084/m9.figshare.949670',
         publication_date: Time.now - 1.days,
-        abstract: 'a third article'
-      )
+        abstract: 'a third article',
+      ).tap do |a|
+        a.add_author('Benjamin', 'E', 'Coe')
+        a.add_author('Christian', 'J-Bone', 'Battista')
+        a.save
+      end
     end
 
     it "can perform full-text search within abstract" do
@@ -110,6 +130,12 @@ describe Article do
 
       articles.documents.count.should == 1
       articles.documents.first.should == a1
+    end
+
+    it "can perform full-text search by author" do
+      articles = Article.search('Christian')
+      articles.documents.count.should == 1
+      articles.documents.first.should == a3
     end
 
     context "sorting" do
