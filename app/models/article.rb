@@ -22,7 +22,6 @@ class Article < ActiveRecord::Base
       middle_name: middle_name,
       last_name: last_name
     )
-    save!
   end
 
   def authors

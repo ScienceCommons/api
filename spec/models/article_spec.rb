@@ -49,6 +49,7 @@ describe Article do
       it "adds an author to the authors_denormalized field" do
         article = Article.create(doi: '123banana', title: 'foo')
         article.add_author('Ben', 'Ernest', 'Coe')
+        article.save!
         article.authors_denormalized.first[:first_name]
           .should == 'Ben'
         article.authors_denormalized.first[:middle_name]
@@ -120,6 +121,7 @@ describe Article do
       ).tap do |a|
         a.add_author('Benjamin', 'E', 'Coe')
         a.add_author('Christian', 'J-Bone', 'Battista')
+        a.save
       end
     end
 
