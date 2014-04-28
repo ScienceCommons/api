@@ -10,6 +10,15 @@ PaperSearchApi::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'alpha#index'
+  get '/bem.html' => 'alpha#bem'
+  get '/barghetal.html' => 'alpha#barghetal'
+  get '/matzkeetal.html' => 'alpha#matzkeetal'
+  get '/donnellanetal.html' => 'alpha#donnellanetal'
+  get '/arielyetal.html' => 'alpha#arielyetal'
+  get '/zhongetal.html' => 'alpha#zhongetal'
+  get '/tversky_kahneman.html' => 'alpha#tversky_kahneman'
+  get '/husnu_crisp.html' => 'alpha#husnu_crisp'
+  get '/lebel_wilbur.html' => 'alpha#lebel_wilbur'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
