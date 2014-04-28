@@ -66,4 +66,6 @@ PaperSearchApi::Application.routes.draw do
   # OAuth 2.0 Specific Resources.
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
   resource :session, :only => :new
+
+  get '/beta', to: 'beta#index'
 end
