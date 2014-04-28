@@ -38,6 +38,10 @@ group :test do
   gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
+group :production do
+  gem 'rails_12factor'
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

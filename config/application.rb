@@ -4,8 +4,8 @@ require File.expand_path('../boot', __FILE__)
 require "active_record/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
-# require "sprockets/railtie"
-# require "rails/test_unit/railtie"
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,7 +35,7 @@ module PaperSearchApi
         'Access-Control-Allow-Origin' => '*',
         'Access-Control-Request-Method' => '*'
     }
-    
+
     config.autoload_paths << File.join(Rails.root, 'lib')
 
     # OAuth2 Resource Server
