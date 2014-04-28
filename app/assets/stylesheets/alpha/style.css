@@ -310,9 +310,6 @@ h3.tritary{
     max-height: 864px;
     position: relative;
     }
-.billboard.3{
-    background:none center no-repeat;
-}
 .billboard .wrapper {
     min-height: 850px;
     max-height: 964px;
