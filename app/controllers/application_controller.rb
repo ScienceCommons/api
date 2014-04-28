@@ -27,4 +27,11 @@ class ApplicationController < ActionController::Base
     render json: 'unauthorized', :status => :unauthorized
   end
   private :authorization_error
+
+  def redirect_https
+    if Rails.env.production?
+      redirect_to :protocol => "https://" unless request.ssl?
+    end
+  end
+  before_filter :redirect_https
 end
