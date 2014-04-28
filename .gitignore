@@ -4,3 +4,4 @@ log/*.log
 *log
 .bundle
 .env
+public/assets
