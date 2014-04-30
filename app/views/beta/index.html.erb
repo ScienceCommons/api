@@ -5,4 +5,5 @@
   CS.user = {}; // user data here
 </script>
 
-<%= javascript_include_tag "beta" %>
+<%= javascript_include_tag "beta", "data-turbolinks-track" => true %>
+<%= csrf_meta_tags %>
