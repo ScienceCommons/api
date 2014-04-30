@@ -1,0 +1,49 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>
+Created by FontForge 20120731 at Tue Apr 29 19:49:46 2014
+ By Stephen Demjanenko
+Created by Stephen Demjanenko with FontForge 2.0 (http://fontforge.sf.net)
+</metadata>
+<defs>
+<font id="icons" horiz-adv-x="250" >
+  <font-face 
+    font-family="icons"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="512"
+    panose-1="2 0 6 3 0 0 0 0 0 0"
+    ascent="448"
+    descent="-64"
+    bbox="0 -68 512 448"
+    underline-thickness="25"
+    underline-position="-52"
+    unicode-range="U+E001-E008"
+  />
+<missing-glyph horiz-adv-x="187" 
+d="M17 0v341h136v-341h-136zM34 17h102v307h-102v-307z" />
+    <glyph glyph-name=".notdef" horiz-adv-x="187" 
+d="M17 0v341h136v-341h-136zM34 17h102v307h-102v-307z" />
+    <glyph glyph-name=".null" horiz-adv-x="0" 
+ />
+    <glyph glyph-name="nonmarkingreturn" horiz-adv-x="170" 
+ />
+    <glyph glyph-name="uniE001" unicode="&#xe001;" horiz-adv-x="384" 
+d="M384 224v-64h-160v-160h-64v160h-160v64h160v160h64v-160h160z" />
+    <glyph glyph-name="uniE002" unicode="&#xe002;" horiz-adv-x="495" 
+d="M171 4l-171 171l34 34l137 -136l290 290l34 -35z" />
+    <glyph glyph-name="uniE003" unicode="&#xe003;" horiz-adv-x="408" 
+d="M408 340l-147 -148l147 -148l-56 -56l-148 147l-147 -147l-57 56l148 148l-148 148l57 56l147 -147l148 147z" />
+    <glyph glyph-name="uniE004" unicode="&#xe004;" horiz-adv-x="256" 
+d="M256 243l-128 -128v0l-128 128l22 22l106 -107l107 107z" />
+    <glyph glyph-name="uniE005" unicode="&#xe005;" horiz-adv-x="512" 
+d="M77 117l219 225l113 -110l-218 -225zM161 -23l-161 -45l48 155zM0 -68zM399 448l113 -110l-73 -76l-114 110z" />
+    <glyph glyph-name="uniE006" unicode="&#xe006;" 
+d="M0 194v0l110 111l23 -22l-75 -74h192v-31h-191l74 -73l-23 -22z" />
+    <glyph glyph-name="uniE007" unicode="&#xe007;" 
+d="M250 194v-1l-110 -110l-23 22l74 73h-191v31h191l-74 74l23 22z" />
+    <glyph glyph-name="uniE008" unicode="&#xe008;" horiz-adv-x="256" 
+d="M0 137l128 128v0l128 -128l-21 -22l-107 107l-106 -107z" />
+  </font>
+</defs></svg>
