@@ -48,8 +48,7 @@ describe Article do
     describe "add_author" do
       it "adds an author to the authors_denormalized field" do
         article = Article.create(doi: '123banana', title: 'foo')
-        article.add_author('Ben', 'Ernest', 'Coe')
-        article.save!
+        article.add_author('Ben', 'Ernest', 'Coe').save!
         article.authors_denormalized.first[:first_name]
           .should == 'Ben'
         article.authors_denormalized.first[:middle_name]
@@ -163,14 +162,27 @@ describe Article do
 
     end
 
-    context "indexing" do
+  end
 
+  describe "studies" do
+    let(:article) do
+      Article.create(
+        title: 'Z Article',
+        doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
+        publication_date: Time.now - 3.days,
+        abstract: 'hello world'
+      )
     end
 
-    context "pagination" do
+    it "should allow a study to be created via an article" do
+      study = article.studies.create
+      article.reload
 
+      # test that all relationships are created.
+      article.studies.count.should == 1
+      study.id.should == article.studies.first.id
+      study.article_id.should == article.id
     end
-
   end
 
 end
