@@ -25,6 +25,9 @@ class PlosAlm
         create_article(article_struct)
       end
     end
+  rescue Error => err
+    REDIS.lpush('plos_500s', "#{PLOS_ALM_URL}?page=#{@page}&api_key=#{ENV['PLOS_API_KEY']}")
+    raise err
   end
 
   # Create an article, enqueue jobs that
@@ -38,6 +41,15 @@ class PlosAlm
       doi: article_struct['doi'],
       title: article_struct['title']
     })
+
+    # why is our PLOS index failing?
+    if article and article.errors.count > 0
+      REDIS.incr('plos_errors')
+      REDIS.lpush('plos_errors_message', article.errors.to_s)
+    else
+      REDIS.incr('plos_success')
+    end
+
     # Enqueue a job to update article with abstract, author,
     # and other information.
     Resque.enqueue(Workers::PlosInfoWorker, article_struct['doi'])
