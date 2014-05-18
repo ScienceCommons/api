@@ -42,10 +42,11 @@ class PlosAlm
       title: article_struct['title']
     })
 
-    # why is our PLOS index failing?
+    # Use REDIS to track Plos indexing
+    # problems.
     if article and article.errors.count > 0
       REDIS.incr('plos_errors')
-      REDIS.lpush('plos_errors_message', article.errors.to_s)
+      REDIS.lpush('plos_errors_message', article.errors.full_messages.join(','))
     else
       REDIS.incr('plos_success')
     end
