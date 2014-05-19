@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140518182951) do
+ActiveRecord::Schema.define(version: 20140519034313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,16 @@ ActiveRecord::Schema.define(version: 20140518182951) do
 
   add_index "clients", ["identifier"], name: "index_clients_on_identifier", unique: true, using: :btree
   add_index "clients", ["name"], name: "index_clients_on_name", unique: true, using: :btree
+
+  create_table "findings", force: true do |t|
+    t.text     "url"
+    t.string   "name"
+    t.integer  "study_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "findings", ["study_id"], name: "index_findings_on_study_id", using: :btree
 
   create_table "refresh_tokens", force: true do |t|
     t.integer  "client_id"

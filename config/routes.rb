@@ -70,7 +70,9 @@ PaperSearchApi::Application.routes.draw do
   #   end
 
   resources :articles, :only => [:index, :show] do
-    resources :studies
+    resources :studies do
+      resources :findings
+    end
   end
 
   resources :sessions, :only => [:create, :destroy]

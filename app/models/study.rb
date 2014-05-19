@@ -2,6 +2,7 @@ class Study < ActiveRecord::Base
 
   VALID_EFFECT_SIZES = [:d, :eta, :r, :phi, :eta_sqr, :partial_eta_sqr]
 
+  has_many :findings
   belongs_to :article
 
   validates_presence_of :article_id
