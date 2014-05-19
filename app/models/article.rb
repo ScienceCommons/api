@@ -2,6 +2,8 @@ class Article < ActiveRecord::Base
 
   include ElasticMapper
 
+  has_many :studies
+
   validates_uniqueness_of :doi
   validates_presence_of :doi, :title
 
@@ -22,6 +24,7 @@ class Article < ActiveRecord::Base
       middle_name: middle_name,
       last_name: last_name
     )
+    self
   end
 
   def authors
