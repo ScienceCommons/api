@@ -114,8 +114,7 @@ describe Study do
         name: 'findings.txt',
         url: 'https://www.example.com/'
       })
-      s = JSON.parse(study.to_json)
-      s['findings'].count.should == 1
+      study.as_json(findings: true)[:findings].count.should == 1
     end
   end
 

@@ -50,7 +50,7 @@ describe StudiesController do
     it "should return a specific study" do
       get :show, article_id: article.id, id: s2.id
       response.status.should == 200
-      JSON.parse(response.body).should == JSON.parse(s2.to_json)
+      JSON.parse(response.body)['id'].should == s2.id
     end
 
     it "should return created_at as an integer epoch" do

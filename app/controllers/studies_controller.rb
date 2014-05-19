@@ -17,6 +17,7 @@ class StudiesController < ApplicationController
     id = params[:id].to_i
     article_id = params[:article_id].to_i
     render json: Article.find(article_id).studies.find(id)
+      .as_json(findings: true)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
