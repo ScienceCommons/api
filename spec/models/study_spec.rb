@@ -90,4 +90,22 @@ describe Study do
     end
   end
 
+  describe "findings" do
+    it "allows a finding to be created for a study" do
+      study.findings.create({
+        name: 'findings.txt',
+        url: 'https://www.example.com/'
+      })
+      study.findings.create({
+        name: 'findings2.txt',
+        url: 'https://www.example2.com/'
+      })
+
+      study.findings.count.should == 2
+      finding = study.findings.first
+      finding.name.should == 'findings.txt'
+      finding.url.should == 'https://www.example.com/'
+    end
+  end
+
 end
