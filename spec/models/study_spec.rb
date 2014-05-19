@@ -108,4 +108,15 @@ describe Study do
     end
   end
 
+  describe "to_json" do
+    it "should include findings" do
+      study.findings.create({
+        name: 'findings.txt',
+        url: 'https://www.example.com/'
+      })
+      s = JSON.parse(study.to_json)
+      s['findings'].count.should == 1
+    end
+  end
+
 end

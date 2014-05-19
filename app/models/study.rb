@@ -47,6 +47,7 @@ class Study < ActiveRecord::Base
     super(opts).tap do |h|
       h['created_at'] = h['created_at'].to_i
       h['updated_at'] = h['updated_at'].to_i
+      h[:findings] = self.findings
       h
     end
   end
