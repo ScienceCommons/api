@@ -6,10 +6,7 @@ describe Study do
   # the article in ES which causes
   # problems for WebMock.
   before(:all) { WebMock.disable! }
-  after(:all) do
-    reset_index
-    WebMock.enable!
-  end
+  after(:all) { WebMock.enable! }
 
   let(:article) do
     Article.create(
@@ -53,13 +50,13 @@ describe Study do
 
   describe "add variables" do
     it "should persist dependent variables that are added" do
-      study.add_dependent_variable('reaction time').save!
+      study.add_dependent_variables('reaction time').save!
       study.reload
       study.dependent_variables.should include('reaction time')
     end
 
     it "should persist independent variables that are added" do
-      study.add_independent_variable('thc').save!
+      study.add_independent_variables('thc').save!
       study.reload
       study.independent_variables.should include('thc')
     end
@@ -75,6 +72,15 @@ describe Study do
       study.set_effect_size(:d, 0.3).save!
       study.reload
       study.effect_size[:d].should == 0.3
+    end
+
+    it "should only allow for one effect size per study" do
+      study.set_effect_size(:d, 0.3)
+      study.set_effect_size(:r, 0.3)
+      study.save!
+      study.reload
+
+      study.effect_size.keys.count.should == 1
     end
   end
 

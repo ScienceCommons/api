@@ -69,7 +69,10 @@ PaperSearchApi::Application.routes.draw do
   #     resources :products
   #   end
 
-  resources :articles, :only => [:index, :show]
+  resources :articles, :only => [:index, :show] do
+    resources :studies
+  end
+
   resources :sessions, :only => [:create, :destroy]
 
   # OAuth 2.0 Specific Resources.
