@@ -45,7 +45,7 @@ class Study < ActiveRecord::Base
     self
   end
 
-  def add_replication(study, replicating_study, closeness=0)
+  def add_replication(replicating_study, closeness=0)
     self.replications.create(
       replicating_study_id: replicating_study.id,
       closeness: closeness
@@ -60,23 +60,8 @@ class Study < ActiveRecord::Base
       # optionally serialize various amounts of
       # relational data.
       h[:findings] = self.findings if opts[:findings]
-      if opts[:replications]
-        h[:replications] = self.replications.map do |r|
-          {
-            closeness: r.closeness,
-            replicating_study: r.replicating_study.as_json
-          }
-        end
-      end
-      if opts[:replication_of]
-        h[:replication_of] = self.replication_of.map do |r|
-          {
-            closeness: r.closeness,
-            study: r.study.as_json
-          }
-        end
-      end
-
+      h[:replications] = self.replications.as_json(opts) if opts[:replications]
+      h[:replication_of] = self.replication_of.as_json(opts) if opts[:replication_of]
       h
     end
   end

@@ -125,14 +125,14 @@ describe Study do
     end
 
     it "should return repliating studies, if replications flag is set" do
-      study.add_replication(study, replicating_study, 3)
+      study.add_replication(replicating_study, 3)
       study_json = study.as_json(replications: true)
       study_json[:replications].count.should == 1
       study_json[:replications][0][:replicating_study]['id'].should == replicating_study.id
     end
 
     it "should return studies that a study replicates, if replication_of flag is set" do
-      study.add_replication(study, replicating_study, 3)
+      study.add_replication(replicating_study, 3)
       study_json = replicating_study.as_json(replication_of: true)
       study_json[:replication_of].count.should == 1
       study_json[:replication_of][0][:study]['id'].should == study.id
@@ -141,7 +141,7 @@ describe Study do
 
   describe "add_replication" do
     it "should allow a replication to be added without a closeness" do
-      study.add_replication(study, replicating_study)
+      study.add_replication(replicating_study)
 
       study.reload
       study.replications.count.should == 1
@@ -152,7 +152,7 @@ describe Study do
     end
 
     it "should allow a replication to be added with a closeness" do
-      study.add_replication(study, replicating_study, 33)
+      study.add_replication(replicating_study, 33)
       study.reload
       replication = study.replications.first
       replication.closeness.should == 33
