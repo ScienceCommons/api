@@ -60,4 +60,14 @@ describe User do
       user.articles.count.should == 2
     end
   end
+
+  describe "studies" do
+    let!(:s1) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
+    let!(:s2) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
+    let!(:s3) { Study.create( article_id: 0, owner_id: user_2.id, n: 0, power: 0) }
+
+    it "allows all studies created by a user to be looked up" do
+      user.studies.count.should == 2
+    end
+  end
 end

@@ -1,28 +1,50 @@
 require 'spec_helper'
 
 describe StudiesController do
+
+  let(:user) do
+    User.create!({
+      :email => "ben@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
+  let(:user_2) do
+    User.create!({
+      :email => "christian@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
   let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
   let!(:article_no_studies) { Article.create(doi: '1234banana', title: 'hello world') }
+
   let!(:s1) do
     article.studies.create.tap do |s|
       s.add_independent_variables('health')
       s.add_dependent_variables('happiness')
       s.set_effect_size(:r, 0.5)
+      s.owner_id = user.id
       s.save!
     end
   end
-  let!(:s2) { article.studies.create }
+  let!(:s2) { article.studies.create({ owner_id: user_2.id }) }
+  let!(:s3) { article.studies.create() }
   let(:time_in_past) { 1400463719 }
 
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.enable! }
+  before(:each) do
+    controller.stub(:current_user).
+      and_return(user)
+  end
 
-  describe "index" do
+  describe "#index" do
     it "should return all studies for a given article" do
       get :index, article_id: article.id
       response.status.should == 200
       studies = JSON.parse(response.body)
-      studies.count.should == 2
+      studies.count.should == 3
       studies.should include(JSON.parse(s1.to_json))
       studies.should include(JSON.parse(s2.to_json))
     end
@@ -46,7 +68,7 @@ describe StudiesController do
     end
   end
 
-  describe "show" do
+  describe "#show" do
     it "should return a specific study" do
       get :show, article_id: article.id, id: s2.id
       response.status.should == 200
@@ -66,14 +88,14 @@ describe StudiesController do
     end
   end
 
-  describe "create" do
+  describe "#create" do
     it "should allow a new blank study to be created" do
       post :create, {article_id: article.id}
 
       response.status.should == 200
       study = JSON.parse(response.body)
       article.reload
-      article.studies.count.should == 3
+      article.studies.count.should == 4
       study['power'].should == nil
       study['n'].should == nil
     end
@@ -143,7 +165,7 @@ describe StudiesController do
     end
   end
 
-  describe 'update' do
+  describe '#update' do
     it "should update simple keys on study" do
       post :update, {
         article_id: article.id,
@@ -195,6 +217,35 @@ describe StudiesController do
       s1.reload
       s1.dependent_variables.first.should == 'banana'
       s1.effect_size.should == {d: 0.9}
+    end
+  end
+
+  describe "#destroy" do
+    it "allows a user to delete a study that they create" do
+      delete :destroy, {
+        article_id: article.id,
+        id: s1.id
+      }
+      response.status.should == 200
+      Study.all.count.should == 2
+    end
+
+    it "allows a user to delete a study that has no owner" do
+      delete :destroy, {
+        article_id: article.id,
+        id: s3.id
+      }
+      response.status.should == 200
+      Study.all.count.should == 2
+    end
+
+    it "should not allow you to delete a study that you did not create" do
+      delete :destroy, {
+        article_id: article.id,
+        id: s2.id
+      }
+      response.status.should == 401
+      Study.all.count.should == 3
     end
   end
 end
