@@ -18,7 +18,7 @@ describe ArticlesController do
     ElasticMapper.index.refresh
   end
 
-  describe "index" do
+  describe "#index" do
     it "should return the list of articles" do
       get :index
       results = JSON.parse(response.body)
@@ -27,7 +27,7 @@ describe ArticlesController do
     end
   end
 
-  describe "show" do
+  describe "#show" do
     it "should return the article corresponding to the id" do
       get :show, id: article.id
       JSON.parse(response.body)['id'].should == article.id
@@ -39,7 +39,7 @@ describe ArticlesController do
     end
   end
 
-  describe "create" do
+  describe "#create" do
     it "should return a 500 if title not provided" do
       post :create, { doi: 'abc123' }
       response.status.should == 500
@@ -103,6 +103,48 @@ describe ArticlesController do
         middle_name: 'J.',
         last_name: 'Battista'
       })
+    end
+  end
+
+  describe '#update' do
+    it "should raise a 404 if article not found" do
+      post :update, { id: -1 }
+      response.status.should == 404
+    end
+
+    it "should allow the title to be changed" do
+      post :update, { id: article.id, title: "my new title" }
+      article.reload
+      article.title.should == 'my new title'
+    end
+
+    it "should allow the publication date to be changed" do
+      post :update, { id: article.id, publication_date: "2014-3-3" }
+      article.reload
+      article.publication_date.should == Date.parse('2014-03-03')
+    end
+
+    it "should allow the authors to be changed" do
+      post :update, {
+        id: article.id,
+        authors: [{
+          first_name: 'Ben',
+          middle_name: 'E.',
+          last_name: 'Coe'
+        }]
+      }
+      article.reload
+      article.authors_denormalized.should include({
+        first_name: 'Ben',
+        middle_name: 'E.',
+        last_name: 'Coe'
+      })
+    end
+
+    it "should allow the abstract to be changed" do
+      post :update, { id: article.id, abstract: "my wacky research" }
+      article.reload
+      article.abstract.should == 'my wacky research'
     end
   end
 end

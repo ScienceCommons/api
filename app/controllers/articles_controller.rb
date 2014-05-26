@@ -41,10 +41,47 @@ class ArticlesController < ApplicationController
       article.save!
     end
 
+    # force index to update, so that we
+    # can immediately query the update.
     ElasticMapper.index.refresh
+
     render json: article
   rescue ActiveRecord::RecordInvalid => ex
     render json: {error: ex.to_s, messages: ex.record.errors.instance_variable_get(:@messages) }, status: 500
+  rescue StandardError => ex
+    render json: {error: ex.to_s}, status: 500
+  end
+
+  def update
+    article = Article.find(params[:id].to_i)
+    article.abstract = params[:abstract] if params[:abstract]
+    article.title = params[:title] if params[:title]
+    article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
+
+    if params[:authors]
+      # reset to empty authors array,
+      # we expect the UI will always send
+      # a list of all the authors in.
+      article.authors_denormalized = []
+
+      params[:authors].each do |author|
+        article.add_author(
+          author['first_name'],
+          author['middle_name'],
+          author['last_name']
+        )
+      end
+    end
+
+    article.save!
+
+    # force index to update, so that we
+    # can immediately query the update.
+    ElasticMapper.index.refresh
+
+    render json: article
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end
