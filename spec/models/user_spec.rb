@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe User do
 
+  before(:all) { WebMock.disable! }
+  after(:all) { WebMock.disable! }
+
   let(:user) do
     User.create!({
       :email => "ben@example.com",
@@ -45,6 +48,16 @@ describe User do
 
     it "allows all replications created by a user to be looked up" do
       user.replications.count.should == 2
+    end
+  end
+
+  describe "articles" do
+    let!(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
+    let!(:article_2) { Article.create(doi: '123apple', title: 'awesome man', owner_id: user.id) }
+    let!(:article_3) { Article.create(doi: '123apple', title: 'awesome man', owner_id: user_2.id) }
+
+    it "allows all articles created by a user to be looked up" do
+      user.articles.count.should == 2
     end
   end
 end

@@ -35,6 +35,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'timecop'
   gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
@@ -69,5 +70,5 @@ gem 'stretcher'
 gem 'will_paginate', '~> 3.0'
 gem 'faraday'
 gem 'nokogiri'
-gem 'elastic_mapper', '~> 0.1.0'
+gem 'elastic_mapper', '~> 0.2.1'
 gem 'devise'
