@@ -69,7 +69,7 @@ PaperSearchApi::Application.routes.draw do
   #     resources :products
   #   end
 
-  resources :articles, :only => [:index, :show] do
+  resources :articles do
     resources :studies do
       resources :replications
       resources :replication_of

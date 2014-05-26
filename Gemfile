@@ -35,6 +35,7 @@ end
 
 group :test do
   gem 'webmock'
+  gem 'timecop'
   gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
