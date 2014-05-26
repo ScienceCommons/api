@@ -40,18 +40,36 @@ describe ReplicationOfController do
   end
 
   describe('#index') do
-    it("returns a list of all replications for a study") do
+    it("returns a list of the studies that a study is a replication of") do
+      get :index, { article_id: article.id, study_id: replicating_study_1.id }
+      response.status.should == 200
+      result = JSON.parse(response.body)
+      result.first.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
     it("raises a 404 if ids are missing") do
+      get :index, { article_id: -1, study_id: study.id }
+      response.status.should == 404
+      get :index, { article_id: article.id, study_id: -1 }
+      response.status.should == 404
     end
   end
 
   describe('#show') do
     it("should return a single replication_of") do
+      get :show, { article_id: article.id, study_id: replicating_study_1.id, id: replication_1.id }
+      response.status.should == 200
+      result = JSON.parse(response.body)
+      result.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
     it("returns a 404 if a required id is not found") do
+      get :show, { article_id: -1, study_id: study.id, id: replication_1.id }
+      response.status.should == 404
+      get :show, { article_id: article.id, study_id: -1, id: replication_1.id }
+      response.status.should == 404
+      get :show, { article_id: article.id, study_id: study.id, id: -1}
+      response.status.should == 404
     end
   end
 
