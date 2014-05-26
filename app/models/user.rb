@@ -4,4 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :replications, :class_name => 'Replication', :foreign_key => :owner_id
+  has_many :articles, :class_name => 'Article', :foreign_key => :owner_id
 end
