@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520051521) do
+ActiveRecord::Schema.define(version: 20140526011926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,8 +84,10 @@ ActiveRecord::Schema.define(version: 20140520051521) do
     t.integer  "closeness"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
+  add_index "replications", ["owner_id"], name: "index_replications_on_owner_id", using: :btree
   add_index "replications", ["replicating_study_id"], name: "index_replications_on_replicating_study_id", using: :btree
   add_index "replications", ["study_id"], name: "index_replications_on_study_id", using: :btree
 

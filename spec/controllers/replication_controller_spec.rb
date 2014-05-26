@@ -6,7 +6,25 @@ describe ReplicationsController do
   # problems for WebMock.
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.enable! }
+  before(:each) do
+    controller.stub(:current_user).
+      and_return(user)
+  end
 
+  let(:user) do
+    User.create!({
+      :email => "ben@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
+  let(:user_2) do
+    User.create!({
+      :email => "christian@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
   let(:article) do
     Article.create(
       title: 'Z Article',
@@ -28,14 +46,16 @@ describe ReplicationsController do
     replication = Replication.create(
       study_id: study.id,
       replicating_study_id: replicating_study_1.id,
-      closeness: 2
+      closeness: 2,
+      owner_id: user.id
     )
   end
   let!(:replication_2) do
     replication = Replication.create(
       study_id: study.id,
       replicating_study_id: replicating_study_2.id,
-      closeness: 2
+      closeness: 2,
+      owner_id: user_2.id
     )
   end
 
@@ -94,6 +114,17 @@ describe ReplicationsController do
       study.replications.count.should == 3
     end
 
+    it("creates a replication that is associated with the current logged in user") do
+      post :create, {
+        article_id: article.id,
+        study_id: study.id,
+        replicating_study_id: replicating_study_2.id,
+        closeness: 3
+      }
+      owner = Replication.find(JSON.parse(response.body)['id']).owner
+      owner.should == user
+    end
+
     it("raises a 404 if ids are missing") do
       post :create, { article_id: -1, study_id: study.id, replicating_study_id: replication_1.id }
       response.status.should == 404
@@ -127,6 +158,29 @@ describe ReplicationsController do
       response.status.should == 404
     end
 
+  end
+
+  describe("#delete") do
+
+    it("does not allow a replication to be deleted by someone other than the owner") do
+      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_2.id }
+      response.status.should == 401
+      Replication.all.count.should == 2
+    end
+
+    it("allows the owner of a replication to delete it") do
+      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_1.id }
+      response.status.should == 200
+      Replication.all.count.should == 1
+      Replication.first.should == replication_2
+    end
+
+    it("allows a replication to be deleted if it has no owner") do
+      replication_2.update(owner_id: nil)
+      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_2.id }
+      response.status.should == 200
+      Replication.all.count.should == 1
+    end
   end
 
 end

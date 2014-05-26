@@ -8,6 +8,13 @@ describe Replication do
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.enable! }
 
+  let!(:owner) do
+    User.create!({
+      :email => "ben@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
   let(:article) do
     Article.create(
       title: 'Z Article',
@@ -54,6 +61,17 @@ describe Replication do
       field, error = replication.errors.first
       field.should == :replicating_study_id
       error.should == "can't be blank"
+    end
+
+    it "allows an owner to be specified when creating a replication" do
+      replication = Replication.create(
+        replicating_study_id: replicating_study.id,
+        study_id: study.id,
+        closeness: 2,
+        owner_id: owner.id
+      )
+      replication.reload
+      replication.owner.should == owner
     end
   end
 
