@@ -78,4 +78,22 @@ class StudiesController < ApplicationController
   end
   private :update_serialized_keys
 
+  def destroy
+    raise 'article_id must be provided' if params[:article_id].nil?
+
+    id = params[:id].to_i
+    article_id = params[:article_id].to_i
+    study = Article.find(article_id).studies.find(id)
+
+    render(json: {error: 'you can only delete studies that you create'}, status: 401) and return unless (current_user == study.owner) or study.owner.nil?
+
+    study.destroy!
+
+    render json: study.as_json(findings: true)
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    p ex
+    render json: {error: ex.to_s}, status: 500
+  end
 end

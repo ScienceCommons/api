@@ -5,6 +5,7 @@ class Study < ActiveRecord::Base
   has_many :findings
   has_many :replications
   has_many :replication_of, :class_name => 'Replication', :foreign_key => :replicating_study_id
+  belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :article
 
   validates_presence_of :article_id
