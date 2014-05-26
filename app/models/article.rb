@@ -3,6 +3,7 @@ class Article < ActiveRecord::Base
   include ElasticMapper
 
   has_many :studies
+  belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
 
   validates_uniqueness_of :doi
   validates_presence_of :doi, :title
@@ -14,6 +15,7 @@ class Article < ActiveRecord::Base
   mapping :publication_date, :type => :date
 
   after_save :index
+  after_destroy :delete_from_index
   before_create do
     self.authors_denormalized = []
   end

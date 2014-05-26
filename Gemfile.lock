@@ -66,7 +66,8 @@ GEM
     dotenv (0.9.0)
     dotenv-rails (0.9.0)
       dotenv (= 0.9.0)
-    elastic_mapper (0.1.0)
+    elastic_mapper (0.2.1)
+      faraday (~> 0.8.9)
       stretcher
     erubis (2.7.0)
     excon (0.31.0)
@@ -251,7 +252,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
   dotenv-rails
-  elastic_mapper (~> 0.1.0)
+  elastic_mapper (~> 0.2.1)
   faraday
   jbuilder (~> 1.2)
   jquery-rails

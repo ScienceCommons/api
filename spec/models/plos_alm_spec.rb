@@ -5,6 +5,7 @@ describe PlosAlm do
   before(:each) do
     Resque.stub(:enqueue)
     Article.any_instance.stub(:index)
+    Article.any_instance.stub(:delete_from_index)
   end
 
   describe "load_meta" do

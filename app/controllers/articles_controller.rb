@@ -26,7 +26,8 @@ class ArticlesController < ApplicationController
       doi: params[:doi],
       title: params[:title],
       publication_date: params[:publication_date] ? Date.parse(params[:publication_date]) : Time.now,
-      abstract: params[:abstract]
+      abstract: params[:abstract],
+      owner_id: current_user ? current_user.id : nil
     })
 
     # add the author list, and resave.
@@ -54,6 +55,10 @@ class ArticlesController < ApplicationController
 
   def update
     article = Article.find(params[:id].to_i)
+
+    # you can only edit articles you have created.
+    render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner
+
     article.abstract = params[:abstract] if params[:abstract]
     article.title = params[:title] if params[:title]
     article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
@@ -74,6 +79,25 @@ class ArticlesController < ApplicationController
     end
 
     article.save!
+
+    # force index to update, so that we
+    # can immediately query the update.
+    ElasticMapper.index.refresh
+
+    render json: article
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    render json: {error: ex.to_s}, status: 500
+  end
+
+  def destroy
+    article = Article.find(params[:id].to_i)
+
+    # you can only edit articles you have created.
+    render(json: {error: 'you can only delete articles that you create'}, status: 401) and return unless current_user == article.owner
+
+    article.destroy!
 
     # force index to update, so that we
     # can immediately query the update.

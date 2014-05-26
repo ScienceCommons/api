@@ -1,8 +1,23 @@
 require 'spec_helper'
 
 describe ArticlesController do
-  let(:article) { Article.create(doi: '123banana', title: 'hello world') }
-  let(:article2) { Article.create(doi: '123apple', title: 'awesome article') }
+
+  let(:user) do
+    User.create!({
+      :email => "ben@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
+  let(:user_2) do
+    User.create!({
+      :email => "christian@example.com",
+      :password => "11111111",
+      :password_confirmation => "11111111"
+    })
+  end
+  let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
+  let(:article_2) { Article.create(doi: '123apple', title: 'awesome article', owner_id: user_2.id) }
   before(:all) do
     WebMock.disable!
     Timecop.freeze(Time.local(1990))
@@ -12,10 +27,16 @@ describe ArticlesController do
     Timecop.return
   end
   before(:each) do
+    # reset ES index, and make sure
+    # testing articles are indexed.
     reset_index
     Article.put_mapping
-    [article, article2]
+    [article, article_2]
     ElasticMapper.index.refresh
+
+    # fake :user being logged in
+    controller.stub(:current_user).
+      and_return(user)
   end
 
   describe "#index" do
@@ -104,6 +125,12 @@ describe ArticlesController do
         last_name: 'Battista'
       })
     end
+
+    it "should set the owner when creating an article" do
+      post :create, { title: 'my awesome title', doi: 'abc555' }
+      article = Article.find_by_doi('abc555')
+      article.owner.should == user
+    end
   end
 
   describe '#update' do
@@ -145,6 +172,40 @@ describe ArticlesController do
       post :update, { id: article.id, abstract: "my wacky research" }
       article.reload
       article.abstract.should == 'my wacky research'
+    end
+
+    it "should raise a 401 if user tries to update article they did not create" do
+      post :update, { id: article_2.id, abstract: "my wacky research" }
+      response.status.should == 401
+      article_2.reload
+      article_2.title.should == 'awesome article'
+    end
+  end
+
+  describe "#destroy" do
+    it "allows an article created by current_user to be destroyed" do
+      delete :destroy, { id: article.id }
+      response.status.should == 200
+
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 1
+      results['total'].should == 1
+    end
+
+    it "does not allow current_user to destroy another user's article" do
+      delete :destroy, { id: article_2.id }
+      response.status.should == 401
+
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 2
+      results['total'].should == 2
+    end
+
+    it "returns a 404 if article is not found" do
+      delete :destroy, { id: -1 }
+      response.status.should == 404
     end
   end
 end
