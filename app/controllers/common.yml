@@ -1,3 +1,0 @@
-# how many minutes should we wait
-# before deleting prior checkouts of a codebase.
-npm_cleanup_minutes: 2880

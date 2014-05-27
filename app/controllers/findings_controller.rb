@@ -20,7 +20,7 @@ class FindingsController < ApplicationController
   end
 
   def show
-    [:article_id, :study_id].each do |k|
+    [:article_id, :study_id, :id].each do |k|
       raise "#{k} must be provided" if params[k].nil?
     end
 
@@ -47,12 +47,12 @@ class FindingsController < ApplicationController
 
     finding_hash = params.select { |key,_| [:url, :name].include? key.to_sym }
 
-    article = Article
+    finding = Article
       .find(article_id).studies
       .find(study_id).findings
       .create!(finding_hash)
 
-    render json: article
+    render json: finding
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end
@@ -67,13 +67,35 @@ class FindingsController < ApplicationController
 
     finding_hash = params.select { |key,_| [:url, :name].include? key.to_sym }
 
-    article = Article
+    finding = Article
       .find(article_id).studies
       .find(study_id).findings
       .find(params[:id])
       .update!(finding_hash)
 
-    render json: article
+    render json: finding
+  rescue StandardError => ex
+    render json: {error: ex.to_s}, status: 500
+  end
+
+  def destroy
+    [:article_id, :study_id, :id].each do |k|
+      raise "#{k} must be provided" if params[k].nil?
+    end
+
+    article_id = params[:article_id].to_i
+    study_id = params[:study_id].to_i
+    finding = Article.find(article_id).studies
+      .find(study_id).findings
+      .find(params[:id])
+
+    render(json: {error: 'you can only delete findings that you create'}, status: 401) and return unless current_user == finding.owner or finding.owner.nil?
+
+    finding.destroy!
+
+    render json: finding
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end

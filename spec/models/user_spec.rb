@@ -70,4 +70,15 @@ describe User do
       user.studies.count.should == 2
     end
   end
+
+  describe "findings" do
+    let!(:s1) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
+    let!(:f1) { s1.findings.create(url: 'www.example.com', name: 'finding.txt', owner_id: user.id) }
+    let!(:f2) { s1.findings.create(url: 'www.example2.com', name: 'finding2.txt', owner_id: user.id) }
+    let!(:f3) { s1.findings.create(url: 'www.example3.com', name: 'finding3.txt', owner_id: user_2.id) }
+
+    it "allows all findings created by a user to be looked up" do
+      user.findings.count.should == 2
+    end
+  end
 end
