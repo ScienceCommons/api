@@ -19,6 +19,7 @@ PaperSearchApi::Application.routes.draw do
   get '/tversky_kahneman.html' => 'alpha#tversky_kahneman'
   get '/husnu_crisp.html' => 'alpha#husnu_crisp'
   get '/lebel_wilbur.html' => 'alpha#lebel_wilbur'
+  get '/schnalletal.html' => 'alpha#schnalletal'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
