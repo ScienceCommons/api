@@ -39,4 +39,8 @@ class AlphaController < ApplicationController
     render layout: false
   end
 
+  def schnalletal
+    render layout: false
+  end
+
 end
