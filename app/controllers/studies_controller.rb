@@ -13,11 +13,19 @@ class StudiesController < ApplicationController
   end
 
   def show
-    raise 'article_id must be provided' if params[:article_id].nil?
-    id = params[:id].to_i
-    article_id = params[:article_id].to_i
-    render json: Article.find(article_id).studies.find(id)
-      .as_json(findings: true)
+    id = params[:id] ? params[:id].to_i : -1
+
+    # allow a study to be looked up by either /article/id/study/id
+    # or /study/id.
+    if params[:article_id]
+      article_id = params[:article_id] ? params[:article_id].to_i : -1
+
+      render json: Article.find(article_id).studies.find(id)
+        .as_json(findings: true)
+    else
+      render json: Study.find(id)
+        .as_json(findings: true)
+    end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
