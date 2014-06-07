@@ -75,6 +75,12 @@ describe StudiesController do
       JSON.parse(response.body)['id'].should == s2.id
     end
 
+    it "should return a specific study, given only a study_id" do
+      get :show, id: s2.id
+      response.status.should == 200
+      JSON.parse(response.body)['id'].should == s2.id
+    end
+
     it "should return created_at as an integer epoch" do
       get :show, article_id: article.id, id: s2.id
       study = JSON.parse(response.body)
