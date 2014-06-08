@@ -186,6 +186,19 @@ describe StudiesController do
       s2.power.should == 0.1
     end
 
+    it "should update simple keys on study even without article id" do
+      post :update, {
+        id: s2.id,
+        n: 35,
+        power: 99
+      }
+
+      response.status.should == 200
+      s2.reload
+      s2.n.should == 35
+      s2.power.should == 99
+    end
+
     it "should raise a 500 if effect size is not valid" do
       post :update, {
         article_id: article.id,

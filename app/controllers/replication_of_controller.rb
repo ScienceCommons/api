@@ -11,8 +11,7 @@ class ReplicationOfController < ApplicationController
     study_id = params[:study_id] ? params[:study_id].to_i : -1
     article_id = params[:article_id] ? params[:article_id].to_i : -1
 
-    if params[:article_id] 
-      article_id = params[:article_id].to_i
+    if article_id != -1
 
       render json: Article.find(article_id)
         .studies.find(study_id)
@@ -37,10 +36,8 @@ class ReplicationOfController < ApplicationController
     article_id = params[:article_id] ? params[:article_id].to_i : -1
     id = params[:id] ? params[:id].to_i : -1
 
-    if params[:article_id]
-
-      article_id = params[:article_id].to_i
-      
+    if article_id != -1
+          
       render json: Article.find(article_id)
         .studies.find(study_id)
         .replication_of.find(id)

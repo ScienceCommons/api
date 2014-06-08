@@ -84,6 +84,13 @@ describe FindingsController do
       JSON.parse(response.body).should == JSON.parse(f1.to_json)
     end
 
+    it "should return a specific finding with only a study id" do
+      get :show, study_id: s1.id, id: f1.id
+      response.status.should == 200
+      JSON.parse(response.body).should == JSON.parse(f1.to_json)
+    end
+
+
     it "should return created_at as an integer epoch" do
       get :show, article_id: article.id, study_id: s1.id, id: f1.id
       finding = JSON.parse(response.body)
@@ -147,6 +154,19 @@ describe FindingsController do
     it "should allow name and url to be updated" do
       post :update, {
         article_id: article.id,
+        study_id: s1.id,
+        id: f1.id,
+        url: 'http://zombocom.com',
+        name: 'awesome.txt'
+      }
+      response.status.should == 200
+      f1.reload
+      f1.url.should == 'http://zombocom.com'
+      f1.name.should == 'awesome.txt'
+    end
+
+    it "should allow name and url to be updated with just a study_id" do
+      post :update, {
         study_id: s1.id,
         id: f1.id,
         url: 'http://zombocom.com',

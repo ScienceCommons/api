@@ -10,9 +10,7 @@ class FindingsController < ApplicationController
     study_id = params[:study_id] ? params[:study_id].to_i : -1
     article_id = params[:article_id] ? params[:article_id].to_i : -1
 
-    if params[:article_id]
-      article_id = params[:article_id].to_i
-
+    if article_id != -1
       render json: Article
         .find(article_id).studies
         .find(study_id).findings
@@ -28,17 +26,25 @@ class FindingsController < ApplicationController
   end
 
   def show
-    [:article_id, :study_id, :id].each do |k|
+    [:study_id, :id].each do |k|
       raise "#{k} must be provided" if params[k].nil?
     end
 
-    article_id = params[:article_id].to_i
-    study_id = params[:study_id].to_i
+    study_id = params[:study_id] ? params[:study_id].to_i : -1
+    article_id = params[:article_id] ? params[:article_id].to_i : -1
 
-    render json: Article
-      .find(article_id).studies
-      .find(study_id).findings
-      .find(params[:id])
+    if article_id != -1
+      render json: Article
+        .find(article_id).studies
+        .find(study_id).findings
+        .find(params[:id])
+      else
+        render json: Study
+          .find(study_id).findings
+          .find(params[:id])
+      end
+
+
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -66,20 +72,28 @@ class FindingsController < ApplicationController
   end
 
   def update
-    [:article_id, :study_id].each do |k|
+    [:study_id].each do |k|
       raise "#{k} must be provided" if params[k].nil?
     end
 
-    article_id = params[:article_id].to_i
-    study_id = params[:study_id].to_i
+    article_id = params[:article_id] ? params[:article_id].to_i : -1
+    study_id = params[:study_id] ? params[:study_id].to_i : -1
 
     finding_hash = params.select { |key,_| [:url, :name].include? key.to_sym }
 
-    finding = Article
-      .find(article_id).studies
-      .find(study_id).findings
-      .find(params[:id])
-      .update!(finding_hash)
+    if article_id != -1
+      finding = Article
+        .find(article_id).studies
+        .find(study_id).findings
+        .find(params[:id])
+        .update!(finding_hash)
+      else
+        finding = Study
+          .find(study_id).findings
+          .find(params[:id])
+          .update!(finding_hash)
+
+      end
 
     render json: finding
   rescue StandardError => ex
