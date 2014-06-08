@@ -46,6 +46,15 @@ describe FindingsController do
       findings.should include(JSON.parse(f2.to_json))
     end
 
+    it "should return all findings given a study id" do
+      get :index, study_id: s1.id
+      response.status.should == 200
+      findings = JSON.parse(response.body)
+      findings.count.should == 3
+      findings.should include(JSON.parse(f1.to_json))
+      findings.should include(JSON.parse(f2.to_json))
+    end
+
     it "should return an empty array if no findings exist" do
       get :index, article_id: article_no_findings.id, study_id: s2.id
       response.status.should == 200
@@ -60,11 +69,6 @@ describe FindingsController do
 
       get :index, article_id: article.id, study_id: 'banana'
       response.status.should == 404
-    end
-
-    it "should raise a 500 if no article_id is provided" do
-      get :index
-      response.status.should == 500
     end
 
     it "should raise a 500 if no study_id is provided" do
