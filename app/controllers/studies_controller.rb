@@ -14,11 +14,11 @@ class StudiesController < ApplicationController
 
   def show
     id = params[:id] ? params[:id].to_i : -1
+    article_id = params[:article_id] ? params[:article_id].to_i : -1
 
     # allow a study to be looked up by either /article/id/study/id
     # or /study/id.
-    if params[:article_id]
-      article_id = params[:article_id] ? params[:article_id].to_i : -1
+    if article_id != -1
 
       render json: Article.find(article_id).studies.find(id)
         .as_json(findings: true)
@@ -48,13 +48,17 @@ class StudiesController < ApplicationController
   end
 
   def update
-    raise 'article_id must be provided' if params[:article_id].nil?
-    id = params[:id].to_i
-    article_id = params[:article_id].to_i
-    study = Article.find(article_id).studies.find(id)
+    article_id = params[:article_id] ? params[:article_id].to_i : - 1
+    id = params[:id] ? params[:id].to_i : -1
+
+    if article_id != -1
+      study = Article.find(article_id).studies.find(id)
+    else
+      study = Study.find(id)
+    end
 
     # don't use the update method, since we
-    # update effecgt_size and variables as well.
+    # update effect_size and variables as well.
     study.n = params[:n] if params[:n]
     study.power = params[:power] if params[:power]
     update_serialized_keys(study)

@@ -77,18 +77,25 @@ class ReplicationsController < ApplicationController
   end
 
   def update
-    [:article_id, :study_id, :id].each do |k|
+    [:study_id, :id].each do |k|
       raise "#{k} must be provided" if params[k].nil?
     end
 
-    article_id = params[:article_id].to_i
-    study_id = params[:study_id].to_i
-    id = params[:id].to_i
+    article_id = params[:article_id] ? params[:article_id].to_i : -1
+    study_id = params[:study_id] ? params[:study_id].to_i : -1
+    id = params[:id] ? params[:id].to_i : -1
+
     closeness = params[:closeness].to_i
 
-    replication = Article.find(article_id)
-      .studies.find(study_id)
-      .replications.find(id)
+    if article_id != -1
+      replication = Article.find(article_id)
+        .studies.find(study_id)
+        .replications.find(id)
+    else
+      replication = Study.find(study_id)
+        .replications.find(id)
+    end
+
 
     replication.update!({
       closeness: closeness

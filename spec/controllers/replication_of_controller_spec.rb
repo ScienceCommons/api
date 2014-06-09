@@ -47,9 +47,15 @@ describe ReplicationOfController do
       result.first.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
+    it("returns a list of studies that the study is a replication of given only a study id") do
+      get :index, { study_id: replicating_study_1.id}
+      response.status.should == 200
+      result = JSON.parse(response.body)
+      result.first.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
+    end
+
+
     it("raises a 404 if ids are missing") do
-      get :index, { article_id: -1, study_id: study.id }
-      response.status.should == 404
       get :index, { article_id: article.id, study_id: -1 }
       response.status.should == 404
     end
@@ -63,9 +69,15 @@ describe ReplicationOfController do
       result.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
+    it("should return a single replication_of with just a study and rep id") do
+      get :show, { study_id: replicating_study_1.id, id: replication_1.id }
+      response.status.should == 200
+      result = JSON.parse(response.body)
+      result.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
+    end
+
+
     it("returns a 404 if a required id is not found") do
-      get :show, { article_id: -1, study_id: study.id, id: replication_1.id }
-      response.status.should == 404
       get :show, { article_id: article.id, study_id: -1, id: replication_1.id }
       response.status.should == 404
       get :show, { article_id: article.id, study_id: study.id, id: -1}

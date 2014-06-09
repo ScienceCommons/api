@@ -46,6 +46,15 @@ describe FindingsController do
       findings.should include(JSON.parse(f2.to_json))
     end
 
+    it "should return all findings given a study id" do
+      get :index, study_id: s1.id
+      response.status.should == 200
+      findings = JSON.parse(response.body)
+      findings.count.should == 3
+      findings.should include(JSON.parse(f1.to_json))
+      findings.should include(JSON.parse(f2.to_json))
+    end
+
     it "should return an empty array if no findings exist" do
       get :index, article_id: article_no_findings.id, study_id: s2.id
       response.status.should == 200
@@ -62,11 +71,6 @@ describe FindingsController do
       response.status.should == 404
     end
 
-    it "should raise a 500 if no article_id is provided" do
-      get :index
-      response.status.should == 500
-    end
-
     it "should raise a 500 if no study_id is provided" do
       get :index, article_id: article.id
       response.status.should == 500
@@ -79,6 +83,13 @@ describe FindingsController do
       response.status.should == 200
       JSON.parse(response.body).should == JSON.parse(f1.to_json)
     end
+
+    it "should return a specific finding with only a study id" do
+      get :show, study_id: s1.id, id: f1.id
+      response.status.should == 200
+      JSON.parse(response.body).should == JSON.parse(f1.to_json)
+    end
+
 
     it "should return created_at as an integer epoch" do
       get :show, article_id: article.id, study_id: s1.id, id: f1.id
@@ -143,6 +154,19 @@ describe FindingsController do
     it "should allow name and url to be updated" do
       post :update, {
         article_id: article.id,
+        study_id: s1.id,
+        id: f1.id,
+        url: 'http://zombocom.com',
+        name: 'awesome.txt'
+      }
+      response.status.should == 200
+      f1.reload
+      f1.url.should == 'http://zombocom.com'
+      f1.name.should == 'awesome.txt'
+    end
+
+    it "should allow name and url to be updated with just a study_id" do
+      post :update, {
         study_id: s1.id,
         id: f1.id,
         url: 'http://zombocom.com',

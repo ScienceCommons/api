@@ -159,9 +159,19 @@ describe ReplicationsController do
       replication_2.closeness.should == 7
     end
 
+    it "allows the closeness of a replication to be updated w/o article id" do
+      post :update, {
+        study_id: study.id,
+        id: replication_2.id,
+        closeness: 8
+      }
+
+      response.status.should == 200
+      replication_2.reload
+      replication_2.closeness.should == 8
+    end
+
     it "raises a 404 if ids are missing" do
-      post :update, { article_id: -1, study_id: study.id, id: replication_1.id }
-      response.status.should == 404
       post :update, { article_id: article.id, study_id: -1, id: replication_1.id }
       response.status.should == 404
       post :update, { article_id: article.id, study_id: study.id, id: -1 }
