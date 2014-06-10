@@ -16,8 +16,14 @@ describe ArticlesController do
       :password_confirmation => "11111111"
     })
   end
-  let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
-  let(:article_2) { Article.create(doi: '123apple', title: 'awesome article', owner_id: user_2.id) }
+
+  let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05') }
+  let(:article_2) { Article.create(doi: '123apple', title: 'awesome article', owner_id: user_2.id, updated_at: '2007-03-05') }
+  let(:article_3) { Article.create(doi: '123mango', title: 'article 3', owner_id: user.id, updated_at: '2008-03-05') }
+  let(:article_4) { Article.create(doi: '123pear', title: 'article 4', owner_id: user_2.id, updated_at: '2010-03-05') }
+  let(:article_5) { Article.create(doi: '123guava', title: 'article 5', owner_id: user.id, updated_at: '2010-04-05') }
+  let(:article_6) { Article.create(doi: '123peach', title: 'article 6', owner_id: user_2.id, updated_at: '2010-04-06') }
+
   before(:all) do
     WebMock.disable!
     Timecop.freeze(Time.local(1990))
@@ -31,7 +37,7 @@ describe ArticlesController do
     # testing articles are indexed.
     reset_index
     Article.put_mapping
-    [article, article_2]
+    [article, article_2, article_3, article_4, article_5, article_6]
     ElasticMapper.index.refresh
 
     # fake :user being logged in
@@ -43,8 +49,8 @@ describe ArticlesController do
     it "should return the list of articles" do
       get :index
       results = JSON.parse(response.body)
-      results['documents'].count.should == 2
-      results['total'].should == 2
+      results['documents'].count.should == 6
+      results['total'].should == 6
     end
   end
 
@@ -58,6 +64,19 @@ describe ArticlesController do
       get :show, id: -1
       response.status.should == 404
     end
+  end
+
+  describe "#recent" do
+    it "should return the three most recent articles" do
+      get :recent
+      results = JSON.parse(response.body)
+      results.length.should == 3
+      results[2]['doi'].should == '123pear'
+      results[1]['doi'].should == '123guava'
+      results[0]['doi'].should == '123peach'
+
+    end
+
   end
 
   describe "#create" do
@@ -86,8 +105,9 @@ describe ArticlesController do
       # and be able to grab it.
       get :index
       results = JSON.parse(response.body)
-      results['documents'].count.should == 3
-      results['total'].should == 3
+
+      results['documents'].count.should == 7
+      results['total'].should == 7
     end
 
     it "should allow publication_date to be set when creating an article" do
@@ -189,8 +209,8 @@ describe ArticlesController do
 
       get :index
       results = JSON.parse(response.body)
-      results['documents'].count.should == 1
-      results['total'].should == 1
+      results['documents'].count.should == 5
+      results['total'].should == 5
     end
 
     it "does not allow current_user to destroy another user's article" do
@@ -199,8 +219,8 @@ describe ArticlesController do
 
       get :index
       results = JSON.parse(response.body)
-      results['documents'].count.should == 2
-      results['total'].should == 2
+      results['documents'].count.should == 6
+      results['total'].should == 6
     end
 
     it "returns a 404 if article is not found" do
