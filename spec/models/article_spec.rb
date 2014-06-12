@@ -185,4 +185,29 @@ describe Article do
     end
   end
 
+  describe "comments" do
+    let(:article) do
+      Article.create(
+        title: 'Z Article',
+        doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
+        publication_date: Time.now - 3.days,
+        abstract: 'hello world'
+      )
+    end
+
+    it "allows you to add a comment to an article" do
+      article.add_comment(0, "hello world!")
+      article.reload
+      article.comments.first.comment.should == 'hello world!'
+    end
+
+    it "should update comment_count when comments are created" do
+      article.add_comment(0, "hello world!")
+      article.reload
+      article.add_comment(0, "hello world!")
+      article.reload
+      article.comment_count.should == 2
+    end
+  end
+
 end

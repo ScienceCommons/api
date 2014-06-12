@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526225556) do
+ActiveRecord::Schema.define(version: 20140612034819) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "access_tokens", force: true do |t|
     t.integer  "client_id"
@@ -39,6 +42,7 @@ ActiveRecord::Schema.define(version: 20140526225556) do
     t.datetime "updated_at"
     t.text     "authors_denormalized"
     t.integer  "owner_id"
+    t.integer  "comment_count",        default: 0
   end
 
   add_index "articles", ["doi"], name: "index_articles_on_doi", unique: true, using: :btree
@@ -56,6 +60,23 @@ ActiveRecord::Schema.define(version: 20140526225556) do
 
   add_index "clients", ["identifier"], name: "index_clients_on_identifier", unique: true, using: :btree
   add_index "clients", ["name"], name: "index_clients_on_name", unique: true, using: :btree
+
+  create_table "comments", force: true do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.text     "comment"
+    t.string   "field"
+    t.integer  "owner_id"
+    t.integer  "comment_count",    default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
+  add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
+  add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
+  add_index "comments", ["field"], name: "index_comments_on_field", using: :btree
+  add_index "comments", ["owner_id"], name: "index_comments_on_owner_id", using: :btree
 
   create_table "findings", force: true do |t|
     t.text     "url"

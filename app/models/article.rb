@@ -1,8 +1,10 @@
 class Article < ActiveRecord::Base
 
   include ElasticMapper
+  include Commentable
 
   has_many :studies
+  has_many :comments, as: :commentable
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
 
   validates_uniqueness_of :doi
