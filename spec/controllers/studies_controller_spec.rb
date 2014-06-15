@@ -98,7 +98,7 @@ describe StudiesController do
     it "should allow a new blank study to be created" do
       post :create, {article_id: article.id}
 
-      response.status.should == 200
+      response.status.should == 201
       study = JSON.parse(response.body)
       article.reload
       article.studies.count.should == 4
@@ -113,7 +113,7 @@ describe StudiesController do
         power: 0.5
       }
 
-      response.status.should == 200
+      response.status.should == 201
       study = JSON.parse(response.body)
       study['n'].should == 22
       study['power'].should == 0.5
@@ -128,7 +128,7 @@ describe StudiesController do
         ]
       }
 
-      response.status.should == 200
+      response.status.should == 201
       study = JSON.parse(response.body)
       study['dependent_variables'].count == 2
       study['dependent_variables'].should include('self-actualization')
@@ -143,7 +143,7 @@ describe StudiesController do
         ]
       }
 
-      response.status.should == 200
+      response.status.should == 201
       study = JSON.parse(response.body)
       study['independent_variables'].count == 2
       study['independent_variables'].should include('inclusive-working-environment')
@@ -155,7 +155,7 @@ describe StudiesController do
         effect_size: {'r' => 0.3}
       }
 
-      response.status.should == 200
+      response.status.should == 201
       study = JSON.parse(response.body)
       study['effect_size']['r'].should == 0.3
     end
@@ -245,7 +245,7 @@ describe StudiesController do
         article_id: article.id,
         id: s1.id
       }
-      response.status.should == 200
+      response.status.should == 204
       Study.all.count.should == 2
     end
 
@@ -254,7 +254,7 @@ describe StudiesController do
         article_id: article.id,
         id: s3.id
       }
-      response.status.should == 200
+      response.status.should == 204
       Study.all.count.should == 2
     end
 

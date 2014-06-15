@@ -42,7 +42,7 @@ class StudiesController < ApplicationController
     update_serialized_keys(study)
 
     study.save! if study.changed?
-    render json: study
+    render json: study, status: 201
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end
@@ -101,11 +101,10 @@ class StudiesController < ApplicationController
 
     study.destroy!
 
-    render json: study.as_json(findings: true)
+    render json: {success: true, data: study.as_json(findings: true)}, status: 204
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    p ex
     render json: {error: ex.to_s}, status: 500
   end
 end

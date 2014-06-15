@@ -185,7 +185,7 @@ describe ArticlesController do
   describe "#destroy" do
     it "allows an article created by current_user to be destroyed" do
       delete :destroy, { id: article.id }
-      response.status.should == 200
+      response.status.should == 204
 
       get :index
       results = JSON.parse(response.body)

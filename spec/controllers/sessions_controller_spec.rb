@@ -24,7 +24,7 @@ describe SessionsController do
         }
       }
 
-      response.status.should == 200
+      response.status.should == 201
     end
 
     it "should return 401 if password is incorrect" do
