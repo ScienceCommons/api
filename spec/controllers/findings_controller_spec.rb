@@ -113,7 +113,7 @@ describe FindingsController do
         name: 'awesome.txt'
       }
 
-      response.status.should == 200
+      response.status.should == 201
       finding = JSON.parse(response.body)
       s1.reload
       s1.findings.count.should == 4

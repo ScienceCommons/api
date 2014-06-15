@@ -12,7 +12,7 @@ describe "JSON API Behavior" do
   describe "create" do
     it "should allow a new blank study to be created" do
       post "/articles/#{article.id}/studies", {article_id: article.id}.to_json, {'ACCEPT' => "application/json", "CONTENT_TYPE" => "application/json"}
-      response.status.should == 200
+      response.status.should == 201
       article.reload
       article.studies.count.should == 3
     end

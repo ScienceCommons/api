@@ -119,7 +119,7 @@ describe ReplicationsController do
         closeness: 3
       }
 
-      response.status.should == 200
+      response.status.should == 201
       JSON.parse(response.body)['closeness'].should == 3
       study.replications.count.should == 3
     end
@@ -190,7 +190,7 @@ describe ReplicationsController do
 
     it("allows the owner of a replication to delete it") do
       delete :destroy, { article_id: article.id, study_id: study.id, id: replication_1.id }
-      response.status.should == 200
+      response.status.should == 204
       Replication.all.count.should == 1
       Replication.first.should == replication_2
     end
@@ -198,7 +198,7 @@ describe ReplicationsController do
     it("allows a replication to be deleted if it has no owner") do
       replication_2.update(owner_id: nil)
       delete :destroy, { article_id: article.id, study_id: study.id, id: replication_2.id }
-      response.status.should == 200
+      response.status.should == 204
       Replication.all.count.should == 1
     end
   end

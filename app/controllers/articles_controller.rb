@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
     # can immediately query the update.
     ElasticMapper.index.refresh
 
-    render json: article
+    render json: article, status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render json: {error: ex.to_s, messages: ex.record.errors.instance_variable_get(:@messages) }, status: 500
   rescue StandardError => ex
@@ -103,7 +103,7 @@ class ArticlesController < ApplicationController
     # can immediately query the update.
     ElasticMapper.index.refresh
 
-    render json: article
+    render json: {success: true, data: article}, status: 204
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex

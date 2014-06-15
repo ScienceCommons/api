@@ -2,7 +2,7 @@
 class SessionsController < Devise::SessionsController
   def create
     if warden.authenticate(:scope => resource_name)
-      render :json => {success: true}
+      render :json => {success: true}, status: 201
     else
       render :json => {success: false}, status: 401
     end

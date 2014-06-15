@@ -15,7 +15,7 @@ class FindingsController < ApplicationController
         .find(article_id).studies
         .find(study_id).findings
     else
-      render json: Study 
+      render json: Study
         .find(study_id).findings
     end
 
@@ -66,7 +66,7 @@ class FindingsController < ApplicationController
       .find(study_id).findings
       .create!(finding_hash)
 
-    render json: finding
+    render json: finding, status: 201
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end
@@ -115,7 +115,7 @@ class FindingsController < ApplicationController
 
     finding.destroy!
 
-    render json: finding
+    render json: {success: true, data: finding}, status: 204
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex

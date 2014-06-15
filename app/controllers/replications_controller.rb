@@ -69,7 +69,7 @@ class ReplicationsController < ApplicationController
       closeness,
       current_user
     )
-    render json: replication.as_json(replications: true)
+    render json: replication.as_json(replications: true), status: 201
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -125,7 +125,7 @@ class ReplicationsController < ApplicationController
     # can be deleted by anyone.
     if not replication.owner or replication.owner == current_user
       replication.destroy!
-      render json: replication.as_json(replications: true), status: 200
+      render json: {success: true, data: replication.as_json(replications: true)}, status: 204
     else
       render json: {error: 'not allowed'}, status: 401
     end
