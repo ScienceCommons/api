@@ -71,7 +71,7 @@ PaperSearchApi::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :studies, :only => [:show] do
+  resources :studies, :only => [:show, :update] do
     resources :replications, :only => [:show, :index]
     resources :replication_of, :only => [:show, :index]
     resources :findings, :only => [:show, :index]
