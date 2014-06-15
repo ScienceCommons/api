@@ -1,4 +1,6 @@
 PaperSearchApi::Application.routes.draw do
+  match '*all', to: 'application#cors_preflight_check', via: [:options]
+
   devise_for :users, :controllers => { :sessions => "sessions" }
   devise_scope :user do
     resources :sessions, :only => [:create, :destroy]
