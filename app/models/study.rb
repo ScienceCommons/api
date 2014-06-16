@@ -3,6 +3,7 @@ class Study < ActiveRecord::Base
   VALID_EFFECT_SIZES = [:d, :eta, :r, :phi, :eta_sqr, :partial_eta_sqr]
 
   has_many :findings
+  has_many :materials
   has_many :replications
   has_many :replication_of, :class_name => 'Replication', :foreign_key => :replicating_study_id
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
@@ -62,6 +63,7 @@ class Study < ActiveRecord::Base
       # optionally serialize various amounts of
       # relational data.
       h[:findings] = self.findings if opts[:findings]
+      h[:materials] = self.materials if opts[:materials]
       h[:replications] = self.replications.as_json(opts) if opts[:replications]
       h[:replication_of] = self.replication_of.as_json(opts) if opts[:replication_of]
       h
