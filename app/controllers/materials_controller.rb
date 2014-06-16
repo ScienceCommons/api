@@ -1,4 +1,4 @@
-class FindingsController < BaseLinkController
+class MaterialsController < BaseLinkController
   #before_action :authenticate_user!
   #before_filter :authenticate!
 end

@@ -124,6 +124,14 @@ describe Study do
       study.as_json(findings: true)[:findings].count.should == 1
     end
 
+    it "should include materials" do
+      study.materials.create({
+        name: 'materials.txt',
+        url: 'https://www.example.com/'
+      })
+      study.as_json(materials: true)[:materials].count.should == 1
+    end
+
     it "should return repliating studies, if replications flag is set" do
       study.add_replication(replicating_study, 3)
       study_json = study.as_json(replications: true)

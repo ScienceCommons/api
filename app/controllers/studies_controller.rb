@@ -21,10 +21,16 @@ class StudiesController < ApplicationController
     if article_id != -1
 
       render json: Article.find(article_id).studies.find(id)
-        .as_json(findings: true)
+        .as_json(
+          findings: true,
+          materials: true
+        )
     else
       render json: Study.find(id)
-        .as_json(findings: true)
+        .as_json(
+          findings: true,
+          materials: true
+        )
     end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
@@ -101,7 +107,7 @@ class StudiesController < ApplicationController
 
     study.destroy!
 
-    render json: {success: true, data: study.as_json(findings: true)}, status: 204
+    render json: {success: true, data: study}, status: 204
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
