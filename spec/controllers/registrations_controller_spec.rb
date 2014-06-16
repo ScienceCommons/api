@@ -58,13 +58,13 @@ describe RegistrationsController do
   end
 
   describe "#show" do
-    it "should return a specific material" do
+    it "should return a specific registration" do
       get :show, article_id: article.id, study_id: s1.id, id: r1.id
       response.status.should == 200
       JSON.parse(response.body).should == JSON.parse(r1.to_json)
     end
 
-    it "should return a specific material with only a study id" do
+    it "should return a specific registration with only a study id" do
       get :show, study_id: s1.id, id: r1.id
       response.status.should == 200
       JSON.parse(response.body).should == JSON.parse(r1.to_json)
@@ -73,7 +73,7 @@ describe RegistrationsController do
 
   describe "#create" do
 
-    it "should allow a new material to be created" do
+    it "should allow a new registration to be created" do
       post :create, {
         article_id: article.id,
         study_id: s1.id,
@@ -82,11 +82,11 @@ describe RegistrationsController do
       }
 
       response.status.should == 201
-      material = JSON.parse(response.body)
+      registration = JSON.parse(response.body)
       s1.reload
       s1.registrations.count.should == 4
-      material['url'].should == 'http://www.zombocom.com'
-      material['name'].should == 'awesome.txt'
+      registration['url'].should == 'http://www.zombocom.com'
+      registration['name'].should == 'awesome.txt'
     end
 
     it "should raise a 500 if url is not provided" do
