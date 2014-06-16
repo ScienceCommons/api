@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140616020025) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "access_tokens", force: true do |t|
     t.integer  "client_id"
     t.integer  "refresh_token_id"

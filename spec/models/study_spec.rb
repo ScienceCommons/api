@@ -76,14 +76,14 @@ describe Study do
     end
 
     it "should set_effect_size, if statistical test is known" do
-      study.set_effect_size(:d, 0.3).save!
+      study.set_effect_size('d', 0.3).save!
       study.reload
-      study.effect_size[:d].should == 0.3
+      study.effect_size['d'].should == 0.3
     end
 
     it "should only allow for one effect size per study" do
-      study.set_effect_size(:d, 0.3)
-      study.set_effect_size(:r, 0.3)
+      study.set_effect_size('d', 0.3)
+      study.set_effect_size('r', 0.3)
       study.save!
       study.reload
 
