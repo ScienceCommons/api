@@ -17,4 +17,18 @@ describe "JSON API Behavior" do
       article.studies.count.should == 3
     end
   end
+
+  describe "update" do
+    it "GITHUB #30, Effect Size Not Saved" do
+      put "/articles/#{article.id}/studies/#{s1.id}", {
+        effect_size: {'d' => 0.9}
+      }.to_json, {'ACCEPT' => "application/json", "CONTENT_TYPE" => "application/json"}
+
+      response.status.should == 200
+      obj = JSON.parse(response.body)['effect_size']['d'].should == 0.9
+
+      get "/articles/#{article.id}/studies/#{s1.id}"
+      obj = JSON.parse(response.body)['effect_size']['d'].should == 0.9
+    end
+  end
 end

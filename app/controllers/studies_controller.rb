@@ -49,7 +49,7 @@ class StudiesController < ApplicationController
 
     update_serialized_keys(study)
 
-    study.save! if study.changed?
+    study.save!
     render json: study, status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
@@ -75,7 +75,7 @@ class StudiesController < ApplicationController
     study.power = params[:power] if params[:power]
     update_serialized_keys(study)
 
-    study.save! if study.changed?
+    study.save!
     render json: study
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
