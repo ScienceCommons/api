@@ -22,7 +22,7 @@ class ReplicationsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def show
@@ -48,7 +48,7 @@ class ReplicationsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def create
@@ -70,10 +70,12 @@ class ReplicationsController < ApplicationController
       current_user
     )
     render json: replication.as_json(replications: true), status: 201
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def update
@@ -102,10 +104,12 @@ class ReplicationsController < ApplicationController
     })
 
     render json: replication.as_json(replications: true)
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def destroy
@@ -133,6 +137,6 @@ class ReplicationsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 end
