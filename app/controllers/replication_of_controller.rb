@@ -7,7 +7,7 @@ class ReplicationOfController < ApplicationController
       raise "#{k} must be provided" if params[k].nil?
     end
 
-   
+
     study_id = params[:study_id] ? params[:study_id].to_i : -1
     article_id = params[:article_id] ? params[:article_id].to_i : -1
 
@@ -24,7 +24,7 @@ class ReplicationOfController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def show
@@ -37,7 +37,7 @@ class ReplicationOfController < ApplicationController
     id = params[:id] ? params[:id].to_i : -1
 
     if article_id != -1
-          
+
       render json: Article.find(article_id)
         .studies.find(study_id)
         .replication_of.find(id)
@@ -52,7 +52,7 @@ class ReplicationOfController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
 end

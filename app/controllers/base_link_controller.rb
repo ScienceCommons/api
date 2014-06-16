@@ -20,7 +20,7 @@ class BaseLinkController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: 'unknown error'}, status: 500
   end
 
   def show
@@ -45,7 +45,7 @@ class BaseLinkController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def create
@@ -64,8 +64,10 @@ class BaseLinkController < ApplicationController
       .create!(object_hash)
 
     render json: object, status: 201
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def destroy
@@ -87,7 +89,7 @@ class BaseLinkController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def update
@@ -114,8 +116,10 @@ class BaseLinkController < ApplicationController
       end
 
     render json: object
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   # use the name of the controller to determine

@@ -42,4 +42,12 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Max-Age'] = '1728000'
     render :text => '', :content_type => 'text/plain'
   end
+
+  def render_error(error)
+    if error.kind_of?(ActiveRecord::RecordInvalid)
+      render json: {error: error.to_s, messages: error.record.errors.instance_variable_get(:@messages)}, status: 500
+    else
+      render json: {error: error.to_s}, status: 500
+    end
+  end
 end

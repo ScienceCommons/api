@@ -3,13 +3,13 @@ class StudiesController < ApplicationController
   #before_filter :authenticate!
 
   def index
-    raise 'article_id must be provided' if params[:article_id].nil?
+    return render_error('article_id must be provided') if params[:article_id].nil?
     article_id = params[:article_id].to_i
     render json: Article.find(article_id).studies
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def show
@@ -37,11 +37,11 @@ class StudiesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 
   def create
-    raise 'article_id must be provided' if params[:article_id].nil?
+    return render_error('article_id must be provided') if params[:article_id].nil?
     study = Article.find(params[:article_id].to_i).studies.create!({
       n: params['n'] ? params['n'].to_i : nil,
       power: params['power'] ? params['power'].to_f : nil
@@ -51,8 +51,12 @@ class StudiesController < ApplicationController
 
     study.save! if study.changed?
     render json: study, status: 201
-  rescue StandardError => ex
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
+  rescue Exceptions::InvalidEffectSize => ex
     render json: {error: ex.to_s}, status: 500
+  rescue StandardError => ex
+    render json: {error: "unknown error"}, status: 500
   end
 
   def update
@@ -73,8 +77,12 @@ class StudiesController < ApplicationController
 
     study.save! if study.changed?
     render json: study
-  rescue StandardError => ex
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
+  rescue Exceptions::InvalidEffectSize => ex
     render json: {error: ex.to_s}, status: 500
+  rescue StandardError => ex
+    render json: {error: "unknown error"}, status: 500
   end
 
   # variables and effect_size are special
@@ -99,7 +107,7 @@ class StudiesController < ApplicationController
   private :update_serialized_keys
 
   def destroy
-    raise 'article_id must be provided' if params[:article_id].nil?
+    return render_error('article_id must be provided') if params[:article_id].nil?
 
     id = params[:id].to_i
     article_id = params[:article_id].to_i
@@ -113,6 +121,6 @@ class StudiesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
-    render json: {error: ex.to_s}, status: 500
+    render json: {error: "unknown error"}, status: 500
   end
 end
