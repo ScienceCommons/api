@@ -23,7 +23,7 @@ describe StudiesController do
     article.studies.create.tap do |s|
       s.add_independent_variables('health')
       s.add_dependent_variables('happiness')
-      s.set_effect_size(:r, 0.5)
+      s.set_effect_size('r', 0.5)
       s.owner_id = user.id
       s.save!
     end
@@ -229,13 +229,13 @@ describe StudiesController do
         article_id: article.id,
         id: s1.id,
         dependent_variables: ['banana'],
-        effect_size: {d: 0.9}
+        effect_size: {'d' => 0.9}
       }
 
       response.status.should == 200
       s1.reload
       s1.dependent_variables.first.should == 'banana'
-      s1.effect_size.should == {d: 0.9}
+      s1.effect_size.should == {'d' => 0.9}
     end
   end
 

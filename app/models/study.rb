@@ -1,6 +1,6 @@
 class Study < ActiveRecord::Base
 
-  VALID_EFFECT_SIZES = [:d, :eta, :r, :phi, :eta_sqr, :partial_eta_sqr]
+  VALID_EFFECT_SIZES = ['d', 'eta', 'r', 'phi', 'eta_sqr', 'partial_eta_sqr']
 
   has_many :findings
   has_many :materials
@@ -39,9 +39,9 @@ class Study < ActiveRecord::Base
   end
 
   def set_effect_size(type, value)
-    if VALID_EFFECT_SIZES.include?(type.to_sym)
+    if VALID_EFFECT_SIZES.include?(type)
       self.effect_size = {} # only one effect size per study.
-      self.effect_size[type.to_sym] = value
+      self.effect_size[type] = value
     else
       raise Exceptions::InvalidEffectSize.new("#{type} is not a valid effect size.")
     end
