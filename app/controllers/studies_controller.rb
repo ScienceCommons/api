@@ -23,13 +23,15 @@ class StudiesController < ApplicationController
       render json: Article.find(article_id).studies.find(id)
         .as_json(
           findings: true,
-          materials: true
+          materials: true,
+          registrations: true
         )
     else
       render json: Study.find(id)
         .as_json(
           findings: true,
-          materials: true
+          materials: true,
+          registrations: true
         )
     end
   rescue ActiveRecord::RecordNotFound => ex

@@ -76,6 +76,7 @@ PaperSearchApi::Application.routes.draw do
     resources :replication_of, :only => [:show, :index]
     resources :findings, :only => [:show, :index]
     resources :materials, :only => [:show, :index]
+    resources :registrations, :only => [:show, :index]
   end
 
   resources :articles do
@@ -84,6 +85,7 @@ PaperSearchApi::Application.routes.draw do
       resources :replication_of
       resources :findings
       resources :materials
+      resources :registrations
     end
   end
 
