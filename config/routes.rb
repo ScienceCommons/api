@@ -80,6 +80,9 @@ PaperSearchApi::Application.routes.draw do
   end
 
   resources :articles do
+    collection do
+      get 'recent'
+    end
     resources :studies do
       resources :replications
       resources :replication_of

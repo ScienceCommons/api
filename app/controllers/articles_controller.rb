@@ -21,6 +21,13 @@ class ArticlesController < ApplicationController
     render json: {error: 'unknown error'}, status: 500
   end
 
+  def recent
+    limit = params[:limit] ? params[:limit].to_i : 3
+    render json: Article.order('updated_at DESC').limit(limit).to_a
+  rescue StandardError => ex
+    render json: {error: ex.to_s}, status: 500
+  end
+
   def create
     article = Article.create!({
       doi: params[:doi],
