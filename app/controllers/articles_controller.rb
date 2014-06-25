@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
     article = Article.create!({
       doi: params[:doi],
       title: params[:title],
-      publication_date: params[:publication_date] ? Date.parse(params[:publication_date]) : Time.now,
+      publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
       abstract: params[:abstract],
       owner_id: current_user ? current_user.id : nil
     })
