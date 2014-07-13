@@ -4,6 +4,7 @@ PaperSearchApi::Application.routes.draw do
   devise_for :users, :controllers => { :sessions => "sessions" }
   devise_scope :user do
     resources :sessions, :only => [:create, :destroy]
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
   end
   resources :users
 
@@ -94,9 +95,13 @@ PaperSearchApi::Application.routes.draw do
 
   resources :sessions, :only => [:create, :destroy]
 
-  # OAuth 2.0 Specific Resources.
+  # Our own OAuth provider.
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
-  resource :session, :only => :new
+  #resource :session, :only => :new
+
+  # Third-party OAuth providers.
+  get "/auth/google_oauth2/callback" => "oauth_sessions#create"
+  get "/login" => "oauth_sessions#login"
 
   get '/beta', to: 'beta#index'
 end

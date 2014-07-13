@@ -81,4 +81,5 @@ describe User do
       user.findings.count.should == 2
     end
   end
+
 end

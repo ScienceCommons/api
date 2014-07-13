@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140616020025) do
+ActiveRecord::Schema.define(version: 20140713052643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 20140616020025) do
 
   add_index "access_tokens", ["expires_at"], name: "index_access_tokens_on_expires_at", using: :btree
   add_index "access_tokens", ["token"], name: "index_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "accounts", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider",   default: "", null: false
+    t.string   "uid",        default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["uid"], name: "index_accounts_on_uid", using: :btree
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "articles", force: true do |t|
     t.string   "doi",                                null: false
@@ -167,6 +178,7 @@ ActiveRecord::Schema.define(version: 20140616020025) do
     t.boolean  "curator"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
