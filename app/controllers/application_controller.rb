@@ -16,9 +16,13 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate!
-    #unless request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
-    #  raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
-    #end
+    unless request.env[Rack::OAuth2::Server::Resource::ACCESS_TOKEN]
+      raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized
+    end
+  end
+
+  def authenticate_user!
+    raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless current_user
   end
 
   # any controller can render a 401 unauthorized by
@@ -48,6 +52,14 @@ class ApplicationController < ActionController::Base
       render json: {error: error.to_s, messages: error.record.errors.instance_variable_get(:@messages)}, status: 500
     else
       render json: {error: error.to_s}, status: 500
+    end
+  end
+
+  def current_user
+    if env['warden'].user
+      @current_user ||= env['warden'].user
+    else
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
   end
 end

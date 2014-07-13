@@ -9,6 +9,8 @@ class SessionsController < Devise::SessionsController
   end
 
   def destroy
-    super
+    session[:user_id] = nil
+    env['warden'].logout
+    redirect_to root_url, :notice => "Signed out!"
   end
 end

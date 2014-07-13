@@ -72,3 +72,4 @@ gem 'faraday'
 gem 'nokogiri'
 gem 'elastic_mapper', '~> 0.2.1'
 gem 'devise'
+gem "omniauth-google-oauth2"
