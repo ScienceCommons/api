@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   around_filter :select_shard
   rescue_from Rack::OAuth2::Server::Resource::Bearer::Unauthorized, :with => :authorization_error
 
+  private
   # Handle sharding, currently we don't
   # shard, but it will be a nice to have.
   def select_shard(&block)
@@ -30,7 +31,6 @@ class ApplicationController < ActionController::Base
   def authorization_error
     render json: 'unauthorized', :status => :unauthorized
   end
-  private :authorization_error
 
   def redirect_https
     if Rails.env.production?
