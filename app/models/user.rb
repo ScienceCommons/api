@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  BETA_EMAILS = []
 
   # when a user logs in using OAuth, we create an account
   # with this fake password. It is important that a user
@@ -15,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :studies, :class_name => 'Study', :foreign_key => :owner_id
   has_many :findings, :class_name => 'Finding', :foreign_key => :owner_id
   has_many :accounts
+
+  validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }
 
   # TODO: make login disabled until
   # a user creates a login for their account.
