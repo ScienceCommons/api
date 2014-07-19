@@ -10,10 +10,7 @@
   ga('create', 'UA-50411070-1', 'curatescience.org');
   ga('send', 'pageview');
 
-  var CS = {};
-  <%- if @current_user %>
-    CS.user = <%= @current_user.to_json %>;
-  <%- end %>
+  var CS = { user: <%= @current_user.to_json %> };
 </script>
 
 <script type="text/javascript" src="<%= @main_js %>"></script>
