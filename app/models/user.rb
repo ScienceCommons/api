@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  BETA_EMAILS = []
+  BETA_EMAILS = ["sdemjanenko@gmail.com"]
 
   # when a user logs in using OAuth, we create an account
   # with this fake password. It is important that a user
