@@ -34,6 +34,10 @@ class ApplicationController < ActionController::Base
     raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless current_user
   end
 
+  def check_admin
+    raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless current_user.try(:admin)
+  end
+
   # any controller can render a 401 unauthorized by
   # raising Exceptions::AuthorizationError.
   def authorization_error
@@ -61,5 +65,6 @@ class ApplicationController < ActionController::Base
     else
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
+    @current_user
   end
 end
