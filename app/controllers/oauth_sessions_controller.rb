@@ -13,7 +13,7 @@ class OauthSessionsController < ApplicationController
     end
 
     session[:user_id] = user.id
-    redirect_to "/beta#/"
+    redirect_to root_url, :notice => "Signed in!"
   end
 
   def login
