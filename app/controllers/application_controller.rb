@@ -6,12 +6,13 @@ class ApplicationController < ActionController::Base
   # we will instead be using an API token.
   # protect_from_forgery with: :exception
 
+  before_filter :set_headers
   around_filter :select_shard
   rescue_from Rack::OAuth2::Server::Resource::Bearer::Unauthorized, :with => :authorization_error
 
-  def cors_preflight_check
-    puts request.headers.inspect
-    puts request.headers["HTTP_ORIGIN"].inspect
+  private
+
+  def set_headers
     if request.headers["HTTP_ORIGIN"] && (
       /^https?:\/\/(.*)\.curatescience\.org/i.match(request.headers["HTTP_ORIGIN"]) ||
       /^https?:\/\/localhost:8000$/i.match(request.headers["HTTP_ORIGIN"])
@@ -25,10 +26,12 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Request-Method'] = '*'
     headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Content-Type'
     headers['Access-Control-Max-Age'] = '1728000'
-    render :text => '', :content_type => 'text/plain'
+
+    if request.method == "OPTIONS"
+      render :text => '', :content_type => 'text/plain'
+    end
   end
 
-  private
   # Handle sharding, currently we don't
   # shard, but it will be a nice to have.
   def select_shard(&block)
