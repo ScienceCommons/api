@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def cors_preflight_check
     if request.headers["HTTP_ORIGIN"] && (
       /^https?:\/\/(.*)\.curatescience\.org/i.match(request.headers["HTTP_ORIGIN"]) ||
-      /^localhost$/i.match(request.headers["HTTP_ORIGIN"])
+      /^localhost:8000$/i.match(request.headers["HTTP_ORIGIN"])
     )
       headers['Access-Control-Allow-Origin'] = request.headers["HTTP_ORIGIN"]
     end
