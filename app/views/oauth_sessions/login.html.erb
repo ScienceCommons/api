@@ -1,5 +1,3 @@
-<%= csrf_meta_tags %>
-
 <% if current_user %>
   Welcome <%= current_user.name %>!
   <%= link_to "Sign Out", '/users/sign_out' %>
