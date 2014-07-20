@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
     )
       headers['Access-Control-Allow-Origin'] = request.headers["HTTP_ORIGIN"]
       headers['Access-Control-Allow-Credentials'] = 'true'
+    else
+      headers['Access-Control-Allow-Origin'] = '*'
     end
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Request-Method'] = '*'
