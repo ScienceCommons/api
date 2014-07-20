@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
       /^localhost:8000$/i.match(request.headers["HTTP_ORIGIN"])
     )
       headers['Access-Control-Allow-Origin'] = request.headers["HTTP_ORIGIN"]
+      headers['Access-Control-Allow-Credentials'] = 'true'
     end
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Content-Type'
