@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+  include ElasticMapper
+
   BETA_EMAILS = ["sdemjanenko@gmail.com", "etienne.lebel@gmail.com", "bencoe@gmail.com", "battista.christian@gmail.com"]
 
   # when a user logs in using OAuth, we create an account
@@ -17,7 +20,14 @@ class User < ActiveRecord::Base
   has_many :findings, :class_name => 'Finding', :foreign_key => :owner_id
   has_many :accounts
 
+  validates_uniqueness_of :email
+  validates_presence_of :email
   validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }
+
+  mapping :email, :name
+
+  after_save :index
+  after_destroy :delete_from_index
 
   # TODO: make login disabled until
   # a user creates a login for their account.
