@@ -10,7 +10,12 @@ class ApplicationController < ActionController::Base
   rescue_from Rack::OAuth2::Server::Resource::Bearer::Unauthorized, :with => :authorization_error
 
   def cors_preflight_check
-    headers['Access-Control-Allow-Origin'] = '*'
+    if request.headers["HTTP_ORIGIN"] && (
+      /^https?:\/\/(.*)\.curatescience\.com$/i.match(request.headers["HTTP_ORIGIN"]) ||
+      /^localhost$/i.match(request.headers["HTTP_ORIGIN"])
+    )
+      headers['Access-Control-Allow-Origin'] = request.headers["HTTP_ORIGIN"]
+    end
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
     headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Content-Type'
     headers['Access-Control-Max-Age'] = '1728000'
