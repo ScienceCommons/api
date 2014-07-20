@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   rescue_from Rack::OAuth2::Server::Resource::Bearer::Unauthorized, :with => :authorization_error
 
   def cors_preflight_check
+    puts request.headers.inspect
+    puts request.headers["HTTP_ORIGIN"].inspect
     if request.headers["HTTP_ORIGIN"] && (
       /^https?:\/\/(.*)\.curatescience\.org/i.match(request.headers["HTTP_ORIGIN"]) ||
       /^https?:\/\/localhost:8000$/i.match(request.headers["HTTP_ORIGIN"])
