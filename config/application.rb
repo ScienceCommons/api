@@ -31,10 +31,10 @@ module PaperSearchApi
 
     # open up CORS for OAuth 2.0 API.
     # we should eventually audit this.
-    config.action_dispatch.default_headers = {
-        'Access-Control-Allow-Origin' => '*',
-        'Access-Control-Request-Method' => '*'
-    }
+    #config.action_dispatch.default_headers = {
+    #    'Access-Control-Allow-Origin' => '*',
+    #    'Access-Control-Request-Method' => '*'
+    #}
 
     config.autoload_paths << File.join(Rails.root, 'lib')
 
