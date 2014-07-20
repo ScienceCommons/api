@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }
 
-  mapping :email, :name
+  mapping :email, :name, :index => :not_analyzed
 
   after_save :index
   after_destroy :delete_from_index
