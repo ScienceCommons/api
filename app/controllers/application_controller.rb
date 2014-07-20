@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
   around_filter :select_shard
   rescue_from Rack::OAuth2::Server::Resource::Bearer::Unauthorized, :with => :authorization_error
 
-  private
-
   def set_headers
     if request.headers["HTTP_ORIGIN"] && (
       /^https?:\/\/(.*)\.curatescience\.org/i.match(request.headers["HTTP_ORIGIN"]) ||
@@ -32,6 +30,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  private
   # Handle sharding, currently we don't
   # shard, but it will be a nice to have.
   def select_shard(&block)
