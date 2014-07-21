@@ -13,7 +13,29 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: User.find(params[:id].to_i)
+    render json: User.find_by(id: params[:id].to_i)
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    render json: {error: 'unknown error'}, status: 500
+  end
+
+  def admins
+    render json: User.where(admin: true).order("id DESC")
+  end
+
+  def toggle_admin
+    user = User.find_by(id: params[:id].to_i)
+    new_state = params[:state]
+    if user.id == @current_user.id
+      render json: {error: "You cannot modify your own record"}, status: 404
+    elsif new_state.nil?
+      render json: {error: "State is required"}, status: 404
+    else
+      user.admin = new_state
+      user.save!
+      render json: user
+    end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex

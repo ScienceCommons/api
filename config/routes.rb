@@ -6,7 +6,14 @@ PaperSearchApi::Application.routes.draw do
     resources :sessions, :only => [:create, :destroy]
     match '/sessions/user', to: 'devise/sessions#create', via: :post
   end
-  resources :users, :only => [:index, :show]
+  resources :users, :only => [:index, :show] do
+    member do
+      post 'toggle_admin'
+    end
+    collection do
+      get 'admins'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
