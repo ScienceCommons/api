@@ -4,12 +4,11 @@
 require File.expand_path('../config/application', __FILE__)
 
 require 'resque/tasks'
-require 'resque_scheduler/tasks'
+require 'resque/scheduler/tasks'
 require 'resque/pool/tasks'
 
 PaperSearchApi::Application.load_tasks
 
-require 'resque/pool/tasks'
 # this task will get called before resque:pool:setup
 # and preload the rails environment in the pool manager
 task "resque:setup" => :environment do
