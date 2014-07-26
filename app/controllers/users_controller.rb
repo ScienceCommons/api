@@ -1,7 +1,7 @@
 require 'net/http'
 
 class UsersController < ApplicationController
-  #before_filter :check_admin
+  before_filter :check_admin
 
   def index
     opts = {
