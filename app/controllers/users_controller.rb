@@ -13,15 +13,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    puts "CREATE"
-    puts user_params.inspect
-    puts "USER PARAMS"
     user = User.new(user_params.merge({
       password: User::PLACEHOLDER_PASSWORD,
       password_confirmation: User::PLACEHOLDER_PASSWORD
     }))
-    puts "INSPECTING USER"
-    puts user.inspect
 
     if user.save
       render json: user
