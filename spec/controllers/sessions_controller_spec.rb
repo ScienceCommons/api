@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SessionsController do
+describe SessionsController, :type => :controller do
   include Devise::TestHelpers
 
   before do

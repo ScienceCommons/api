@@ -1,5 +1,5 @@
 # post :create, {article_id: article.id}, {'ACCEPT' => "application/json", "CONTENT_TYPE" => "application/json"}
-require 'spec_helper'
+require 'rails_helper'
 
 describe "JSON API Behavior" do
   let!(:article) { Article.create(doi: '123banana', title: 'hello world') }

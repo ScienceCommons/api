@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ArticlesController do
+describe ArticlesController, :type => :controller do
 
   let(:user) do
     User.create!({

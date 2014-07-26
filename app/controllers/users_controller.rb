@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :check_admin
+  #before_filter :check_admin
 
   def index
     opts = {
@@ -10,6 +10,24 @@ class UsersController < ApplicationController
     render json: User.search(params[:q] || '*', opts)
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
+  end
+
+  def create
+    puts "CREATE"
+    puts user_params.inspect
+    puts "USER PARAMS"
+    user = User.new(user_params.merge({
+      password: User::PLACEHOLDER_PASSWORD,
+      password_confirmation: User::PLACEHOLDER_PASSWORD
+    }))
+    puts "INSPECTING USER"
+    puts user.inspect
+
+    if user.save
+      render json: user
+    else
+      render(json: {:errors => user.errors.full_messages})
+    end
   end
 
   def show
@@ -40,5 +58,11 @@ class UsersController < ApplicationController
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
     render json: {error: 'unknown error'}, status: 500
+  end
+
+  private
+
+  def user_params
+    params.require(:email).permit(:name)
   end
 end

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe RegistrationsController do
+describe RegistrationsController, :type => :controller do
   let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
   let!(:article_no_registrations) { Article.create(doi: '1234banana', title: 'hello world') }
   let!(:s1) { article.studies.create }

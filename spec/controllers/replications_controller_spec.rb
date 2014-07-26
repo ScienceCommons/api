@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ReplicationsController do
+describe ReplicationsController, :type => :controller do
   # creating an article indexes
   # the article in ES which causes
   # problems for WebMock.

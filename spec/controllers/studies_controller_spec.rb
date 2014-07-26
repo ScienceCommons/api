@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe StudiesController do
+describe StudiesController, :type => :controller do
 
   let(:user) do
     User.create!({

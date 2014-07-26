@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Workers::PlosInfoWorker do
   before(:all) { Resque.inline = true }

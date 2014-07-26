@@ -1,18 +1,19 @@
 PaperSearchApi::Application.routes.draw do
   match '*all', to: 'application#set_headers', via: [:options]
 
-  devise_for :users, :controllers => { :sessions => "sessions" }
-  devise_scope :user do
-    resources :sessions, :only => [:create, :destroy]
-    match '/sessions/user', to: 'devise/sessions#create', via: :post
-  end
-  resources :users, :only => [:index, :show] do
+  resources :users, :only => [:index, :show, :create] do
     member do
       post 'toggle_admin'
     end
     collection do
       get 'admins'
     end
+  end
+
+  devise_for :users, :controllers => { :sessions => "sessions" }
+  devise_scope :user do
+    resources :sessions, :only => [:create, :destroy]
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -79,13 +80,18 @@ PaperSearchApi::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :studies, :only => [:show, :update] do
+  resources :studies, :only => [:index, :show, :update] do
     resources :replications, :only => [:show, :index]
     resources :replication_of, :only => [:show, :index]
     resources :findings, :only => [:show, :index]
     resources :materials, :only => [:show, :index]
     resources :registrations, :only => [:show, :index]
   end
+
+  resources :materials, :only => [:index, :update]
+  resources :replications, :only => [:index, :update]
+  resources :registrations, :only => [:index, :update]
+  resources :findings, :only => [:index]
 
   resources :articles do
     collection do

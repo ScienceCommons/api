@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email
   validates_presence_of :email
-  validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }
+  validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }, if: Proc.new {|a| Rails.env == 'production'}
 
   mapping :email, :name, :index => :not_analyzed
 

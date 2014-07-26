@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe MaterialsController do
+describe MaterialsController, :type => :controller do
   let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
   let!(:article_no_materials) { Article.create(doi: '1234banana', title: 'hello world') }
   let!(:s1) { article.studies.create }

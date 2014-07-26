@@ -25,7 +25,7 @@ class PlosAlm
         create_article(article_struct)
       end
     end
-  rescue Error => err
+  rescue => err
     REDIS.lpush('plos_500s', "#{PLOS_ALM_URL}?page=#{@page}&api_key=#{ENV['PLOS_API_KEY']}")
     raise err
   end
