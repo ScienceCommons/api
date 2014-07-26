@@ -63,6 +63,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:email).permit(:name)
+    params.slice(:email, :name)
   end
 end
