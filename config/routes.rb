@@ -5,8 +5,10 @@ PaperSearchApi::Application.routes.draw do
     member do
       post 'toggle_admin'
     end
+
     collection do
       get 'admins'
+      get 'beta_mail_list'
     end
   end
 
