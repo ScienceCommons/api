@@ -122,6 +122,7 @@ class BaseLinkController < ApplicationController
     render json: {error: "unknown error"}, status: 500
   end
 
+  private
   # use the name of the controller to determine
   # the underlying model that we should interact with.
   def relationship_name
