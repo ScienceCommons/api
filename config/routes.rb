@@ -88,10 +88,10 @@ PaperSearchApi::Application.routes.draw do
     resources :registrations, :only => [:show, :index]
   end
 
-  resources :materials, :only => [:index, :update]
-  resources :replications, :only => [:index, :update]
-  resources :registrations, :only => [:index, :update]
-  resources :findings, :only => [:index]
+  resources :materials
+  resources :replications
+  resources :registrations
+  resources :findings
 
   resources :articles do
     collection do

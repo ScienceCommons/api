@@ -37,6 +37,7 @@ module PaperSearchApi
     #}
 
     config.autoload_paths << File.join(Rails.root, 'lib')
+    config.action_controller.permit_all_parameters = true
 
     # OAuth2 Resource Server
     require 'rack/oauth2'
