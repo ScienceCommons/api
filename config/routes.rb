@@ -90,6 +90,10 @@ PaperSearchApi::Application.routes.draw do
     resources :registrations, :only => [:show, :index]
   end
 
+  resources :comments, :only => [:show, :destroy]
+  get ":commentable_type/:commentable_id/comments(/:field)" => "comments#index"
+  post ":commentable_type/:commentable_id/comments(/:field)" => "comments#create"
+
   resources :materials
   resources :replications
   resources :registrations
@@ -99,6 +103,7 @@ PaperSearchApi::Application.routes.draw do
     collection do
       get 'recent'
     end
+
     resources :studies do
       resources :replications
       resources :replication_of
