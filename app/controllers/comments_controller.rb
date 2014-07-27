@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
 
   def create
     comment = Comment.new(
-      :owner => current_user,
+      :owner_id => current_user.id,
       :comment => params[:comment].to_s,
       :commentable_type => params[:commentable_type].camelize,
       :commentable_id => params[:commentable_id].to_i
