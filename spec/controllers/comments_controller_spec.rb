@@ -3,6 +3,7 @@ require 'rails_helper'
 describe CommentsController, :type => :controller do
   let(:user) do
     User.create!({
+      :name => "bentron",
       :email => "ben@example.com",
       :password => "11111111",
       :password_confirmation => "11111111"
@@ -11,6 +12,7 @@ describe CommentsController, :type => :controller do
 
   let(:admin_user) do
     User.create!({
+      :name => "ben",
       :email => "ben+admin@example.com",
       :password => "11111111",
       :password_confirmation => "11111111",
@@ -41,13 +43,14 @@ describe CommentsController, :type => :controller do
 
   describe "#index" do
     it "should return the list of comments" do
-      get :index, :commentable_type => "article", :commentable_id => article.id
+      get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
+      puts results.inspect
       results.count.should == 3
     end
 
     it "should return the list of comments for a field" do
-      get :index, :commentable_type => "article", :commentable_id => article.id, :field => "fooField"
+      get :index, :commentable_type => "articles", :commentable_id => article.id, :field => "fooField"
       results = JSON.parse(response.body)
       results.count.should == 1
     end
@@ -68,23 +71,23 @@ describe CommentsController, :type => :controller do
 
   describe "#create" do
     it "should return a 500 if comment is not provided" do
-      post :create, :commentable_type => "article", :commentable_id => article.id
+      post :create, :commentable_type => "articles", :commentable_id => article.id
       response.status.should == 500
     end
 
     it "should allow a comment to be created" do
-      post :create, :commentable_type => "article", :commentable_id => article.id, :comment => "my comment"
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
       response.status.should == 201
 
       comment = JSON.parse(response.body)
       comment['comment'].should == 'my comment'
-      get :index, :commentable_type => "article", :commentable_id => article.id
+      get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
       results.count.should == 4
     end
 
     it "should set the owner when creating a comment" do
-      post :create, :commentable_type => "article", :commentable_id => article.id, :comment => "my comment"
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
       comment = JSON.parse(response.body)
       comment['owner_id'].should == user.id
     end
@@ -96,7 +99,7 @@ describe CommentsController, :type => :controller do
       delete :destroy, id: comment.id
       response.status.should == 204
 
-      get :index, :commentable_type => "article", :commentable_id => article.id
+      get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
       results.count.should == 2
     end
@@ -107,7 +110,7 @@ describe CommentsController, :type => :controller do
       delete :destroy, id: comment.id
       response.status.should == 204
 
-      get :index, :commentable_type => "article", :commentable_id => article.id
+      get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
       results.count.should == 2
     end
@@ -117,7 +120,7 @@ describe CommentsController, :type => :controller do
       delete :destroy, id: comment.id
       response.status.should == 401
 
-      get :index, :commentable_type => "article", :commentable_id => article.id
+      get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
       results.count.should == 3
     end

@@ -14,6 +14,11 @@ class Comment < ActiveRecord::Base
     super(opts).tap do |h|
       h['created_at'] = h['created_at'].to_i
       h['updated_at'] = h['updated_at'].to_i
+      if h['anonymous']
+        h.delete('owner_id')
+      else
+        h['name'] = self.owner.name
+      end
       h
     end
   end
