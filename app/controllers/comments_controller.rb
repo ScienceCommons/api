@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
 
   def index
     query = Comment.where(
-      :commentable_type => params[:commentable_type].camelize,
+      :commentable_type => params[:commentable_type].camelize.singularize,
       :commentable_id => params[:commentable_id].to_i
     )
     query.and.where(:field => params[:field].to_s) if params[:field]
