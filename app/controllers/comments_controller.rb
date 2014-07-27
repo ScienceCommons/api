@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
     comment = Comment.new(
       :owner_id => current_user.id,
       :comment => params[:comment].to_s,
-      :commentable_type => params[:commentable_type].camelize,
+      :commentable_type => params[:commentable_type].camelize.singularize,
       :commentable_id => params[:commentable_id].to_i
     )
     comment.field = params[:field].to_s if params[:field]
