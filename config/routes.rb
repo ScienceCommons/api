@@ -1,6 +1,12 @@
 PaperSearchApi::Application.routes.draw do
   match '*all', to: 'application#set_headers', via: [:options]
 
+  devise_for :users, :controllers => { :sessions => "sessions" }
+  devise_scope :user do
+    resources :sessions, :only => [:create, :destroy]
+    match '/sessions/user', to: 'devise/sessions#create', via: :post
+  end
+
   resources :users, :only => [:index, :show, :create] do
     member do
       post 'toggle_admin'
@@ -10,12 +16,6 @@ PaperSearchApi::Application.routes.draw do
       get 'admins'
       get 'beta_mail_list'
     end
-  end
-
-  devise_for :users, :controllers => { :sessions => "sessions" }
-  devise_scope :user do
-    resources :sessions, :only => [:create, :destroy]
-    match '/sessions/user', to: 'devise/sessions#create', via: :post
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
