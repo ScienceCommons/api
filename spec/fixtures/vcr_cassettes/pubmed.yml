@@ -1,0 +1,249 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=battista.christian@gmail.com&retmax=200&term=science%5Bjournal%5D%202008%5Bpdat%5D&tool=curatescience&usehistory=y
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 02 Aug 2014 19:52:39 GMT
+      Server:
+      - Apache
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - private
+      Ncbi-Sid:
+      - 08DE06733DD41871_0017SID
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Set-Cookie:
+      - ncbi_sid=08DE06733DD41871_0017SID; domain=.nih.gov; path=/; expires=Sun, 02
+        Aug 2015 19:52:39 GMT
+      X-Ua-Compatible:
+      - IE=Edge
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD esearch 20060628//EN" "http://eutils.ncbi.nlm.nih.gov/eutils/dtd/20060628/esearch.dtd">
+        <eSearchResult><Count>2250</Count><RetMax>200</RetMax><RetStart>0</RetStart><QueryKey>1</QueryKey><WebEnv>NCID_1_1139840066_130.14.22.215_9001_1407009159_300368070_0MetA0_S_MegaStore_F_1</WebEnv><IdList>
+        <Id>19095945</Id>
+        <Id>19095944</Id>
+        <Id>19095943</Id>
+        <Id>19095942</Id>
+        <Id>19095941</Id>
+        <Id>19095940</Id>
+        <Id>19095939</Id>
+        <Id>19095938</Id>
+        <Id>19095937</Id>
+        <Id>19095936</Id>
+        <Id>19095935</Id>
+        <Id>19095934</Id>
+        <Id>19095933</Id>
+        <Id>19095932</Id>
+        <Id>19095931</Id>
+        <Id>19095930</Id>
+        <Id>19095929</Id>
+        <Id>19095928</Id>
+        <Id>19095927</Id>
+        <Id>19095926</Id>
+        <Id>19095925</Id>
+        <Id>19095924</Id>
+        <Id>19095923</Id>
+        <Id>19095922</Id>
+        <Id>19095921</Id>
+        <Id>19095920</Id>
+        <Id>19095919</Id>
+        <Id>19095918</Id>
+        <Id>19095917</Id>
+        <Id>19095916</Id>
+        <Id>19095914</Id>
+        <Id>19095913</Id>
+        <Id>19095912</Id>
+        <Id>19095911</Id>
+        <Id>19095910</Id>
+        <Id>19095909</Id>
+        <Id>19095908</Id>
+        <Id>19095907</Id>
+        <Id>19095906</Id>
+        <Id>19095905</Id>
+        <Id>19095904</Id>
+        <Id>19095903</Id>
+        <Id>19095902</Id>
+        <Id>19095901</Id>
+        <Id>19095900</Id>
+        <Id>19095899</Id>
+        <Id>19095898</Id>
+        <Id>19095897</Id>
+        <Id>19095896</Id>
+        <Id>19074353</Id>
+        <Id>19074352</Id>
+        <Id>19074351</Id>
+        <Id>19074350</Id>
+        <Id>19074349</Id>
+        <Id>19074348</Id>
+        <Id>19074347</Id>
+        <Id>19074346</Id>
+        <Id>19074345</Id>
+        <Id>19074344</Id>
+        <Id>19074343</Id>
+        <Id>19074342</Id>
+        <Id>19074341</Id>
+        <Id>19074340</Id>
+        <Id>19074339</Id>
+        <Id>19074338</Id>
+        <Id>19074337</Id>
+        <Id>19074336</Id>
+        <Id>19074335</Id>
+        <Id>19074334</Id>
+        <Id>19074333</Id>
+        <Id>19074332</Id>
+        <Id>19074331</Id>
+        <Id>19074330</Id>
+        <Id>19074329</Id>
+        <Id>19074328</Id>
+        <Id>19074327</Id>
+        <Id>19074326</Id>
+        <Id>19074325</Id>
+        <Id>19074324</Id>
+        <Id>19074323</Id>
+        <Id>19074322</Id>
+        <Id>19074321</Id>
+        <Id>19074320</Id>
+        <Id>19074319</Id>
+        <Id>19074318</Id>
+        <Id>19074317</Id>
+        <Id>19074316</Id>
+        <Id>19074315</Id>
+        <Id>19074314</Id>
+        <Id>19074313</Id>
+        <Id>19074312</Id>
+        <Id>19074311</Id>
+        <Id>19074310</Id>
+        <Id>19074309</Id>
+        <Id>19074308</Id>
+        <Id>19056990</Id>
+        <Id>19056989</Id>
+        <Id>19056988</Id>
+        <Id>19056987</Id>
+        <Id>19056986</Id>
+        <Id>19056985</Id>
+        <Id>19056984</Id>
+        <Id>19056983</Id>
+        <Id>19056982</Id>
+        <Id>19056981</Id>
+        <Id>19056980</Id>
+        <Id>19056979</Id>
+        <Id>19056978</Id>
+        <Id>19056977</Id>
+        <Id>19056976</Id>
+        <Id>19056975</Id>
+        <Id>19056974</Id>
+        <Id>19056973</Id>
+        <Id>19056972</Id>
+        <Id>19056971</Id>
+        <Id>19056970</Id>
+        <Id>19056969</Id>
+        <Id>19056968</Id>
+        <Id>19056967</Id>
+        <Id>19056966</Id>
+        <Id>19056965</Id>
+        <Id>19056964</Id>
+        <Id>19056963</Id>
+        <Id>19056962</Id>
+        <Id>19056961</Id>
+        <Id>19056960</Id>
+        <Id>19056959</Id>
+        <Id>19056958</Id>
+        <Id>19056957</Id>
+        <Id>19056956</Id>
+        <Id>19056955</Id>
+        <Id>19056954</Id>
+        <Id>19056953</Id>
+        <Id>19056952</Id>
+        <Id>19056951</Id>
+        <Id>19056950</Id>
+        <Id>19056949</Id>
+        <Id>19056948</Id>
+        <Id>19056947</Id>
+        <Id>19056946</Id>
+        <Id>19056945</Id>
+        <Id>19056944</Id>
+        <Id>19056943</Id>
+        <Id>19056942</Id>
+        <Id>19056941</Id>
+        <Id>19056940</Id>
+        <Id>19056939</Id>
+        <Id>19056938</Id>
+        <Id>19056937</Id>
+        <Id>19039140</Id>
+        <Id>19039139</Id>
+        <Id>19039138</Id>
+        <Id>19039137</Id>
+        <Id>19039136</Id>
+        <Id>19039135</Id>
+        <Id>19039134</Id>
+        <Id>19039133</Id>
+        <Id>19039132</Id>
+        <Id>19039131</Id>
+        <Id>19039130</Id>
+        <Id>19039129</Id>
+        <Id>19039128</Id>
+        <Id>19039127</Id>
+        <Id>19039126</Id>
+        <Id>19039125</Id>
+        <Id>19039124</Id>
+        <Id>19039123</Id>
+        <Id>19039122</Id>
+        <Id>19039121</Id>
+        <Id>19039120</Id>
+        <Id>19039119</Id>
+        <Id>19039118</Id>
+        <Id>19039117</Id>
+        <Id>19039116</Id>
+        <Id>19039115</Id>
+        <Id>19039114</Id>
+        <Id>19039113</Id>
+        <Id>19039112</Id>
+        <Id>19039111</Id>
+        <Id>19039110</Id>
+        <Id>19039109</Id>
+        <Id>19039108</Id>
+        <Id>19039107</Id>
+        <Id>19039106</Id>
+        <Id>19039105</Id>
+        <Id>19039104</Id>
+        <Id>19039103</Id>
+        <Id>19023086</Id>
+        <Id>19023085</Id>
+        <Id>19023083</Id>
+        <Id>19023082</Id>
+        <Id>19023081</Id>
+        <Id>19023080</Id>
+        <Id>19023079</Id>
+        <Id>19023078</Id>
+        <Id>19023077</Id>
+        <Id>19023076</Id>
+        <Id>19023075</Id>
+        <Id>19023074</Id>
+        <Id>19023073</Id>
+        </IdList><TranslationSet><Translation>     <From>science[journal]</From>     <To>"Science"[Journal] OR "Science (80- )"[Journal] OR "J Zhejiang Univ Sci"[Journal]</To>    </Translation></TranslationSet><TranslationStack>   <TermSet>    <Term>"Science"[Journal]</Term>    <Field>Journal</Field>    <Count>165363</Count>    <Explode>N</Explode>   </TermSet>   <TermSet>    <Term>"Science (80- )"[Journal]</Term>    <Field>Journal</Field>    <Count>10</Count>    <Explode>N</Explode>   </TermSet>   <OP>OR</OP>   <TermSet>    <Term>"J Zhejiang Univ Sci"[Journal]</Term>    <Field>Journal</Field>    <Count>364</Count>    <Explode>N</Explode>   </TermSet>   <OP>OR</OP>   <OP>GROUP</OP>   <TermSet>    <Term>2008[pdat]</Term>    <Field>pdat</Field>    <Count>830584</Count>    <Explode>N</Explode>   </TermSet>   <OP>AND</OP>  </TranslationStack><QueryTranslation>("Science"[Journal] OR "Science (80- )"[Journal] OR "J Zhejiang Univ Sci"[Journal]) AND 2008[pdat]</QueryTranslation></eSearchResult>
+    http_version: 
+  recorded_at: Sat, 02 Aug 2014 19:52:39 GMT
+recorded_with: VCR 2.8.0
