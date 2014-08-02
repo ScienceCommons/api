@@ -5,7 +5,8 @@ module Commentable
       owner_id: owner_id
     })
     comment.field = field if field
-    comment.save
+    comment.save!
+    comment
   end
 
   def update_comment_counts(comment)
