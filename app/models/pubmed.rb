@@ -6,7 +6,8 @@ class Pubmed
   ESEARCH_URL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
   EFETCH_URL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
 
-  def initialize(journal, year)
+  def initialize(journal, year, page=0)
+    @page = page
     @journal = journal
     @year = year
   end
@@ -18,15 +19,34 @@ class Pubmed
     @web_env = xml.css('WebEnv').text
   end
 
-  def load_article
-    xml = get_xml(efetch)
-    p xml
-    # Article PubModel="Print-Electronic"
-    # <ELocationID EIdType="doi" ValidYN="Y">10.1126/science.1163732</ELocationID>
-    # <Abstract> <AbstractText>
-    #
-    #<AuthorList CompleteYN="Y"> <Author ValidYN="Y"> <LastName>Bednarek</LastName> <ForeName>Pawel</ForeName> <Initials>P</Initials>
-    # ArticleTitle
+  def create_articles
+    xml = get_xml(efetch(@page))
+
+    xml.css('Article').each do |article_xml|
+      doi = article_xml.css('ELocationID[EIdType="doi"]').text
+      unless doi.empty? or article_xml.css('PubDate').text.empty?
+        article = Article.create({
+          title: article_xml.css('ArticleTitle').text.strip,
+          doi: doi,
+          publication_date: DateTime.new(
+            article_xml.css('PubDate Year').text.to_i,
+            Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
+            article_xml.css('PubDate Day').text.to_i
+          ),
+          abstract: article_xml.css('AbstractText').text
+        })
+
+        article_xml.css('AuthorList Author').each do |author|
+          article.add_author(
+            author.css('ForeName').text,
+            nil,
+            author.css('LastName').text
+          )
+        end
+
+        article.save!
+      end
+    end
   end
 
   def efetch(page=0)
@@ -38,7 +58,7 @@ class Pubmed
   end
 
   def get_xml(url)
-    @xml ||= Nokogiri::XML(
+    Nokogiri::XML(
       open(url)
     )
   end

@@ -4,6 +4,7 @@ describe Pubmed do
 
   before(:each) do
     Resque.stub(:enqueue)
+    Article.any_instance.stub(:index)
   end
 
   describe "load_meta" do
@@ -21,31 +22,39 @@ describe Pubmed do
     end
   end
 
-  describe "load_article" do
-    it "should create articles for each doi, if they do not exist" do
+  describe "create_articles" do
+    let(:article) { Article.find_by_doi('10.1126/science.1163233') }
+    before(:each) do
       VCR.use_cassette('pubmed_articles') do
         pubmed = Pubmed.new(
           "science",
           "2008"
         )
         pubmed.load_meta
-        pubmed.load_article
-
-
-        pubmed.web_env.should == 'NCID_1_1058260831_130.14.18.34_9001_1407009331_826881071_0MetA0_S_MegaStore_F_1'
-        pubmed.article_count.should == 2250
+        pubmed.create_articles
       end
+    end
 
-=begin
-      VCR.use_cassette('plos_alm') do
-        plos_alm = PlosAlm.new(1) # Lookup first page of ALM data.
+    it "should create articles for each doi, if they do not exist" do
+      article.title.should == 'Ab initio determination of light hadron masses.'
+    end
 
-        # all 50 articles are new, should create them.
-        expect(Article).to receive(:create).exactly(50).times
+    it "should populate an abstract for each article" do
+      article.abstract.should match(/More than 99% of the mass of the visible/)
+    end
 
-        plos_alm.update_articles
-      end
-=end
+    it "should populate authors for each article" do
+      article.authors_denormalized.should include({
+        first_name: 'S',
+        middle_name: nil,
+        last_name: 'Dürr'
+      })
+
+      article.authors_denormalized.should include({
+        first_name: 'G',
+        middle_name: nil,
+        last_name: 'Vulvert'
+      })
     end
   end
 
