@@ -6,10 +6,20 @@ class Pubmed
   ESEARCH_URL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
   EFETCH_URL = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
 
-  def initialize(journal, year, page=0)
+  def initialize(journal, year, page=0, web_env=nil)
     @page = page
     @journal = journal
     @year = year
+    @web_env = web_env
+  end
+
+  def crawl
+    load_meta # first load the meta information.
+
+    # then create a job for each page of results.
+    (0..@article_count).step(PER_PAGE) do |n|
+      Resque.enqueue(Workers::PubmedWorker, @journal, @year, n / PER_PAGE, @web_env)
+    end
   end
 
   def load_meta
@@ -20,12 +30,14 @@ class Pubmed
   end
 
   def create_articles
-    xml = get_xml(efetch(@page))
+    xml = get_xml(efetch)
 
     xml.css('Article').each do |article_xml|
       doi = article_xml.css('ELocationID[EIdType="doi"]').text
       unless doi.empty? or article_xml.css('PubDate').text.empty?
-        article = Article.create({
+        article = Article.create!({
+          journal_issn: article_xml.css('Journal ISSN').text,
+          journal_title: article_xml.css('Journal Title').text,
           title: article_xml.css('ArticleTitle').text.strip,
           doi: doi,
           publication_date: DateTime.new(
@@ -49,8 +61,8 @@ class Pubmed
     end
   end
 
-  def efetch(page=0)
-    "#{EFETCH_URL}?db=pubmed&retmode=xml&WebEnv=#{@web_env}&query_key=1&retstart=#{PER_PAGE * page}&retmax=#{PER_PAGE}&#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
+  def efetch
+    "#{EFETCH_URL}?db=pubmed&retmode=xml&WebEnv=#{@web_env}&query_key=1&retstart=#{PER_PAGE * @page}&retmax=#{PER_PAGE}&#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
   end
 
   def esearch

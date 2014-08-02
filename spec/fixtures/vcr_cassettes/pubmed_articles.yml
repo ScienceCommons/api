@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 02 Aug 2014 21:01:43 GMT
+      - Sat, 02 Aug 2014 23:01:25 GMT
       Server:
       - Apache
       Access-Control-Allow-Origin:
@@ -27,12 +27,12 @@ http_interactions:
       Cache-Control:
       - private
       Ncbi-Sid:
-      - 9DFC7DE53DD51B71_0097SID
+      - 9DFC1B133DD6DC51_0095SID
       Content-Type:
       - text/xml; charset=UTF-8
       Set-Cookie:
-      - ncbi_sid=9DFC7DE53DD51B71_0097SID; domain=.nih.gov; path=/; expires=Sun, 02
-        Aug 2015 21:01:43 GMT
+      - ncbi_sid=9DFC1B133DD6DC51_0095SID; domain=.nih.gov; path=/; expires=Sun, 02
+        Aug 2015 23:01:25 GMT
       X-Ua-Compatible:
       - IE=Edge
       Transfer-Encoding:
@@ -42,7 +42,7 @@ http_interactions:
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD esearch 20060628//EN" "http://eutils.ncbi.nlm.nih.gov/eutils/dtd/20060628/esearch.dtd">
-        <eSearchResult><Count>2250</Count><RetMax>200</RetMax><RetStart>0</RetStart><QueryKey>1</QueryKey><WebEnv>NCID_1_1140238722_130.14.22.215_9001_1407013303_1091270378_0MetA0_S_MegaStore_F_1</WebEnv><IdList>
+        <eSearchResult><Count>2250</Count><RetMax>200</RetMax><RetStart>0</RetStart><QueryKey>1</QueryKey><WebEnv>NCID_1_1059300358_130.14.18.34_9001_1407020485_1694275225_0MetA0_S_MegaStore_F_1</WebEnv><IdList>
         <Id>19095945</Id>
         <Id>19095944</Id>
         <Id>19095943</Id>
@@ -245,10 +245,10 @@ http_interactions:
         <Id>19023073</Id>
         </IdList><TranslationSet><Translation>     <From>science[journal]</From>     <To>"Science"[Journal] OR "Science (80- )"[Journal] OR "J Zhejiang Univ Sci"[Journal]</To>    </Translation></TranslationSet><TranslationStack>   <TermSet>    <Term>"Science"[Journal]</Term>    <Field>Journal</Field>    <Count>165363</Count>    <Explode>N</Explode>   </TermSet>   <TermSet>    <Term>"Science (80- )"[Journal]</Term>    <Field>Journal</Field>    <Count>10</Count>    <Explode>N</Explode>   </TermSet>   <OP>OR</OP>   <TermSet>    <Term>"J Zhejiang Univ Sci"[Journal]</Term>    <Field>Journal</Field>    <Count>364</Count>    <Explode>N</Explode>   </TermSet>   <OP>OR</OP>   <OP>GROUP</OP>   <TermSet>    <Term>2008[pdat]</Term>    <Field>pdat</Field>    <Count>830584</Count>    <Explode>N</Explode>   </TermSet>   <OP>AND</OP>  </TranslationStack><QueryTranslation>("Science"[Journal] OR "Science (80- )"[Journal] OR "J Zhejiang Univ Sci"[Journal]) AND 2008[pdat]</QueryTranslation></eSearchResult>
     http_version: 
-  recorded_at: Sat, 02 Aug 2014 21:01:43 GMT
+  recorded_at: Sat, 02 Aug 2014 23:01:25 GMT
 - request:
     method: get
-    uri: http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?WebEnv=NCID_1_1140238722_130.14.22.215_9001_1407013303_1091270378_0MetA0_S_MegaStore_F_1&battista.christian@gmail.com&db=pubmed&query_key=1&retmax=200&retmode=xml&retstart=0&tool=curatescience
+    uri: http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?WebEnv=NCID_1_1059300358_130.14.18.34_9001_1407020485_1694275225_0MetA0_S_MegaStore_F_1&battista.christian@gmail.com&db=pubmed&query_key=1&retmax=200&retmode=xml&retstart=0&tool=curatescience
     body:
       encoding: US-ASCII
       string: ''
@@ -265,7 +265,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 02 Aug 2014 21:01:43 GMT
+      - Sat, 02 Aug 2014 23:01:25 GMT
       Server:
       - Apache
       Access-Control-Allow-Origin:
@@ -273,12 +273,12 @@ http_interactions:
       Cache-Control:
       - private
       Ncbi-Sid:
-      - 9DFD708A3DD51B71_0118SID
+      - 08DE022C3DD6DC51_0165SID
       Content-Type:
       - text/xml; charset=UTF-8
       Set-Cookie:
-      - ncbi_sid=9DFD708A3DD51B71_0118SID; domain=.nih.gov; path=/; expires=Sun, 02
-        Aug 2015 21:01:43 GMT
+      - ncbi_sid=08DE022C3DD6DC51_0165SID; domain=.nih.gov; path=/; expires=Sun, 02
+        Aug 2015 23:01:25 GMT
       X-Ua-Compatible:
       - IE=Edge
       Transfer-Encoding:
@@ -34998,5 +34998,5 @@ http_interactions:
         dD4KICAgIDwvUHVibWVkRGF0YT4KPC9QdWJtZWRBcnRpY2xlPgoKPC9QdWJt
         ZWRBcnRpY2xlU2V0Pgo=
     http_version: 
-  recorded_at: Sat, 02 Aug 2014 21:01:55 GMT
+  recorded_at: Sat, 02 Aug 2014 23:01:28 GMT
 recorded_with: VCR 2.8.0

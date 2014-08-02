@@ -22,6 +22,19 @@ describe Pubmed do
     end
   end
 
+  describe "crawl" do
+    it "should enqueue a job for each page of articles" do
+      VCR.use_cassette('pubmed') do
+        pubmed = Pubmed.new(
+          "science",
+          "2008"
+        )
+        expect(Resque).to receive(:enqueue).exactly(12).times
+        pubmed.crawl
+      end
+    end
+  end
+
   describe "create_articles" do
     let(:article) { Article.find_by_doi('10.1126/science.1163233') }
     before(:each) do
@@ -41,6 +54,11 @@ describe Pubmed do
 
     it "should populate an abstract for each article" do
       article.abstract.should match(/More than 99% of the mass of the visible/)
+    end
+
+    it "should populate an journal title and issn" do
+      article.journal_title.should == 'Science (New York, N.Y.)'
+      article.journal_issn.should == '1095-9203'
     end
 
     it "should populate authors for each article" do

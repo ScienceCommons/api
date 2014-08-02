@@ -13,7 +13,7 @@ class Article < ActiveRecord::Base
   serialize :authors_denormalized
 
   mapping :title, :doi, :index => :not_analyzed
-  mapping :title, :abstract, :authors
+  mapping :title, :abstract, :authors, :journal_title
   mapping :publication_date, :type => :date
 
   after_save :index
