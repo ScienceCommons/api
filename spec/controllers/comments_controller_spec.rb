@@ -45,7 +45,6 @@ describe CommentsController, :type => :controller do
     it "should return the list of comments" do
       get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
-      puts results.inspect
       results.count.should == 3
     end
 
