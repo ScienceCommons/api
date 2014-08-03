@@ -42,7 +42,7 @@ class Pubmed
           pub_date = if article_xml.css('PubDate MedlineDate').text.empty?
             DateTime.new(
               article_xml.css('PubDate Year').text.to_i,
-              Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
+              Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text.empty? ? 'Jan' : article_xml.css('PubDate Month').text),
               article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
             )
           else
