@@ -46,7 +46,7 @@ class Pubmed
               article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
             )
           else
-            split_date = article_xml('PubDate MedlineDate').text.split(' ')
+            split_date = article_xml.css('PubDate MedlineDate').text.split(' ')
             Date.new(
               split_date[0].to_i,
               Date::ABBR_MONTHNAMES.index(split_date[1].split('-')[0]),
