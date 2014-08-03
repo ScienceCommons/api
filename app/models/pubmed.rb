@@ -35,6 +35,11 @@ class Pubmed
     xml.css('Article').each do |article_xml|
       doi = article_xml.css('ELocationID[EIdType="doi"]').text
       unless doi.empty? or article_xml.css('PubDate').text.empty?
+        p article_xml.css('Journal ISSN').text
+        p article_xml.css('PubDate Year').text.to_i
+        p article_xml.css('PubDate Month').text.to_i
+        p article_xml.css('PubDate Day').text.to_i
+
         article = Article.create!({
           journal_issn: article_xml.css('Journal ISSN').text,
           journal_title: article_xml.css('Journal Title').text,
