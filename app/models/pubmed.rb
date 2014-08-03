@@ -36,16 +36,30 @@ class Pubmed
       doi = article_xml.css('ELocationID[EIdType="doi"]').text
       unless doi.empty? or article_xml.css('PubDate').text.empty?
         begin
+
+          # Year Month Day or,
+          # <MedlineDate>2012 Nov-Dec</MedlineDate>
+          pub_date = if article_xml.css('PubDate MedlineDate').text.empty?
+            DateTime.new(
+              article_xml.css('PubDate Year').text.to_i,
+              Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
+              article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
+            )
+          else
+            split_date = article_xml('PubDate MedlineDate').text.split(' ')
+            Date.new(
+              split_date[0].to_i,
+              Date::ABBR_MONTHNAMES.index(split_date[1].split('-')[0]),
+              1
+            )
+          end
+
           article = Article.create!({
             journal_issn: article_xml.css('Journal ISSN').text,
             journal_title: article_xml.css('Journal Title').text,
             title: article_xml.css('ArticleTitle').text.strip,
             doi: doi,
-            publication_date: DateTime.new(
-              article_xml.css('PubDate Year').text.to_i,
-              Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
-              article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
-            ),
+            publication_date: pub_date,
             abstract: article_xml.css('AbstractText').text
           })
 
@@ -59,7 +73,7 @@ class Pubmed
 
           article.save!
         rescue StandardError => ex
-          p ">>> #{ex} url=#{efetch} title=#{article_xml.css('ArticleTitle').text}"
+          p ">>> #{ex} url=#{efetch} title=#{article_xml.css('ArticleTitle').text}" unless ex.to_s =~ /Doi has already been taken/
         end
       end
     end
