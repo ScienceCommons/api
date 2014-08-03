@@ -59,7 +59,7 @@ class Pubmed
 
           article.save!
         rescue StandardError => ex
-          p ">>> #{ex}"
+          p ">>> #{ex} url=#{efetch} title=#{article_xml.css('ArticleTitle').text}"
         end
       end
     end
