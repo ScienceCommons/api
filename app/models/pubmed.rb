@@ -35,28 +35,32 @@ class Pubmed
     xml.css('Article').each do |article_xml|
       doi = article_xml.css('ELocationID[EIdType="doi"]').text
       unless doi.empty? or article_xml.css('PubDate').text.empty?
-        article = Article.create!({
-          journal_issn: article_xml.css('Journal ISSN').text,
-          journal_title: article_xml.css('Journal Title').text,
-          title: article_xml.css('ArticleTitle').text.strip,
-          doi: doi,
-          publication_date: DateTime.new(
-            article_xml.css('PubDate Year').text.to_i,
-            Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
-            article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
-          ),
-          abstract: article_xml.css('AbstractText').text
-        })
+        begin
+          article = Article.create!({
+            journal_issn: article_xml.css('Journal ISSN').text,
+            journal_title: article_xml.css('Journal Title').text,
+            title: article_xml.css('ArticleTitle').text.strip,
+            doi: doi,
+            publication_date: DateTime.new(
+              article_xml.css('PubDate Year').text.to_i,
+              Date::ABBR_MONTHNAMES.index(article_xml.css('PubDate Month').text),
+              article_xml.css('PubDate Day').text.empty? ? 1 : article_xml.css('PubDate Day').text.to_i
+            ),
+            abstract: article_xml.css('AbstractText').text
+          })
 
-        article_xml.css('AuthorList Author').each do |author|
-          article.add_author(
-            author.css('ForeName').text,
-            nil,
-            author.css('LastName').text
-          )
+          article_xml.css('AuthorList Author').each do |author|
+            article.add_author(
+              author.css('ForeName').text,
+              nil,
+              author.css('LastName').text
+            )
+          end
+
+          article.save!
+        rescue SystemError => ex
+          p ">>> #{ex}"
         end
-
-        article.save!
       end
     end
   end
