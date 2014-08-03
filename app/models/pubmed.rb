@@ -58,7 +58,7 @@ class Pubmed
           end
 
           article.save!
-        rescue SystemError => ex
+        rescue StandardError => ex
           p ">>> #{ex}"
         end
       end
