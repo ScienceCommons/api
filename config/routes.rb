@@ -111,6 +111,8 @@ PaperSearchApi::Application.routes.draw do
 
   # Our own OAuth provider.
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
+  # used for unit testing our OAuth controller before it's in use.
+  resources :oauth_protected
   #resource :session, :only => :new
 
   # Third-party OAuth providers.
