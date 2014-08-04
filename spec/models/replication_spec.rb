@@ -10,9 +10,7 @@ describe Replication do
 
   let!(:owner) do
     User.create!({
-      :email => "ben@example.com",
-      :password => "11111111",
-      :password_confirmation => "11111111"
+      :email => "ben@example.com"
     })
   end
   let(:article) do

@@ -4,9 +4,7 @@ describe CommentsController, :type => :controller do
   let(:user) do
     User.create!({
       :name => "bentron",
-      :email => "ben@example.com",
-      :password => "11111111",
-      :password_confirmation => "11111111"
+      :email => "ben@example.com"
     })
   end
 
@@ -14,8 +12,6 @@ describe CommentsController, :type => :controller do
     User.create!({
       :name => "ben",
       :email => "ben+admin@example.com",
-      :password => "11111111",
-      :password_confirmation => "11111111",
       :admin => true
     })
   end

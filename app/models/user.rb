@@ -4,16 +4,6 @@ class User < ActiveRecord::Base
 
   BETA_EMAILS = ["sdemjanenko@gmail.com", "etienne.lebel@gmail.com", "bencoe@gmail.com", "battista.christian@gmail.com"]
 
-  # when a user logs in using OAuth, we create an account
-  # with this fake password. It is important that a user
-  # not be allowed to login with this password.
-  PLACEHOLDER_PASSWORD = 'f662c13e-0a4d-11e4-a0d0-b2227cce2b54'
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
   has_many :replications, :class_name => 'Replication', :foreign_key => :owner_id
   has_many :articles, :class_name => 'Article', :foreign_key => :owner_id
   has_many :studies, :class_name => 'Study', :foreign_key => :owner_id
@@ -29,12 +19,6 @@ class User < ActiveRecord::Base
   after_save :index
   after_destroy :delete_from_index
 
-  # TODO: make login disabled until
-  # a user creates a login for their account.
-  def active_for_authentication?
-    super && false
-  end
-
   def self.create_with_omniauth(auth)
     email = auth.info.email
     user = User.find_by_email(email)
@@ -44,9 +28,7 @@ class User < ActiveRecord::Base
     unless user
       user = User.create({
         name: auth["info"]["name"],
-        email: email,
-        password: PLACEHOLDER_PASSWORD,
-        password_confirmation: PLACEHOLDER_PASSWORD
+        email: email
       })
     end
 
