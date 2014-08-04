@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def beta_mail_list
     uri = URI('https://us7.api.mailchimp.com/2.0/lists/members.json')
-    beta_params = { :apikey => "f7117b16cdaded8f5565d9b9cc3b25bc", :id => "fba08af7dd" }
+    beta_params = { :apikey => ENV['MAILCHIMP_API_KEY'], :id => ENV['MAILCHIMP_ID'] }
     uri.query = URI.encode_www_form(beta_params)
     res = Net::HTTP.get_response(uri)
 
