@@ -12,6 +12,7 @@ describe User do
   end
   let(:user_2) do
     User.create!({
+      :invite_count => 1,
       :email => "bob@example.com"
     })
   end
@@ -75,6 +76,21 @@ describe User do
 
     it "allows all findings created by a user to be looked up" do
       user.findings.count.should == 2
+    end
+  end
+
+  describe "send_invite" do
+    it "does not allow a user to send invites if invite_count is 0" do
+      Invite.any_instance.should_not_receive(:send_invite)
+      expect { user.send_invite('ben@example.com') }
+        .to raise_error(Exceptions::NoInvitesAvailable)
+    end
+
+    it "allows an invite to be sent if invite_cout > 0" do
+      Invite.any_instance.should_receive(:send_invite)
+      user_2.invite_count.should == 1
+      user_2.send_invite('ben@example.com')
+      user_2.invite_count.should == 0
     end
   end
 

@@ -2,6 +2,9 @@ module Exceptions
   class InvalidEffectSize < StandardError
   end
 
+  class NoInvitesAvailable < StandardError
+  end
+
   class ErrorWithFields < StandardError
     attr_accessor :field
     def initialize(message, field)

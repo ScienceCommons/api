@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :articles, :class_name => 'Article', :foreign_key => :owner_id
   has_many :studies, :class_name => 'Study', :foreign_key => :owner_id
   has_many :findings, :class_name => 'Finding', :foreign_key => :owner_id
+  has_many :invites, :class_name => 'Invite', :foreign_key => :inviter_id
   has_many :accounts
 
   validates_uniqueness_of :email
@@ -39,5 +40,16 @@ class User < ActiveRecord::Base
     })
 
     user
+  end
+
+  def send_invite(email)
+    if self.invite_count > 0
+      self.update_attribute(:invite_count, self.invite_count - 1)
+      self.invites.create(
+        email: email
+      ).send_invite
+    else
+      raise Exceptions::NoInvitesAvailable.new
+    end
   end
 end
