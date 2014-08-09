@@ -83,11 +83,11 @@ PaperSearchApi::Application.routes.draw do
   #     resources :products
   #   end
   resources :studies, :only => [:index, :show, :update] do
-    resources :replications, :only => [:show, :index]
-    resources :replication_of, :only => [:show, :index]
-    resources :findings, :only => [:show, :index]
-    resources :materials, :only => [:show, :index]
-    resources :registrations, :only => [:show, :index]
+    resources :replications
+    resources :replication_of
+    resources :findings
+    resources :materials
+    resources :registrations
   end
 
   resources :comments, :only => [:show, :destroy]
