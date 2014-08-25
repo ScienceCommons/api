@@ -1,12 +1,6 @@
 PaperSearchApi::Application.routes.draw do
   match '*all', to: 'application#set_headers', via: [:options]
 
-  devise_for :users, :controllers => { :sessions => "sessions" }
-  devise_scope :user do
-    resources :sessions, :only => [:create, :destroy]
-    match '/sessions/user', to: 'devise/sessions#create', via: :post
-  end
-
   resources :users, :only => [:index, :show, :create] do
     member do
       post 'toggle_admin'
@@ -117,11 +111,14 @@ PaperSearchApi::Application.routes.draw do
 
   # Our own OAuth provider.
   post 'oauth2/token', :to => proc { |env| TokenEndpoint.new.call(env) }
+  # used for unit testing our OAuth controller before it's in use.
+  resources :oauth_protected
   #resource :session, :only => :new
 
   # Third-party OAuth providers.
   get "/auth/google_oauth2/callback" => "oauth_sessions#create"
   get "/login" => "oauth_sessions#login"
+  get "/log_out" => "oauth_sessions#destroy"
 
   get '/beta', to: 'beta#index'
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140802230609) do
+ActiveRecord::Schema.define(version: 20140805055451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,17 @@ ActiveRecord::Schema.define(version: 20140802230609) do
   add_index "findings", ["owner_id"], name: "index_findings_on_owner_id", using: :btree
   add_index "findings", ["study_id"], name: "index_findings_on_study_id", using: :btree
 
+  create_table "invites", force: true do |t|
+    t.integer  "invite_id"
+    t.integer  "inviter_id"
+    t.string   "email",      default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invites", ["email"], name: "index_invites_on_email", using: :btree
+  add_index "invites", ["inviter_id"], name: "index_invites_on_inviter_id", using: :btree
+
   create_table "materials", force: true do |t|
     t.text     "url"
     t.string   "name"
@@ -167,12 +178,9 @@ ActiveRecord::Schema.define(version: 20140802230609) do
   add_index "studies", ["owner_id"], name: "index_studies_on_owner_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.string   "email",               default: "", null: false
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -182,9 +190,9 @@ ActiveRecord::Schema.define(version: 20140802230609) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.integer  "invite_count",        default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

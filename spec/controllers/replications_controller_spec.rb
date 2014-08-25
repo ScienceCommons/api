@@ -13,16 +13,12 @@ describe ReplicationsController, :type => :controller do
 
   let(:user) do
     User.create!({
-      :email => "ben@example.com",
-      :password => "11111111",
-      :password_confirmation => "11111111"
+      :email => "ben@example.com"
     })
   end
   let(:user_2) do
     User.create!({
-      :email => "christian@example.com",
-      :password => "11111111",
-      :password_confirmation => "11111111"
+      :email => "christian@example.com"
     })
   end
   let(:article) do

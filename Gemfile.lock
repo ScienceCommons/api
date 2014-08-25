@@ -46,7 +46,6 @@ GEM
       activesupport (>= 3.2.0)
     arel (4.0.2)
     attr_required (1.0.0)
-    bcrypt (3.1.7)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -57,12 +56,6 @@ GEM
     coffee-script-source (1.7.1)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
-    devise (3.2.4)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
     dotenv (0.11.1)
@@ -125,7 +118,6 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
-    orm_adapter (0.5.0)
     pg (0.17.1)
     polyglot (0.3.5)
     rack (1.5.2)
@@ -280,8 +272,6 @@ GEM
     uuidtools (2.1.4)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    warden (1.2.3)
-      rack (>= 1.0)
     webmock (1.18.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -293,7 +283,6 @@ PLATFORMS
 DEPENDENCIES
   ar-octopus
   coffee-rails (~> 4.0.0)
-  devise
   dotenv-rails
   elastic_mapper (~> 0.2.1)
   faraday
