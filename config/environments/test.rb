@@ -33,4 +33,7 @@ PaperSearchApi::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # environment-specific globals.
+  INVITE_URL = 'https://127.0.0.1:5000/login'
 end

@@ -3,6 +3,6 @@ class Invite < ActiveRecord::Base
   belongs_to :inviter, :class_name => 'User', :foreign_key => :inviter_id
 
   def send_invite
-    # we should totes write the logic that does this.
+    UserMailer.invite_email(self.email, self.inviter).deliver!
   end
 end

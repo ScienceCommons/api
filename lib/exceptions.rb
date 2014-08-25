@@ -5,6 +5,9 @@ module Exceptions
   class NoInvitesAvailable < StandardError
   end
 
+  class NotOnInviteList < StandardError
+  end
+
   class ErrorWithFields < StandardError
     attr_accessor :field
     def initialize(message, field)

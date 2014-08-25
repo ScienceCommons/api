@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email
   validates_presence_of :email
-  validates :email, inclusion: { in: BETA_EMAILS, message: "%{value} is not in the beta." }, if: Proc.new {|a| Rails.env == 'production'}
 
   mapping :email, :name, :index => :not_analyzed
 
@@ -22,11 +21,15 @@ class User < ActiveRecord::Base
 
   def self.create_with_omniauth(auth)
     email = auth.info.email
+
     user = User.find_by_email(email)
 
     # if no user is associated with this
     # email address create one.
     unless user
+      # only allow invited users to create accounts.
+      raise Exceptions::NotOnInviteList.new unless Invite.find_by_email(email)
+
       user = User.create({
         name: auth["info"]["name"],
         email: email

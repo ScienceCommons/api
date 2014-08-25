@@ -94,4 +94,33 @@ describe User do
     end
   end
 
+  describe "create_with_omniauth" do
+    it "does not allow an account to be created if user not in invites table" do
+      expect do
+        User.create_with_omniauth(
+          OpenStruct.new({
+            info: OpenStruct.new({ email: 'foo@example.com', name: 'Ben' }),
+            provider: 'fake-provider',
+            uid: 'fake-uid'
+          })
+        )
+      end.to raise_error(Exceptions::NotOnInviteList)
+    end
+
+    it "allows user on invite list to create an account" do
+      Invite.create(email: 'foo@example.com')
+
+      User.create_with_omniauth(
+        OpenStruct.new({
+          info: OpenStruct.new({ email: 'foo@example.com', name: 'BDizzle' }),
+          provider: 'fake-provider',
+          uid: 'fake-uid'
+        })
+      )
+
+      user = User.find_by_email('foo@example.com')
+      user.name.should == 'BDizzle'
+    end
+  end
+
 end

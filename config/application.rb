@@ -44,5 +44,11 @@ module PaperSearchApi
     config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Rack::OAuth2 Article Search API' do |req|
         Oauth2::AccessToken.valid.find_by_token(req.access_token) || req.invalid_token!
     end
-  end
+
+    # Setup SES as our mailer.
+    ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base,
+      :access_key_id => ENV['AWS_SES_ID'],
+      :secret_access_key => ENV['AWS_SES_KEY'],
+      :server => ENV['AWS_SES_SERVER']
+    end
 end
