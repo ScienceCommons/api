@@ -86,6 +86,12 @@ describe CommentsController, :type => :controller do
       comment = JSON.parse(response.body)
       comment['owner_id'].should == user.id
     end
+
+    it "should set whether the comment is anonymous when creating a comment" do
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
+      comment = JSON.parse(response.body)
+      comment['anonymous'].should == false
+    end
   end
 
   describe "#destroy" do
