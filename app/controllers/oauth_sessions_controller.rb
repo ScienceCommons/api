@@ -14,6 +14,8 @@ class OauthSessionsController < ApplicationController
 
     session[:user_id] = user.id
     redirect_to "/beta/#/"
+  rescue Exceptions::NotOnInviteList => ex
+    redirect_to "/#section-6"
   end
 
   def current_user
