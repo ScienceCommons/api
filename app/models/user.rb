@@ -2,8 +2,6 @@ class User < ActiveRecord::Base
 
   include ElasticMapper
 
-  BETA_EMAILS = ["sdemjanenko@gmail.com", "etienne.lebel@gmail.com", "bencoe@gmail.com", "battista.christian@gmail.com"]
-
   has_many :replications, :class_name => 'Replication', :foreign_key => :owner_id
   has_many :articles, :class_name => 'Article', :foreign_key => :owner_id
   has_many :studies, :class_name => 'Study', :foreign_key => :owner_id
