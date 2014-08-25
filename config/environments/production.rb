@@ -78,4 +78,7 @@ PaperSearchApi::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  # environment-specific globals.
+  INVITE_URL = 'https://127.0.0.1:5000/login'
 end

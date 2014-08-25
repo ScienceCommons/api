@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe PlosAlm do
 
+  before(:all) { WebMock.enable! }
+
   before(:each) do
     Resque.stub(:enqueue)
     Article.any_instance.stub(:index)
