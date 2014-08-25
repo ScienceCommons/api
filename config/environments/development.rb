@@ -28,5 +28,5 @@ PaperSearchApi::Application.configure do
   config.assets.debug = true
 
   # environment-specific globals.
-  INVITE_URL = 'https://127.0.0.1:5000/login'
+  INVITE_URL = 'http://127.0.0.1:5000/login'
 end
