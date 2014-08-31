@@ -97,6 +97,7 @@ PaperSearchApi::Application.routes.draw do
   resources :articles do
     collection do
       get 'recent'
+      get 'recently_added'
     end
 
     resources :studies do
