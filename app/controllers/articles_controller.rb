@@ -28,6 +28,13 @@ class ArticlesController < ApplicationController
     render json: {error: ex.to_s}, status: 500
   end
 
+  def recently_added
+    limit = params[:limit] ? params[:limit].to_i : 3
+    render json: Article.order('created_at DESC').limit(limit).to_a
+  rescue StandardError => ex
+    render json: {error: ex.to_s}, status: 500
+  end
+
   def create
     article = Article.create!({
       doi: params[:doi],
