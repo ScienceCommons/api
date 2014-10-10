@@ -44,8 +44,8 @@ class User < ActiveRecord::Base
   end
 
   def send_invite(email)
-    if self.invite_count > 0
-      self.update_attribute(:invite_count, self.invite_count - 1)
+    if self.admin || self.invite_count > 0
+      self.update_attribute(:invite_count, self.invite_count - 1) unless self.admin
       self.invites.create(
         email: email
       ).send_invite
