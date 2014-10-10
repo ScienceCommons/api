@@ -46,9 +46,9 @@ class User < ActiveRecord::Base
   def send_invite(email)
     if self.admin || self.invite_count > 0
       self.update_attribute(:invite_count, self.invite_count - 1) unless self.admin
-      self.invites.create(
-        email: email
-      ).send_invite
+      invite = self.invites.create(email: email)
+      invite.send_invite
+      return invite
     else
       raise Exceptions::NoInvitesAvailable.new
     end
