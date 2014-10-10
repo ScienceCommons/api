@@ -23,7 +23,7 @@ describe InvitesController, :type => :controller do
 
       User.any_instance.should_receive(:send_invite).with('foo@example.com')
 
-      post :create, { to_email: 'foo@example.com' }
+      post :create, { email: 'foo@example.com' }
 
       response.status.should == 201
     end
@@ -32,14 +32,14 @@ describe InvitesController, :type => :controller do
       # return a user with invits
       controller.stub(:current_user).and_return(user2)
 
-      post :create, { to_email: 'foo@example.com' }
+      post :create, { email: 'foo@example.com' }
 
       response.status.should == 500
       response.body.should =~ /no invites remaining/
     end
 
     it "should return a 401 not authorized if user not logged in" do
-      post :create, { to_email: 'foo@example.com' }
+      post :create, { email: 'foo@example.com' }
       User.any_instance.should_not_receive(:send_invite).with('foo@example.com')
       response.status.should == 401
     end
