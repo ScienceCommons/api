@@ -1,7 +1,7 @@
 PaperSearchApi::Application.routes.draw do
   match '*all', to: 'application#set_headers', via: [:options]
 
-  resources :users, :only => [:index, :show, :create] do
+  resources :users, :only => [:index, :show, :create, :update] do
     member do
       post 'toggle_admin'
     end

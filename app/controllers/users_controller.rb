@@ -1,7 +1,10 @@
 require 'net/http'
 
 class UsersController < ApplicationController
-  before_filter :check_admin
+  #before_action :authenticate_user!
+  #before_filter :authenticate!
+
+  before_filter :check_admin, :except => [:update]
 
   def index
     opts = {
@@ -16,6 +19,21 @@ class UsersController < ApplicationController
 
   def show
     render json: User.find_by(id: params[:id].to_i)
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    render json: {error: 'unknown error'}, status: 500
+  end
+
+  def update
+    user = User.find(params[:id].to_i)
+    render(json: {error: 'you can only edit your user'}, status: 401) and return unless current_user == user
+
+    user.name = params[:name] if params[:name]
+    user.save!
+    render json: user
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
