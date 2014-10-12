@@ -113,17 +113,11 @@ class ReplicationsController < ApplicationController
   end
 
   def destroy
-    [:article_id, :study_id, :id].each do |k|
+    [:id].each do |k|
       raise "#{k} must be provided" if params[k].nil?
     end
 
-    article_id = params[:article_id].to_i
-    study_id = params[:study_id].to_i
-    id = params[:id].to_i
-
-    replication = Article.find(article_id)
-      .studies.find(study_id)
-      .replications.find(id)
+    replication = Replication.find(params[:id].to_i)
 
     # currently replications created with no owner
     # can be deleted by anyone.

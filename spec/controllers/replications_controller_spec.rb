@@ -183,13 +183,13 @@ describe ReplicationsController, :type => :controller do
   describe("#delete") do
 
     it("does not allow a replication to be deleted by someone other than the owner") do
-      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_2.id }
+      delete :destroy, { id: replication_2.id }
       response.status.should == 401
       Replication.all.count.should == 2
     end
 
     it("allows the owner of a replication to delete it") do
-      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_1.id }
+      delete :destroy, { id: replication_1.id }
       response.status.should == 204
       Replication.all.count.should == 1
       Replication.first.should == replication_2
@@ -197,7 +197,7 @@ describe ReplicationsController, :type => :controller do
 
     it("allows a replication to be deleted if it has no owner") do
       replication_2.update(owner_id: nil)
-      delete :destroy, { article_id: article.id, study_id: study.id, id: replication_2.id }
+      delete :destroy, { id: replication_2.id }
       response.status.should == 204
       Replication.all.count.should == 1
     end
