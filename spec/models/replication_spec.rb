@@ -71,6 +71,19 @@ describe Replication do
       replication.reload
       replication.owner.should == owner
     end
+
+    it "should not allow the study and the replicating study to be the same" do
+      replication = Replication.create(
+        study_id: study.id,
+        replicating_study_id: study.id,
+        closeness: 2
+      )
+
+      replication.errors.count.should == 1
+      field, error = replication.errors.first
+      field.should == :replicating_study_id
+      error.should == "must be different from study_id"
+    end
   end
 
   describe "returning study objects" do
