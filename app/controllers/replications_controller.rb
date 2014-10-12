@@ -127,7 +127,7 @@ class ReplicationsController < ApplicationController
 
     # currently replications created with no owner
     # can be deleted by anyone.
-    if not replication.owner or replication.owner == current_user
+    if not replication.owner or replication.owner == current_user or current_user.admin
       replication.destroy!
       render json: {success: true, data: replication.as_json(replications: true)}, status: 204
     else

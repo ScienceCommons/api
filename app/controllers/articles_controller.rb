@@ -71,7 +71,7 @@ class ArticlesController < ApplicationController
     article = Article.find(params[:id].to_i)
 
     # you can only edit articles you have created.
-    render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner
+    render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
 
     article.abstract = params[:abstract] if params[:abstract]
     article.title = params[:title] if params[:title]
@@ -111,7 +111,7 @@ class ArticlesController < ApplicationController
     article = Article.find(params[:id].to_i)
 
     # you can only edit articles you have created.
-    render(json: {error: 'you can only delete articles that you create'}, status: 401) and return unless current_user == article.owner
+    render(json: {error: 'you can only delete articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
 
     article.destroy!
 
