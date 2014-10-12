@@ -49,7 +49,7 @@ class Study < ActiveRecord::Base
   end
 
   def add_replication(replicating_study, closeness=0, owner=nil)
-    self.replications.create(
+    self.replications.create!(
       replicating_study_id: replicating_study.id,
       closeness: closeness,
       owner_id: owner ? owner.id : nil

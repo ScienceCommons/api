@@ -38,6 +38,9 @@ describe ReplicationsController, :type => :controller do
   let(:replicating_study_2) do
     Study.create({ article_id: article.id, n: 0, power: 0 })
   end
+  let(:replicating_study_3) do
+    Study.create({ article_id: article.id, n: 0, power: 0 })
+  end
   let!(:replication_1) do
     replication = Replication.create(
       study_id: study.id,
@@ -111,7 +114,7 @@ describe ReplicationsController, :type => :controller do
       post :create, {
         article_id: article.id,
         study_id: study.id,
-        replicating_study_id: replicating_study_2.id,
+        replicating_study_id: replicating_study_3.id,
         closeness: 3
       }
 
@@ -124,9 +127,10 @@ describe ReplicationsController, :type => :controller do
       post :create, {
         article_id: article.id,
         study_id: study.id,
-        replicating_study_id: replicating_study_2.id,
+        replicating_study_id: replicating_study_3.id,
         closeness: 3
       }
+      response.status.should == 201
       owner = Replication.find(JSON.parse(response.body)['id']).owner
       owner.should == user
     end
