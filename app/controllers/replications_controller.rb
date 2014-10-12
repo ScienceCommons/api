@@ -62,7 +62,7 @@ class ReplicationsController < ApplicationController
     closeness = params[:closeness].to_i
 
     study = Article.find(article_id).studies.find(study_id)
-    replicating_study = Article.find(article_id).studies.find(replicating_study_id)
+    replicating_study = Study.find(replicating_study_id)
 
     replication = study.add_replication(
       replicating_study,
