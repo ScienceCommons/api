@@ -100,19 +100,22 @@ describe StudiesController, :type => :controller do
       article.studies.count.should == 4
       study['power'].should == nil
       study['n'].should == nil
+      study['number'].should == nil
     end
 
-    it "should allow us to populate power and n" do
+    it "should allow us to populate power, n and number" do
       post :create, {
         article_id: article.id,
         n: 22,
-        power: 0.5
+        power: 0.5,
+        number: "1a"
       }
 
       response.status.should == 201
       study = JSON.parse(response.body)
       study['n'].should == 22
       study['power'].should == 0.5
+      study['number'].should == "1a"
     end
 
     it "allows dependent variables to be added when creating study" do
@@ -173,13 +176,15 @@ describe StudiesController, :type => :controller do
         article_id: article.id,
         id: s2.id,
         n: 25,
-        power: 0.1
+        power: 0.1,
+        number: "2b"
       }
 
       response.status.should == 200
       s2.reload
       s2.n.should == 25
       s2.power.should == 0.1
+      s2.number.should == "2b"
     end
 
     it "should update simple keys on study even without article id" do
