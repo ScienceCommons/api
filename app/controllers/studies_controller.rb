@@ -94,10 +94,7 @@ class StudiesController < ApplicationController
   def update_serialized_keys(study)
     # push dependent and independent variables.
     [:dependent_variables, :independent_variables].each do |key|
-      params[key].to_a.each do |v|
-        study.send("#{key}=".to_sym, [])
-        study.send("add_#{key}".to_sym, v)
-      end
+      study.send("#{key}=".to_sym, params[key].to_a) if !params[key].nil?
     end
 
     # set effect size for a specific test type.
