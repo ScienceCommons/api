@@ -46,7 +46,8 @@ class StudiesController < ApplicationController
     return render_error('article_id must be provided') if params[:article_id].nil?
     study = Article.find(params[:article_id].to_i).studies.create!({
       n: params['n'] ? params['n'].to_i : nil,
-      power: params['power'] ? params['power'].to_f : nil
+      power: params['power'] ? params['power'].to_f : nil,
+      number: params['number'].to_s,
     })
 
     update_serialized_keys(study)
@@ -76,6 +77,7 @@ class StudiesController < ApplicationController
     study.n = params[:n] if params[:n]
     study.power = params[:power] if params[:power]
     update_serialized_keys(study)
+    study.number = params[:number] if params[:number]
 
     study.save!
     render json: study
