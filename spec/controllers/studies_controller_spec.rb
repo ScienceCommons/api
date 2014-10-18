@@ -141,7 +141,7 @@ describe StudiesController, :type => :controller do
 
       response.status.should == 201
       study = JSON.parse(response.body)
-      study['independent_variables'].count == 2
+      study['independent_variables'].count.should == 2
       study['independent_variables'].should include('inclusive-working-environment')
     end
 
@@ -210,13 +210,15 @@ describe StudiesController, :type => :controller do
       post :update, {
         article_id: article.id,
         id: s1.id,
-        dependent_variables: ['banana'],
-        independent_variables: ['apple']
+        dependent_variables: ['banana', 'foo'],
+        independent_variables: ['apple', 'cat']
       }
 
       response.status.should == 200
       s1.reload
+      s1.independent_variables.count.should == 2
       s1.independent_variables.first.should == 'apple'
+      s1.dependent_variables.count.should == 2
       s1.dependent_variables.first.should == 'banana'
     end
 
