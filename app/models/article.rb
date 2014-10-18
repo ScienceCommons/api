@@ -8,7 +8,7 @@ class Article < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
 
   validates_uniqueness_of :doi
-  validates_presence_of :doi, :title
+  validates_presence_of :title
 
   serialize :authors_denormalized
 
@@ -20,6 +20,7 @@ class Article < ActiveRecord::Base
   after_destroy :delete_from_index
   before_create do
     self.authors_denormalized = []
+    self.doi ||= ""
   end
 
   def add_author(first_name, middle_name, last_name)

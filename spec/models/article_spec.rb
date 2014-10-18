@@ -21,14 +21,9 @@ describe Article do
       error.should == 'has already been taken'
     end
 
-    it "should not allow an article with a nil DOI to be created" do
+    it "should allow an article with a nil DOI to be created" do
       article = Article.create(doi: nil, title: 'hello world')
-
-      article.errors.count.should == 1
-
-      field, error = article.errors.first
-      field.should == :doi
-      error.should == "can't be blank"
+      article.errors.count.should == 0
     end
   end
 

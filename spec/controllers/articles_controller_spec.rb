@@ -83,15 +83,6 @@ describe ArticlesController, :type => :controller do
       err['messages']['title'].should == ["can't be blank"]
     end
 
-    # we might eventually automatically create a DOI
-    # if none is provided.
-    it "should return a 500 if DOI is not provided" do
-      post :create, { title: 'my awesome title' }
-      response.status.should == 500
-      err = JSON.parse(response.body)
-      err['messages']['doi'].should == ["can't be blank"]
-    end
-
     it "should allow an article to be created with DOI and title" do
       post :create, { title: 'my awesome title', doi: 'abc555' }
       article = JSON.parse(response.body)

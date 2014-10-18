@@ -100,7 +100,7 @@ describe StudiesController, :type => :controller do
       article.studies.count.should == 4
       study['power'].should == nil
       study['n'].should == nil
-      study['number'].should == nil
+      study['number'].should == ""
     end
 
     it "should allow us to populate power, n and number" do
