@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
   <% if Rails.env == 'production' %>
-    Raven.config(<%= ENV['SENTRY_DSN'].to_json.html_safe %>, {
+    Raven.config('https://ddd00458907a4eeea7e63a633a41c85c@app.getsentry.com/31981', {
       whitelistUrls: ['curatescience.org/']
     }).install();
   <% end %>
