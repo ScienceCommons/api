@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-PaperSearchApi::Application.config.secret_key_base = Rails.env == "test" ? "12345" : ENV['SECRET_KEY_BASE']
+PaperSearchApi::Application.config.secret_key_base = Rails.env == "production" ? ENV['SECRET_KEY_BASE'] : "12345"
