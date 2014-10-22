@@ -63,6 +63,23 @@ ActiveRecord::Schema.define(version: 20141018174535) do
   add_index "articles", ["owner_id"], name: "index_articles_on_owner_id", using: :btree
   add_index "articles", ["publication_date"], name: "index_articles_on_publication_date", using: :btree
 
+  create_table "authors", force: true do |t|
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "orcid"
+    t.string   "job_title"
+    t.integer  "user_id"
+    t.integer  "same_as_id"
+    t.json     "affiliations"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authors", ["orcid"], name: "index_authors_on_orcid", using: :btree
+  add_index "authors", ["same_as_id"], name: "index_authors_on_same_as_id", using: :btree
+  add_index "authors", ["user_id"], name: "index_authors_on_user_id", using: :btree
+
   create_table "clients", force: true do |t|
     t.string   "identifier"
     t.string   "secret"
