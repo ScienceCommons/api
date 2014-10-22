@@ -123,4 +123,5 @@ PaperSearchApi::Application.routes.draw do
   get "/log_out" => "oauth_sessions#destroy"
 
   get '/beta', to: 'beta#index'
+  get '/beta/*all', to: 'beta#index'
 end
