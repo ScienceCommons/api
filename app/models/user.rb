@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :findings, :class_name => 'Finding', :foreign_key => :owner_id
   has_many :invites, :class_name => 'Invite', :foreign_key => :inviter_id
   has_many :accounts
+  has_one :author
 
   validates_uniqueness_of :email
   validates_presence_of :email
