@@ -6,6 +6,8 @@ class Article < ActiveRecord::Base
   has_many :studies
   has_many :comments, as: :commentable
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
+  has_many :article_authors
+  has_many :authors, :through => :article_authors
 
   validates_uniqueness_of :doi
   validates_presence_of :title

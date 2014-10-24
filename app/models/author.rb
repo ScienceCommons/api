@@ -2,6 +2,8 @@ class Author < ActiveRecord::Base
   include ElasticMapper
 
   belongs_to :user
+  has_many :article_authors
+  has_many :articles, :through => :article_authors
 
   validates_uniqueness_of :orcid
   validates_uniqueness_of :user_id
