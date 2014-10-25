@@ -20,6 +20,14 @@ describe ArticlesController, :type => :controller do
   let(:article_5) { Article.create(doi: '123guava', title: 'article 5', owner_id: user.id, updated_at: '2010-04-05') }
   let(:article_6) { Article.create(doi: '123peach', title: 'article 6', owner_id: user_2.id, updated_at: '2010-04-06') }
 
+  let(:author) {
+    author = Author.create({first_name: 'cat', last_name: 'dog'})
+    author.articles << article_5
+    author.articles << article_6
+    author.save
+    author
+  }
+
   before(:all) do
     WebMock.disable!
     Timecop.freeze(Time.local(1990))
@@ -47,6 +55,12 @@ describe ArticlesController, :type => :controller do
       results = JSON.parse(response.body)
       results['documents'].count.should == 6
       results['total'].should == 6
+    end
+
+    it "returns a list articles for an author" do
+      get :index, :author_id => author.id
+      results = JSON.parse(response.body)
+      results.count.should == 2
     end
   end
 

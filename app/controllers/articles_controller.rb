@@ -3,12 +3,17 @@ class ArticlesController < ApplicationController
   #before_filter :authenticate!
 
   def index
-    opts = {
-      from: params[:from] ? params[:from].to_i : 0,
-      size: params[:size] ? params[:size].to_i : 20
-    }
+    author_id = params[:author_id].to_i
+    if author_id != 0
+      render json: Author.find(author_id).articles
+    else
+      opts = {
+        from: params[:from] ? params[:from].to_i : 0,
+        size: params[:size] ? params[:size].to_i : 20
+      }
 
-    render json: Article.search(params[:q] || '*', opts)
+      render json: Article.search(params[:q] || '*', opts)
+    end
   rescue StandardError => ex
     render json: {error: ex.to_s}, status: 500
   end
