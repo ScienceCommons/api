@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024052654) do
+ActiveRecord::Schema.define(version: 20141025175412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,9 +84,11 @@ ActiveRecord::Schema.define(version: 20141024052654) do
     t.json     "affiliations"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   add_index "authors", ["orcid"], name: "index_authors_on_orcid", using: :btree
+  add_index "authors", ["owner_id"], name: "index_authors_on_owner_id", using: :btree
   add_index "authors", ["same_as_id"], name: "index_authors_on_same_as_id", using: :btree
   add_index "authors", ["user_id"], name: "index_authors_on_user_id", using: :btree
 
