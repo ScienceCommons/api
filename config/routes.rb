@@ -93,6 +93,7 @@ PaperSearchApi::Application.routes.draw do
   resources :registrations
   resources :findings
   resources :invites, :only => [:create]
+  resources :authors, :only => [:index, :show, :create, :update, :destroy]
 
   resources :articles do
     collection do
