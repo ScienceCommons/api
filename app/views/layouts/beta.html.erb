@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Curate Science</title>
   <link rel='shortcut icon' type='image/x-icon' href="https://s3.amazonaws.com/www.curatescience.org/favicon.ico" />
+  <%= csrf_meta_tags %>
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -14,6 +15,5 @@
   <![endif]-->
 
   <%= yield %>
-  
 </body>
 </html>
