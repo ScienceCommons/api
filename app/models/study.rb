@@ -6,6 +6,7 @@ class Study < ActiveRecord::Base
   has_many :materials
   has_many :replications
   has_many :registrations
+  has_many :links
   has_many :replication_of, :class_name => 'Replication', :foreign_key => :replicating_study_id
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :article
@@ -68,6 +69,7 @@ class Study < ActiveRecord::Base
       h[:registrations] = self.registrations if opts[:registrations]
       h[:replications] = self.replications.as_json(opts) if opts[:replications]
       h[:replication_of] = self.replication_of.as_json(opts) if opts[:replication_of]
+      h[:links] = self.links if opts[:links]
       h
     end
   end

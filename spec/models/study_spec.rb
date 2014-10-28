@@ -115,6 +115,27 @@ describe Study do
     end
   end
 
+  describe "links" do
+    it "allows a link to be created for a study" do
+      study.links.create({
+        name: 'link1.txt',
+        url: 'https://www.example.com/',
+        type: 'finding'
+      })
+      study.links.create({
+        name: 'link2.txt',
+        url: 'https://www.example2.com/',
+        type: 'material'
+      })
+
+      study.links.count.should == 2
+      link = study.links.first
+      link.name.should == 'link1.txt'
+      link.url.should == 'https://www.example.com/'
+      link.type.should == 'finding'
+    end
+  end
+
   describe "to_json" do
     it "should include findings" do
       study.findings.create({
@@ -140,6 +161,14 @@ describe Study do
       study.as_json(registrations: true)[:registrations].count.should == 1
     end
 
+    it "should include links" do
+      study.links.create({
+        name: 'link1.txt',
+        url: 'https://www.example.com/',
+        type: 'finding'
+      })
+      study.as_json(links: true)[:links].count.should == 1
+    end
 
     it "should return repliating studies, if replications flag is set" do
       study.add_replication(replicating_study, 3)
