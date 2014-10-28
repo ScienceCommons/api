@@ -96,6 +96,7 @@ PaperSearchApi::Application.routes.draw do
   resources :authors, :only => [:index, :show, :create, :update, :destroy] do
     resources :articles, :only => [:index]
   end
+  resources :links, :only => [:index, :create, :update, :destroy]
 
   resources :articles do
     collection do
@@ -109,6 +110,7 @@ PaperSearchApi::Application.routes.draw do
       resources :findings
       resources :materials
       resources :registrations
+      resources :links, :only => [:index, :create]
     end
   end
 
