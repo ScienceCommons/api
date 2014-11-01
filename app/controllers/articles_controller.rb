@@ -51,13 +51,8 @@ class ArticlesController < ApplicationController
 
     # add the author list, and resave.
     if params[:authors]
-      params[:authors].each do |author|
-        article.add_author(
-          author['first_name'],
-          author['middle_name'],
-          author['last_name']
-        )
-      end
+      ids = params[:authors].map{|author| author["id"].to_i}
+      article.authors = Author.find(ids)
       article.save!
     end
 
@@ -82,19 +77,10 @@ class ArticlesController < ApplicationController
     article.title = params[:title] if params[:title]
     article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
 
+    # add the author list, and resave.
     if params[:authors]
-      # reset to empty authors array,
-      # we expect the UI will always send
-      # a list of all the authors in.
-      article.authors_denormalized = []
-
-      params[:authors].each do |author|
-        article.add_author(
-          author['first_name'],
-          author['middle_name'],
-          author['last_name']
-        )
-      end
+      ids = params[:authors].map{|author| author["id"].to_i}
+      article.authors = Author.find(ids)
     end
 
     article.save!

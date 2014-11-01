@@ -34,12 +34,6 @@ class Article < ActiveRecord::Base
     self
   end
 
-  def authors
-    authors_denormalized.map do |a|
-      "#{a[:first_name]} #{a[:middle_name]} #{a[:last_name]}"
-    end.join(' ')
-  end
-
   def as_json(opts={})
     super(opts).tap do |h|
       h['created_at'] = h['created_at'].to_i

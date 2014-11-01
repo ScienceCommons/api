@@ -129,22 +129,10 @@ describe ArticlesController, :type => :controller do
       post :create, {
         title: 'my new awesome title',
         doi: '111111',
-        authors: [{
-          first_name: 'Ben',
-          middle_name: 'E.',
-          last_name: 'Coe'
-        }, {
-          first_name: 'Christian',
-          middle_name: 'J.',
-          last_name: 'Battista'
-        }]
+        authors: [{id: author.id}]
       }
       article = Article.find_by_doi('111111')
-      article.authors_denormalized.should include({
-        first_name: 'Christian',
-        middle_name: 'J.',
-        last_name: 'Battista'
-      })
+      article.authors.should include(author)
     end
 
     it "should set the owner when creating an article" do
@@ -175,18 +163,10 @@ describe ArticlesController, :type => :controller do
     it "should allow the authors to be changed" do
       post :update, {
         id: article.id,
-        authors: [{
-          first_name: 'Ben',
-          middle_name: 'E.',
-          last_name: 'Coe'
-        }]
+        authors: [{id: author.id}]
       }
       article.reload
-      article.authors_denormalized.should include({
-        first_name: 'Ben',
-        middle_name: 'E.',
-        last_name: 'Coe'
-      })
+      article.authors.should include(author)
     end
 
     it "should allow the abstract to be changed" do
