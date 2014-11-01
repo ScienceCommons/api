@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
     render json: User.search(params[:q] || '*', opts)
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -22,6 +23,7 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -37,6 +39,7 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -59,6 +62,7 @@ class UsersController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 

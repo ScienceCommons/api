@@ -19,6 +19,7 @@ class AuthorsController < ApplicationController
 
     render json: Author.search(params[:q] || '*', opts)
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -27,6 +28,7 @@ class AuthorsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -44,6 +46,7 @@ class AuthorsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -64,6 +67,7 @@ class AuthorsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -83,6 +87,7 @@ class AuthorsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 end

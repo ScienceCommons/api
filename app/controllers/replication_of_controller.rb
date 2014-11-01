@@ -24,6 +24,7 @@ class ReplicationOfController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: "unknown error"}, status: 500
   end
 
@@ -52,6 +53,7 @@ class ReplicationOfController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: "unknown error"}, status: 500
   end
 

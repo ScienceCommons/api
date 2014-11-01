@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
     query.and.where(:field => params[:field].to_s) if params[:field]
     render json: query
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -18,6 +19,7 @@ class CommentsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -38,6 +40,7 @@ class CommentsController < ApplicationController
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -52,6 +55,7 @@ class CommentsController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 end
