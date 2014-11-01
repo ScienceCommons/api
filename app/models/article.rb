@@ -15,7 +15,7 @@ class Article < ActiveRecord::Base
   serialize :authors_denormalized
 
   mapping :title, :doi, :index => :not_analyzed
-  mapping :title, :abstract, :authors, :journal_title
+  mapping :title, :abstract, :journal_title
   mapping :publication_date, :type => :date
 
   after_save :index
@@ -38,6 +38,7 @@ class Article < ActiveRecord::Base
     super(opts).tap do |h|
       h['created_at'] = h['created_at'].to_i
       h['updated_at'] = h['updated_at'].to_i
+      h['authors'] = self.authors if opts[:authors]
     end
   end
 end

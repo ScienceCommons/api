@@ -20,7 +20,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    render json: Article.find(params[:id].to_i)
+    render json: Article.find(params[:id].to_i).as_json(:authors => true)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -64,7 +64,7 @@ class ArticlesController < ApplicationController
     # can immediately query the update.
     ElasticMapper.index.refresh
 
-    render json: article, status: 201
+    render json: article.as_json(:authors => true), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue StandardError => ex
@@ -94,7 +94,7 @@ class ArticlesController < ApplicationController
     # can immediately query the update.
     ElasticMapper.index.refresh
 
-    render json: article
+    render json: article.as_json(:authors => true)
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
