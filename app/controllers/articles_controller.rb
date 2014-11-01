@@ -15,6 +15,7 @@ class ArticlesController < ApplicationController
       render json: Article.search(params[:q] || '*', opts)
     end
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -23,6 +24,7 @@ class ArticlesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -30,6 +32,7 @@ class ArticlesController < ApplicationController
     limit = params[:limit] ? params[:limit].to_i : 3
     render json: Article.order('updated_at DESC').limit(limit).to_a
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -37,6 +40,7 @@ class ArticlesController < ApplicationController
     limit = params[:limit] ? params[:limit].to_i : 3
     render json: Article.order('created_at DESC').limit(limit).to_a
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
@@ -64,6 +68,7 @@ class ArticlesController < ApplicationController
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -95,6 +100,7 @@ class ArticlesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
@@ -114,6 +120,7 @@ class ArticlesController < ApplicationController
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
+    Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 end
