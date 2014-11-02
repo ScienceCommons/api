@@ -21,6 +21,8 @@ describe StudiesController, :type => :controller do
       s.add_dependent_variables('happiness')
       s.set_effect_size('r', 0.5)
       s.owner_id = user.id
+      s.links << Link.new({name: "cat", url: "dog", type: "test"})
+      s.links << Link.new({name: "bat", url: "happy", type: "test"})
       s.save!
     end
   end
@@ -168,6 +170,20 @@ describe StudiesController, :type => :controller do
       response.status.should == 500
       JSON.parse(response.body)['error'].should == 'q is not a valid effect size.'
     end
+
+    it "should create links" do
+      post :create, {article_id: article.id, links: [{name: "foo", url: "foobar", type: "test"}]}
+
+      response.status.should == 201
+      study = JSON.parse(response.body)
+      article.reload
+      article.studies.count.should == 4
+      study['power'].should == nil
+      study['n'].should == nil
+      study['number'].should == ""
+      study['links'].count.should == 1
+      article.studies.find(study["id"]).links.count.should == 1
+    end
   end
 
   describe '#update' do
@@ -239,6 +255,20 @@ describe StudiesController, :type => :controller do
       s1.reload
       s1.dependent_variables.first.should == 'banana'
       s1.effect_size.should == {'d' => 0.9}
+    end
+
+    it "should update links" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        dependent_variables: ['banana'],
+        effect_size: {'d' => 0.9},
+        links: [{name: "foo", url: "foobar", type: "test"}]
+      }
+
+      response.status.should == 200
+      s1.reload
+      s1.links.count.should == 1
     end
   end
 
