@@ -27,8 +27,8 @@ class AdminController < ApplicationController
     {
       :total => model.count,
       :last_day => {
-        :created => model.where("created_at > ?", 1.day.ago),
-        :updated => model.where("updated_at > ?", 1.day.ago)
+        :created => model.where("created_at > ?", 1.day.ago).count,
+        :updated => model.where("updated_at > ?", 1.day.ago).count
       }
     }
   end
