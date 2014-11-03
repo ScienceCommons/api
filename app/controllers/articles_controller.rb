@@ -57,7 +57,7 @@ class ArticlesController < ApplicationController
     if params[:authors]
       ids = params[:authors].map{|author| author["id"].to_i}
       article.authors = Author.find(ids)
-      article.authors.each_with_index{|a, i| a.number = i}
+      # article.authors.each_with_index{|a, i| a.number = i}
       article.save!
     end
 
@@ -87,7 +87,7 @@ class ArticlesController < ApplicationController
     if params[:authors]
       ids = params[:authors].map{|author| author["id"].to_i}
       article.authors = Author.find(ids)
-      article.authors.each_with_index{|a, i| a.number = i}
+      # article.authors.each_with_index{|a, i| a.number = i}
     end
 
     article.save!
