@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 describe Finding do
-  let(:study) do
-    Study.create({
-      article_id: 0,
-      n: 0,
-      power: 0
-    })
-  end
+  let(:study) { Study.create({ article_id: 0 }) }
 
   describe "create" do
     it "should not allow a finding to be created without a study id" do

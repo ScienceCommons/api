@@ -30,16 +30,16 @@ describe ReplicationsController, :type => :controller do
     )
   end
   let(:study) do
-    Study.create({ article_id: article.id, n: 0, power: 0 })
+    Study.create({ article_id: article.id })
   end
   let(:replicating_study_1) do
-    Study.create({ article_id: article.id, n: 0, power: 0 })
+    Study.create({ article_id: article.id })
   end
   let(:replicating_study_2) do
-    Study.create({ article_id: article.id, n: 0, power: 0 })
+    Study.create({ article_id: article.id })
   end
   let(:replicating_study_3) do
-    Study.create({ article_id: article.id, n: 0, power: 0 })
+    Study.create({ article_id: article.id })
   end
   let!(:replication_1) do
     replication = Replication.create(

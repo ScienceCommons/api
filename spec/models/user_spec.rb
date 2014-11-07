@@ -59,9 +59,9 @@ describe User do
   end
 
   describe "studies" do
-    let!(:s1) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
-    let!(:s2) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
-    let!(:s3) { Study.create( article_id: 0, owner_id: user_2.id, n: 0, power: 0) }
+    let!(:s1) { Study.create( article_id: 0, owner_id: user.id) }
+    let!(:s2) { Study.create( article_id: 0, owner_id: user.id) }
+    let!(:s3) { Study.create( article_id: 0, owner_id: user_2.id) }
 
     it "allows all studies created by a user to be looked up" do
       user.studies.count.should == 2
@@ -69,7 +69,7 @@ describe User do
   end
 
   describe "findings" do
-    let!(:s1) { Study.create( article_id: 0, owner_id: user.id, n: 0, power: 0) }
+    let!(:s1) { Study.create( article_id: 0, owner_id: user.id) }
     let!(:f1) { s1.findings.create(url: 'www.example.com', name: 'finding.txt', owner_id: user.id) }
     let!(:f2) { s1.findings.create(url: 'www.example2.com', name: 'finding2.txt', owner_id: user.id) }
     let!(:f3) { s1.findings.create(url: 'www.example3.com', name: 'finding3.txt', owner_id: user_2.id) }

@@ -207,7 +207,7 @@ describe StudiesController, :type => :controller do
       post :update, {
         id: s2.id,
         n: 35,
-        power: 99
+        power: 0.99
       }
 
       response.status.should == 200
