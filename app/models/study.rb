@@ -66,10 +66,11 @@ class Study < ActiveRecord::Base
 
       # optionally serialize various amounts of
       # relational data.
+      h[:authors] = self.article.authors if opts[:authors]
       h[:findings] = self.findings if opts[:findings]
       h[:materials] = self.materials if opts[:materials]
       h[:registrations] = self.registrations if opts[:registrations]
-      h[:replications] = self.replications.as_json(opts) if opts[:replications]
+      h[:replications] = self.replications.as_json(opts.merge(:authors => true)) if opts[:replications]
       h[:replication_of] = self.replication_of.as_json(opts) if opts[:replication_of]
       h[:links] = self.links if opts[:links]
       h
