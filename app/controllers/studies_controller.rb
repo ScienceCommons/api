@@ -123,8 +123,12 @@ class StudiesController < ApplicationController
 
     # set effect size for a specific test type.
     if params[:effect_size]
-      key, value = params[:effect_size].each_pair.first
-      study.set_effect_size(key, value.to_f)
+      if params[:effect_size].empty?
+        study.effect_size = {}
+      else
+        key, value = params[:effect_size].each_pair.first
+        study.set_effect_size(key, value.to_f)
+      end
     end
   end
   private :update_serialized_keys

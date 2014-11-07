@@ -213,7 +213,7 @@ describe StudiesController, :type => :controller do
       response.status.should == 200
       s2.reload
       s2.n.should == 35
-      s2.power.should == 99
+      s2.power.should == 0.99
     end
 
     it "should raise a 500 if effect size is not valid" do
@@ -225,6 +225,18 @@ describe StudiesController, :type => :controller do
 
       response.status.should == 500
       JSON.parse(response.body)['error'].should == 'q is not a valid effect size.'
+    end
+
+    it "should allow effect size to be cleared" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        effect_size: {}
+      }
+
+      response.status.should == 200
+      s1.reload
+      s1.effect_size.should be_empty
     end
 
     it "should update dependent and independent variables" do
