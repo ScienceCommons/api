@@ -38,7 +38,13 @@ class Article < ActiveRecord::Base
     super(opts).tap do |h|
       h['created_at'] = h['created_at'].to_i
       h['updated_at'] = h['updated_at'].to_i
-      h['authors'] = self.authors if opts[:authors]
+      if opts[:authors]
+        if self.authors.count > 0
+          h['authors'] = self.authors
+        else
+          h['authors'] = self.authors_denormalized
+        end
+      end
     end
   end
 end
