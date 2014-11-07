@@ -49,8 +49,8 @@ class StudiesController < ApplicationController
   def create
     return render_error('article_id must be provided') if params[:article_id].nil?
     study = Article.find(params[:article_id].to_i).studies.create!({
-      n: params['n'] ? params['n'].to_i : nil,
-      power: params['power'] ? params['power'].to_f : nil,
+      n: !params['n'].blank? ? params['n'].to_i : nil,
+      power: !params['power'].blank? ? params['power'].to_f : nil,
       number: params['number'].to_s,
     })
 
@@ -87,8 +87,8 @@ class StudiesController < ApplicationController
 
     # don't use the update method, since we
     # update effect_size and variables as well.
-    study.n = params[:n] if params[:n]
-    study.power = params[:power] if params[:power]
+    study.n = params[:n].to_i if params[:n]
+    study.power = params[:power].to_f if params[:power]
     update_serialized_keys(study)
     study.number = params[:number] if params[:number]
 
