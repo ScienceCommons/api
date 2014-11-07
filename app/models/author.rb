@@ -3,7 +3,7 @@ class Author < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
-  has_many :article_authors
+  has_many :article_authors, dependent: :destroy
   has_many :articles, :through => :article_authors
 
   validates_uniqueness_of :orcid, unless: lambda { |author| author.orcid.blank? }
