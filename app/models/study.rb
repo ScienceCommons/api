@@ -12,6 +12,8 @@ class Study < ActiveRecord::Base
   belongs_to :article
 
   validates_presence_of :article_id
+  validates_numericality_of :n, greater_than: 0, only_integer: true, unless: "n.blank?"
+  validates_numericality_of :power, greater_than: 0, less_than: 1, unless: "power.blank?"
 
   # independent and dependent variables
   # are stored as serialized arrays.

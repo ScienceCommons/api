@@ -18,26 +18,19 @@ describe Study do
   end
   let(:study) do
     Study.create({
-        article_id: article.id,
-        n: 0,
-        power: 0
+        article_id: article.id
     })
   end
   let(:replicating_study) do
     Study.create({
-        article_id: article.id,
-        n: 0,
-        power: 0
+        article_id: article.id
     })
   end
 
   describe "create" do
 
     it "should not allow study to be created without article_id" do
-      study = Study.create({
-          n: 0,
-          power: 0
-      })
+      study = Study.create({})
 
       study.errors.count.should == 1
       field, error = study.errors.first
@@ -66,6 +59,55 @@ describe Study do
       study.add_independent_variables('thc').save!
       study.reload
       study.independent_variables.should include('thc')
+    end
+  end
+
+  describe "n" do
+    it "should raise an error when set negative" do
+      study.n = -1
+      study.save
+      study.errors.count.should == 1
+      field, error = study.errors.first
+      field.should == :n
+      error.should == "must be greater than 0"
+    end
+
+    it "should raise an error when 0" do
+      study.n = 0
+      study.save
+      study.errors.count.should == 1
+      field, error = study.errors.first
+      field.should == :n
+      error.should == "must be greater than 0"
+    end
+
+    it "should raise an error when not an integer" do
+      study.n = 1.3
+      study.save
+      study.errors.count.should == 1
+      field, error = study.errors.first
+      field.should == :n
+      error.should == "must be an integer"
+    end
+  end
+
+  describe "power" do
+    it "should raise an error when set negative" do
+      study.power = -1
+      study.save
+      study.errors.count.should == 1
+      field, error = study.errors.first
+      field.should == :power
+      error.should == "must be greater than 0"
+    end
+
+    it "should raise an error when above 1" do
+      study.power = 2
+      study.save
+      study.errors.count.should == 1
+      field, error = study.errors.first
+      field.should == :power
+      error.should == "must be less than 1"
     end
   end
 
