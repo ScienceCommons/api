@@ -84,7 +84,7 @@ class ArticlesController < ApplicationController
     article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
 
     # add the author list, and resave.
-    if params[:authors]
+    if !params[:authors].nil?
       ids = params[:authors].map{|author| author["id"].to_i}
       article.authors = Author.find(ids)
       # article.authors.each_with_index{|a, i| a.number = i}
