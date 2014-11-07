@@ -14,10 +14,10 @@ class ReplicationsController < ApplicationController
 
       render json: Article.find(article_id)
         .studies.find(study_id)
-        .replications.as_json(replications: true)
+        .replications.as_json(authors: true, replications: true)
     else
       render json: Study.find(study_id)
-        .replications.as_json(replications: true)
+        .replications.as_json(authors: true, replications: true)
     end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
@@ -40,11 +40,11 @@ class ReplicationsController < ApplicationController
       render json: Article.find(article_id)
         .studies.find(study_id)
         .replications.find(id)
-        .as_json(replications: true)
+        .as_json(authors: true, replications: true)
     else
       render json: Study.find(study_id)
         .replications.find(id)
-        .as_json(replications: true)
+        .as_json(authors: true, replications: true)
     end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
@@ -71,7 +71,7 @@ class ReplicationsController < ApplicationController
       closeness,
       current_user
     )
-    render json: replication.as_json(replications: true), status: 201
+    render json: replication.as_json(authors: true, replications: true), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
@@ -106,7 +106,7 @@ class ReplicationsController < ApplicationController
       closeness: closeness
     })
 
-    render json: replication.as_json(replications: true)
+    render json: replication.as_json(authors: true, replications: true)
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
