@@ -45,19 +45,24 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    article = Article.create!({
-      doi: params[:doi],
-      title: params[:title],
-      publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
-      abstract: params[:abstract],
-      owner_id: current_user ? current_user.id : nil
-    })
+    article = nil
+    ActiveRecord::Base.transaction do
+      article = Article.create!({
+        doi: params[:doi],
+        title: params[:title],
+        publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
+        abstract: params[:abstract],
+        owner_id: current_user ? current_user.id : nil
+      })
 
-    # add the author list, and resave.
-    if params[:authors]
-      ids = params[:authors].map{|author| author["id"].to_i}
-      article.authors = Author.find(ids)
-      # article.authors.each_with_index{|a, i| a.number = i}
+      # add the author list, and resave.
+      if params[:authors]
+        ids = params[:authors].map{|author| author["id"].to_i}
+        article.authors = Author.find(ids)
+        ids.each_with_index do |id, i|
+          article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
+        end
+      end
       article.save!
     end
 
@@ -74,23 +79,29 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    article = Article.find(params[:id].to_i)
+    article = nil
+    ActiveRecord::Base.transaction do
+      article = Article.find(params[:id].to_i)
 
-    # you can only edit articles you have created.
-    render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
+      # you can only edit articles you have created.
+      render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
 
-    article.abstract = params[:abstract] if params[:abstract]
-    article.title = params[:title] if params[:title]
-    article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
+      article.abstract = params[:abstract] if params[:abstract]
+      article.title = params[:title] if params[:title]
+      article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
 
-    # add the author list, and resave.
-    if !params[:authors].nil?
-      ids = params[:authors].map{|author| author["id"].to_i}
-      article.authors = Author.find(ids)
-      # article.authors.each_with_index{|a, i| a.number = i}
+      # add the author list, and resave.
+      if !params[:authors].nil?
+        ids = params[:authors].map{|author| author["id"].to_i}
+        article.authors = Author.find(ids)
+        ids.each_with_index do |id, i|
+          article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
+        end
+        # article.authors.each_with_index{|a, i| a.number = i}
+      end
+
+      article.save!
     end
-
-    article.save!
 
     # force index to update, so that we
     # can immediately query the update.

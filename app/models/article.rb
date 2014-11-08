@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   has_many :studies, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
-  has_many :article_authors, dependent: :destroy
+  has_many :article_authors, dependent: :destroy, autosave: true
   has_many :authors, -> {order 'article_authors.number ASC'}, :through => :article_authors
 
   validates_uniqueness_of :doi

@@ -28,6 +28,9 @@ describe ArticlesController, :type => :controller do
     author
   }
 
+  let(:author_2) { Author.create({first_name: 'rabbit', last_name: 'dog'}) }
+  let(:author_3) { Author.create({first_name: 'horse', last_name: 'dog'}) }
+
   before(:all) do
     WebMock.disable!
     Timecop.freeze(Time.local(1990))
@@ -139,6 +142,22 @@ describe ArticlesController, :type => :controller do
       post :create, { title: 'my awesome title', doi: 'abc555' }
       article = Article.find_by_doi('abc555')
       article.owner.should == user
+    end
+
+    it "should order authors" do
+      post :create, {
+        title: 'my new awesome title',
+        doi: '111111',
+        authors: [{id: author.id}, {id: author_3.id}, {id: author_2.id}]
+      }
+      # results = JSON.parse(response.body)
+      # results["authors"].map{|res_author| res_author["id"]}.should == [author.id, author_3.id, author_2.id]
+      article = Article.find_by_doi('111111')
+      article.authors.should == [author, author_3, author_2]
+
+      ArticleAuthor.find_by(:article_id => article.id, :author_id => author.id).number.should == 0
+      ArticleAuthor.find_by(:article_id => article.id, :author_id => author_2.id).number.should == 2
+      ArticleAuthor.find_by(:article_id => article.id, :author_id => author_3.id).number.should == 1
     end
   end
 
