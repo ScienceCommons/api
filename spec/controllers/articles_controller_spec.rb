@@ -128,6 +128,12 @@ describe ArticlesController, :type => :controller do
       article['publication_date'].should == '2006-03-05'
     end
 
+    it "should allow tags to be set when creating an article" do
+      post :create, { title: 'my awesome title', doi: 'abc555', tags: ["apple", "bat"] }
+      article = JSON.parse(response.body)
+      article['tags'].should == ["apple", "bat"]
+    end
+
     it "should allow authors to be set when creating an article" do
       post :create, {
         title: 'my new awesome title',
@@ -177,6 +183,12 @@ describe ArticlesController, :type => :controller do
       post :update, { id: article.id, publication_date: "2014-3-3" }
       article.reload
       article.publication_date.should == Date.parse('2014-03-03')
+    end
+
+    it "should allow tags to be changed" do
+      post :update, { id: article.id, tags: ["foo", "bar"] }
+      article.reload
+      article.tags.should == ["foo", "bar"]
     end
 
     it "should allow the authors to be changed" do

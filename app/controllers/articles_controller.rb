@@ -52,7 +52,8 @@ class ArticlesController < ApplicationController
         title: params[:title],
         publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
         abstract: params[:abstract],
-        owner_id: current_user ? current_user.id : nil
+        owner_id: current_user ? current_user.id : nil,
+        tags: params[:tags]
       })
 
       # add the author list, and resave.
@@ -89,6 +90,7 @@ class ArticlesController < ApplicationController
       article.abstract = params[:abstract] if params[:abstract]
       article.title = params[:title] if params[:title]
       article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
+      article.tags = params[:tags] if params[:tags]
 
       # add the author list, and resave.
       if !params[:authors].nil?
