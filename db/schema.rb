@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028031158) do
+ActiveRecord::Schema.define(version: 20141109190351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20141028031158) do
     t.integer  "comment_count",        default: 0
     t.text     "journal_title"
     t.string   "journal_issn"
+    t.json     "tags"
   end
 
   add_index "articles", ["doi"], name: "index_articles_on_doi", unique: true, using: :btree
