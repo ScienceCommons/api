@@ -47,8 +47,9 @@ module PaperSearchApi
 
     # Setup SES as our mailer.
     ActionMailer::Base.add_delivery_method :ses, AWS::SES::Base,
-      :access_key_id => ENV['AWS_SES_ID'],
-      :secret_access_key => ENV['AWS_SES_KEY'],
-      :server => ENV['AWS_SES_SERVER']
+      :access_key_id => ENV['AWS_SES_ID'] || "foobar",
+      :secret_access_key => ENV['AWS_SES_KEY'] || "foobar",
+      :server => ENV['AWS_SES_SERVER'] || "foobar",
+      :perform_deliveries => Rails.env != "test"
     end
 end
