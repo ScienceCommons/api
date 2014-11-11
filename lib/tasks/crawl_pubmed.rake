@@ -19,7 +19,8 @@ namespace :pubmed do
       "Trends in Cognitive Science"
     ]
 
-    years = ["2009", "2010", "2011", "2012", "2013", "2014"]
+    #years = ["2009", "2010", "2011", "2012", "2013", "2014"]
+    years = ["2014"]
 
     journals.each do |journal|
       years.each do |year|
