@@ -36,4 +36,6 @@ PaperSearchApi::Application.configure do
 
   # environment-specific globals.
   INVITE_URL = 'http://127.0.0.1:5000/login'
+  ENV['PUBMED_KEY'] = 'battista.christian@gmail.com'
+  ENV['PUBMED_SECRET'] = 'curatescience'
 end

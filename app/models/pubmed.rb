@@ -34,7 +34,7 @@ class Pubmed
 
     xml.css('Article').each do |article_xml|
       doi = article_xml.css('ELocationID[EIdType="doi"]').text
-      unless doi.empty? or article_xml.css('PubDate').text.empty?
+      if !doi.empty? && !article_xml.css('PubDate').text.empty? && !Article.exists?(doi: doi)
         begin
 
           # Year Month Day or,
@@ -80,7 +80,7 @@ class Pubmed
   end
 
   def efetch
-    "#{EFETCH_URL}?db=pubmed&retmode=xml&WebEnv=#{@web_env}&query_key=1&retstart=#{PER_PAGE * @page}&retmax=#{PER_PAGE}&#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
+    "#{EFETCH_URL}?db=pubmed&retmode=xml&WebEnv=#{@web_env}&query_key=1&retstart=#{PER_PAGE * @page}&retmax=#{PER_PAGE}&email=#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
   end
 
   def esearch
