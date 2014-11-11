@@ -33,7 +33,10 @@ describe ReplicationsController, :type => :controller do
     Study.create({ article_id: article.id })
   end
   let(:replicating_study_1) do
-    Study.create({ article_id: article.id })
+    study = Study.create({ article_id: article.id })
+    study.links << Link.new({name: "cat", url: "dog", type: "test"})
+    study.save!
+    study
   end
   let(:replicating_study_2) do
     Study.create({ article_id: article.id })
@@ -83,6 +86,12 @@ describe ReplicationsController, :type => :controller do
       get :index, { article_id: -1, study_id: study.id }
       results = JSON.parse(response.body)
       response.status.should == 404
+    end
+
+    it("includes links") do
+      get :index, { study_id: study.id }
+      results = JSON.parse(response.body)
+      results.first["replicating_study"]["links"].length.should == 1
     end
   end
 
