@@ -269,7 +269,7 @@ describe StudiesController, :type => :controller do
       s1.effect_size.should == {'d' => 0.9}
     end
 
-    it "should update links" do
+    it "should reset links" do
       post :update, {
         article_id: article.id,
         id: s1.id,
@@ -277,10 +277,26 @@ describe StudiesController, :type => :controller do
         effect_size: {'d' => 0.9},
         links: [{name: "foo", url: "foobar", type: "test"}]
       }
+      
+      response.status.should == 200
+      s1.reload
+      s1.links.count.should == 1
+    end
+
+    it "should update existing links" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        dependent_variables: ['banana'],
+        effect_size: {'d' => 0.9},
+        links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
+      }
 
       response.status.should == 200
       s1.reload
       s1.links.count.should == 1
+      s1.links.first.name.should == "foo"
+      s1.links.first.url.should == "foobar"
     end
   end
 

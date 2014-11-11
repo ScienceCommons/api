@@ -94,7 +94,11 @@ class StudiesController < ApplicationController
       ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
       study.links = Link.find(ids)
       params[:links].each do |link|
-        study.links << Link.new(link) if link["id"].nil?
+        if link["id"].nil?
+          study.links << Link.new(link) if link["id"].nil?
+        else
+          study.links.find(link["id"]).update_attributes(link)
+        end
       end
     end
 
