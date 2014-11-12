@@ -94,12 +94,15 @@ class ArticlesController < ApplicationController
 
       # add the author list, and resave.
       if !params[:authors].nil?
-        ids = params[:authors].map{|author| author["id"].to_i}
-        article.authors = Author.find(ids)
-        ids.each_with_index do |id, i|
-          article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
+        if params[:authors].empty?
+          article.article_authors.destroy_all
+        else
+          ids = params[:authors].map{|author| author["id"].to_i}
+          article.authors = Author.find(ids)
+          ids.each_with_index do |id, i|
+            article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
+          end
         end
-        # article.authors.each_with_index{|a, i| a.number = i}
       end
 
       article.save!
