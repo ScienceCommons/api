@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109190351) do
+ActiveRecord::Schema.define(version: 20141115193252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,24 @@ ActiveRecord::Schema.define(version: 20141109190351) do
 
   add_index "materials", ["owner_id"], name: "index_materials_on_owner_id", using: :btree
   add_index "materials", ["study_id"], name: "index_materials_on_study_id", using: :btree
+
+  create_table "model_updates", force: true do |t|
+    t.integer  "changeable_id"
+    t.string   "changeable_type"
+    t.json     "model_changes",                   null: false
+    t.integer  "submitter_id",                    null: false
+    t.integer  "approver_id"
+    t.boolean  "approved",        default: false
+    t.boolean  "rejected",        default: false
+    t.text     "reason"
+    t.text     "rejected_reason"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "model_updates", ["approver_id"], name: "index_model_updates_on_approver_id", using: :btree
+  add_index "model_updates", ["changeable_id", "changeable_type"], name: "index_model_updates_on_changeable_id_and_changeable_type", using: :btree
+  add_index "model_updates", ["submitter_id"], name: "index_model_updates_on_submitter_id", using: :btree
 
   create_table "refresh_tokens", force: true do |t|
     t.integer  "client_id"
