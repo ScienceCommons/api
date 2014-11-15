@@ -224,6 +224,12 @@ describe ArticlesController, :type => :controller do
       article_2.reload
       article_2.title.should == 'awesome article'
     end
+
+    it "should log changes to model_updates" do
+      post :update, { id: article.id, title: "my wacky research" }
+      article.reload
+      article.model_updates.count.should == 1
+    end
   end
 
   describe "#destroy" do

@@ -102,6 +102,10 @@ class StudiesController < ApplicationController
       end
     end
 
+    if study.changed?
+      study.model_updates.create!(:submitter => current_user, :model_changes => study.changes)
+    end
+
     study.save!
     render json: study.as_json()
   rescue ActiveRecord::RecordInvalid => ex

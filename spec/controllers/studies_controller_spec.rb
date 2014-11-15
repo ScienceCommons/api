@@ -277,7 +277,7 @@ describe StudiesController, :type => :controller do
         effect_size: {'d' => 0.9},
         links: [{name: "foo", url: "foobar", type: "test"}]
       }
-      
+
       response.status.should == 200
       s1.reload
       s1.links.count.should == 1
@@ -297,6 +297,18 @@ describe StudiesController, :type => :controller do
       s1.links.count.should == 1
       s1.links.first.name.should == "foo"
       s1.links.first.url.should == "foobar"
+    end
+
+    it "should log changes to model_updates" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        dependent_variables: ['banana'],
+        effect_size: {'d' => 0.9},
+        links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
+      }
+      s1.reload
+      s1.model_updates.count.should == 1
     end
   end
 

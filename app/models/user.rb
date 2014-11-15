@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :invites, :class_name => 'Invite', :foreign_key => :inviter_id
   has_many :accounts
   has_one :author
+  has_many :submmited_changes, :class_name => 'ModelUpdate', :foreign_key => :submitter_id
+  has_many :approved_changes, :class_name => 'ModelUpdate', :foreign_key => :approver_id
 
   validates_uniqueness_of :email
   validates_presence_of :email
@@ -55,5 +57,9 @@ class User < ActiveRecord::Base
     else
       raise Exceptions::NoInvitesAvailable.new
     end
+  end
+
+  def can_curate?
+    true
   end
 end

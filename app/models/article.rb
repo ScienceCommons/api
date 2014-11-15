@@ -8,6 +8,7 @@ class Article < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   has_many :article_authors, dependent: :destroy, autosave: true
   has_many :authors, -> {order 'article_authors.number ASC'}, :through => :article_authors
+  has_many :model_updates, as: :changeable, dependent: :destroy
 
   validates_uniqueness_of :doi
   validates_presence_of :title
