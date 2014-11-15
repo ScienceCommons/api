@@ -76,3 +76,4 @@ gem 'elastic_mapper', '~> 0.2.1'
 gem "omniauth-google-oauth2"
 gem "aws-ses", "~> 0.5.0", :require => 'aws/ses'
 gem 'gctools'
+gem 'firebase'

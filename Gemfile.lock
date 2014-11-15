@@ -71,6 +71,8 @@ GEM
       faraday (~> 0.8.9)
       stretcher
     erubis (2.7.0)
+    ethon (0.7.1)
+      ffi (>= 1.3.0)
     excon (0.40.0)
     execjs (2.2.1)
     faraday (0.8.9)
@@ -80,6 +82,10 @@ GEM
     faraday_middleware-multi_json (0.0.6)
       faraday_middleware
       multi_json
+    ffi (1.9.6)
+    firebase (0.2.2)
+      json
+      typhoeus (>= 0.6.1)
     gctools (0.2.3)
     hashie (3.3.1)
     hike (1.2.3)
@@ -238,6 +244,8 @@ GEM
     tilt (1.4.1)
     timecop (0.7.1)
     trollop (1.16.2)
+    typhoeus (0.6.9)
+      ethon (>= 0.7.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
@@ -266,6 +274,7 @@ DEPENDENCIES
   dotenv-rails
   elastic_mapper (~> 0.2.1)
   faraday
+  firebase
   gctools
   jbuilder (~> 1.2)
   jquery-rails
