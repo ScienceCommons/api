@@ -33,7 +33,7 @@ class ModelUpdate < ActiveRecord::Base
         }
       end
       FIREBASE_CLIENT.push("ModelUpdates", data)
-      model_name = self.changeable.class.model_name.human.pluralize
+      model_name = self.changeable.class.model_name.human.pluralize.downcase
       FIREBASE_CLIENT.push("#{model_name}/#{self.changeable_id}/changes", data)
     end
   end
