@@ -58,7 +58,7 @@ class AuthorsController < ApplicationController
     ActiveRecord::Base.transaction do
       author.attributes = params.slice(*UPDATEABLE_ATTRS)
       if author.changed?
-        author.model_updates.create!(:submitter => current_user, :model_changes => author.changes)
+        author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_updated)
       end
       author.save!
     end

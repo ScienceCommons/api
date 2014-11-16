@@ -103,7 +103,7 @@ class StudiesController < ApplicationController
     end
 
     if study.changed?
-      study.model_updates.create!(:submitter => current_user, :model_changes => study.changes)
+      study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
     end
 
     study.save!

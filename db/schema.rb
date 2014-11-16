@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141115193252) do
+ActiveRecord::Schema.define(version: 20141116183419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -182,6 +182,7 @@ ActiveRecord::Schema.define(version: 20141115193252) do
     t.text     "rejected_reason"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "operation",                       null: false
   end
 
   add_index "model_updates", ["approver_id"], name: "index_model_updates_on_approver_id", using: :btree

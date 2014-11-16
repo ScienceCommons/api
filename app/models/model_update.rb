@@ -1,4 +1,6 @@
 class ModelUpdate < ActiveRecord::Base
+  enum operation: [ :model_created, :model_updated, :model_deleted ]
+
   belongs_to :changeable, polymorphic: true
   belongs_to :submitter, class_name: "User"
   belongs_to :approver, class_name: "User"

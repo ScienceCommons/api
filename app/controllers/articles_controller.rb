@@ -105,7 +105,7 @@ class ArticlesController < ApplicationController
         end
       end
       if article.changed?
-        article.model_updates.create!(:submitter => current_user, :model_changes => article.changes)
+        article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_updated)
       end
       article.save!
     end
