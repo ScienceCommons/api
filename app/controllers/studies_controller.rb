@@ -105,6 +105,7 @@ class StudiesController < ApplicationController
           study.links.find(link["id"]).update_attributes(link)
         end
       end
+      study.links(true)
     end
 
     if study.changed?

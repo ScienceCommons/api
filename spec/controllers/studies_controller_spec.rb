@@ -302,6 +302,10 @@ describe StudiesController, :type => :controller do
       }
 
       response.status.should == 200
+      res = JSON.parse(response.body)
+      res["links"].count.should == 1
+      res["links"].first["name"].should == "foo"
+      
       s1.reload
       s1.links.count.should == 1
       s1.links.first.name.should == "foo"
