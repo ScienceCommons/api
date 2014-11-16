@@ -296,8 +296,6 @@ describe StudiesController, :type => :controller do
       post :update, {
         article_id: article.id,
         id: s1.id,
-        dependent_variables: ['banana'],
-        effect_size: {'d' => 0.9},
         links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
       }
 
@@ -305,11 +303,40 @@ describe StudiesController, :type => :controller do
       res = JSON.parse(response.body)
       res["links"].count.should == 1
       res["links"].first["name"].should == "foo"
-      
+
       s1.reload
       s1.links.count.should == 1
       s1.links.first.name.should == "foo"
       s1.links.first.url.should == "foobar"
+    end
+
+    it "should delete existing links" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        links: nil # testing case http://stackoverflow.com/questions/14647731/rails-converts-empty-arrays-into-nils-in-params-of-the-request
+      }
+
+      response.status.should == 200
+      res = JSON.parse(response.body)
+      res["links"].count.should == 0
+
+      s1.reload
+      s1.links.count.should == 0
+    end
+
+    it "should not delete existing links if the parameter is not passed" do
+      post :update, {
+        article_id: article.id,
+        id: s1.id
+      }
+
+      response.status.should == 200
+      res = JSON.parse(response.body)
+      res["links"].count.should == 2
+
+      s1.reload
+      s1.links.count.should == 2
     end
 
     it "should log changes to model_updates" do

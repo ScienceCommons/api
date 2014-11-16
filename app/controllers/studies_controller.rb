@@ -98,6 +98,7 @@ class StudiesController < ApplicationController
       update_serialized_keys(study)
       study.number = params[:number] if params[:number]
 
+      params[:links] ||= [] if params.has_key?(:links)
       if params[:links]
         ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
         study.links = Link.find(ids)
@@ -117,7 +118,7 @@ class StudiesController < ApplicationController
 
       study.save!
     end
-    
+
     render json: study.as_json()
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
