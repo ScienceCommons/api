@@ -81,6 +81,7 @@ class StudiesController < ApplicationController
   def update
     article_id = params[:article_id] ? params[:article_id].to_i : - 1
     id = params[:id] ? params[:id].to_i : -1
+    study = nil
 
     if article_id != -1
       study = Article.find(article_id).studies.find(id)
@@ -88,31 +89,35 @@ class StudiesController < ApplicationController
       study = Study.find(id)
     end
 
-    # don't use the update method, since we
-    # update effect_size and variables as well.
-    study.n = params[:n].to_i if params[:n]
-    study.power = params[:power].to_f if params[:power]
-    update_serialized_keys(study)
-    study.number = params[:number] if params[:number]
+    ActiveRecord::Base.transaction do
 
-    if params[:links]
-      ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
-      study.links = Link.find(ids)
-      params[:links].each do |link|
-        if link["id"].nil?
-          study.links << Link.new(link) if link["id"].nil?
-        else
-          study.links.find(link["id"]).update_attributes(link)
+      # don't use the update method, since we
+      # update effect_size and variables as well.
+      study.n = params[:n].to_i if params[:n]
+      study.power = params[:power].to_f if params[:power]
+      update_serialized_keys(study)
+      study.number = params[:number] if params[:number]
+
+      if params[:links]
+        ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
+        study.links = Link.find(ids)
+        params[:links].each do |link|
+          if link["id"].nil?
+            study.links << Link.new(link) if link["id"].nil?
+          else
+            study.links.find(link["id"]).update_attributes!(link)
+          end
         end
+        study.links(true)
       end
-      study.links(true)
-    end
 
-    if study.changed?
-      study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
-    end
+      if study.changed?
+        study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
+      end
 
-    study.save!
+      study.save!
+    end
+    
     render json: study.as_json()
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
