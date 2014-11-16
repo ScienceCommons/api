@@ -111,6 +111,12 @@ describe AuthorsController, :type => :controller do
       author_2.reload
       author_2.first_name.should == 'spot'
     end
+
+    it "should log changes to model_updates" do
+      post :update, { id: author.id, last_name: "my new last name" }
+      author.reload
+      author.model_updates.count.should == 1
+    end
   end
 
   describe "#destroy" do

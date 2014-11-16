@@ -55,7 +55,13 @@ class AuthorsController < ApplicationController
 
     # you can only edit articles you have created.
     render(json: {error: 'you can only edit authors that you create'}, status: 401) and return unless current_user == author.owner || current_user.admin
-    author.update_attributes!(params.slice(*UPDATEABLE_ATTRS))
+    ActiveRecord::Base.transaction do
+      author.attributes = params.slice(*UPDATEABLE_ATTRS)
+      if author.changed?
+        author.model_updates.create!(:submitter => current_user, :model_changes => author.changes)
+      end
+      author.save!
+    end
 
     # force index to update, so that we
     # can immediately query the update.

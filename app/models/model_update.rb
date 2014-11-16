@@ -16,9 +16,34 @@ class ModelUpdate < ActiveRecord::Base
 
   def notify_firebase
     if !defined?(FIREBASE_CLIENT).nil? && self.approved
-      FIREBASE_CLIENT.push("ModelUpdates", self)
+      # FIREBASE_CLIENT.push("ModelUpdates", self)
+      data = {
+        user: self.submitter.email,
+        fields: self.model_changes.keys.sort,
+        changeable_id: self.changeable_id,
+        changeable_type: self.changeable_type,
+        label: self.label
+      }
+      if self.changeable.class.name == "Study"
+        data[:parent] = {
+          label: study.changeable.article.title,
+          id: study.changeable.article.id
+        }
+      end
+      FIREBASE_CLIENT.push("ModelUpdates", data)
       # model_name = self.changeable.class.model_name.human.pluralize
       # FIREBASE_CLIENT.push("#{model_name}/#{self.changeable_id}/changes", self)
+    end
+  end
+
+  def label
+    case self.changeable.class.name
+    when "Study"
+      return self.changeable.number
+    when "Article"
+      return self.changeable.title
+    when "Author"
+      return self.changeable.full_name
     end
   end
 end
