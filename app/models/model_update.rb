@@ -25,7 +25,8 @@ class ModelUpdate < ActiveRecord::Base
         changeable_id: self.changeable_id,
         changeable_type: self.changeable_type,
         label: self.label,
-        created_at: self.created_at
+        created_at: self.created_at,
+        operation: self.operation
       }
       if self.changeable.class.name == "Study"
         data[:parent] = {
