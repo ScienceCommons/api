@@ -26,8 +26,8 @@ class ModelUpdate < ActiveRecord::Base
       }
       if self.changeable.class.name == "Study"
         data[:parent] = {
-          label: study.changeable.article.title,
-          id: study.changeable.article.id
+          label: self.changeable.article.title,
+          id: self.changeable.article.id
         }
       end
       FIREBASE_CLIENT.push("ModelUpdates", data)
