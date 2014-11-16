@@ -85,6 +85,13 @@ describe AuthorsController, :type => :controller do
       author = Author.find_by_first_name_and_last_name('bunny', 'dog')
       author.owner.should == user
     end
+
+    it "should log changes to model_updates" do
+      post :create, { first_name: 'bunny', last_name: 'dog' }
+      author = Author.find_by_first_name_and_last_name('bunny', 'dog')
+      author.model_updates.count.should == 1
+      author.model_updates.first.operation.should == "model_created"
+    end
   end
 
   describe '#update' do
@@ -116,6 +123,7 @@ describe AuthorsController, :type => :controller do
       post :update, { id: author.id, last_name: "my new last name" }
       author.reload
       author.model_updates.count.should == 1
+      author.model_updates.first.operation.should == "model_updated"
     end
   end
 

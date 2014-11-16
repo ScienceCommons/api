@@ -33,10 +33,13 @@ class AuthorsController < ApplicationController
   end
 
   def create
-    author = Author.new({
-      owner_id: current_user ? current_user.id : nil
-    })
-    author.update_attributes!(params.slice(*UPDATEABLE_ATTRS))
+    author = nil
+    ActiveRecord::Base.transaction do
+      author = Author.create!({
+        owner_id: current_user ? current_user.id : nil
+      }.merge(params.slice(*UPDATEABLE_ATTRS)))
+      author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_created)
+    end
 
     # force index to update, so that we
     # can immediately query the update.

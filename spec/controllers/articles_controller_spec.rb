@@ -165,6 +165,13 @@ describe ArticlesController, :type => :controller do
       ArticleAuthor.find_by(:article_id => article.id, :author_id => author_2.id).number.should == 2
       ArticleAuthor.find_by(:article_id => article.id, :author_id => author_3.id).number.should == 1
     end
+
+    it "should log changes to model_updates" do
+      post :create, { title: 'my awesome title', doi: 'abc555' }
+      article = Article.find_by_doi('abc555')
+      article.model_updates.count.should == 1
+      article.model_updates.first.operation.should == "model_created"
+    end
   end
 
   describe '#update' do
@@ -229,6 +236,7 @@ describe ArticlesController, :type => :controller do
       post :update, { id: article.id, title: "my wacky research" }
       article.reload
       article.model_updates.count.should == 1
+      article.model_updates.first.operation.should == "model_updated"
     end
   end
 

@@ -184,6 +184,15 @@ describe StudiesController, :type => :controller do
       study['links'].count.should == 1
       article.studies.find(study["id"]).links.count.should == 1
     end
+
+    it "should log changes to model_updates" do
+      post :create, { article_id: article.id, effect_size: {'r' => 0.3} }
+      response.status.should == 201
+      study_json = JSON.parse(response.body)
+      study = Study.find(study_json['id'])
+      study.model_updates.count.should == 1
+      study.model_updates.first.operation.should == "model_created"
+    end
   end
 
   describe '#update' do
@@ -309,6 +318,7 @@ describe StudiesController, :type => :controller do
       }
       s1.reload
       s1.model_updates.count.should == 1
+      s1.model_updates.first.operation.should == "model_updated"
     end
   end
 

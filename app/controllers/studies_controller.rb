@@ -46,23 +46,28 @@ class StudiesController < ApplicationController
 
   def create
     return render_error('article_id must be provided') if params[:article_id].nil?
-    study = Article.find(params[:article_id].to_i).studies.create!({
-      n: !params['n'].blank? ? params['n'].to_i : nil,
-      power: !params['power'].blank? ? params['power'].to_f : nil,
-      number: params['number'].to_s,
-    })
+    study = nil
+    ActiveRecord::Base.transaction do
+      study = Article.find(params[:article_id].to_i).studies.create!({
+        n: !params['n'].blank? ? params['n'].to_i : nil,
+        power: !params['power'].blank? ? params['power'].to_f : nil,
+        number: params['number'].to_s,
+      })
 
-    update_serialized_keys(study)
+      update_serialized_keys(study)
 
-    if params[:links]
-      ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
-      study.links = Link.find(ids)
-      params[:links].each do |link|
-        study.links << Link.new(link) if link["id"].nil?
+      if params[:links]
+        ids = params[:links].map{|link| id = link["id"].to_i; id > 0 ? id : nil}.compact
+        study.links = Link.find(ids)
+        params[:links].each do |link|
+          study.links << Link.new(link) if link["id"].nil?
+        end
       end
+
+      study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_created)
+      study.save!
     end
 
-    study.save!
     render json: study.as_json(), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
