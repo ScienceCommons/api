@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_one :author
   has_many :submmited_changes, :class_name => 'ModelUpdate', :foreign_key => :submitter_id
   has_many :approved_changes, :class_name => 'ModelUpdate', :foreign_key => :approver_id
+  has_many :bookmarks, :class_name => "UserBookmark", dependent: :destroy
 
   validates_uniqueness_of :email
   validates_presence_of :email
