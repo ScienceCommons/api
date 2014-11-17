@@ -87,6 +87,7 @@ PaperSearchApi::Application.routes.draw do
   end
 
   resources :comments, :only => [:show, :destroy]
+  resources :bookmarks, :only => [:index, :show, :create, :destroy]
   get ":commentable_type/:commentable_id/comments(/:field)" => "comments#index"
   post ":commentable_type/:commentable_id/comments(/:field)" => "comments#create"
 
