@@ -8,8 +8,10 @@ class AdminController < ApplicationController
     stats = {
       :articles => get_stats(Article),
       :authors => get_stats(Author),
+      :bookmarks => get_stats(UserBookmark),
       :invites => get_stats(Invite),
       :links => get_stats(Link),
+      :model_updates => get_stats(ModelUpdate),
       :replications => get_stats(Replication),
       :studies => get_stats(Study),
       :users => get_stats(User)
