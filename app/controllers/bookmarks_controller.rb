@@ -3,7 +3,7 @@ class BookmarksController < ApplicationController
   #before_filter :authenticate!
 
   def index
-    render json: current_user.bookmarks
+    render json: current_user.bookmarks.map{|bookmark| bookmark.as_json(bookmarkabe: true)}
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -13,7 +13,7 @@ class BookmarksController < ApplicationController
 
   def show
     id = params[:id] ? params[:id].to_i : -1
-    render json: current_user.bookmarks.find(id)
+    render json: current_user.bookmarks.find(id).as_json(bookmarkable: true)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex

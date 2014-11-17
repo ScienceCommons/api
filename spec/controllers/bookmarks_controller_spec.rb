@@ -38,6 +38,13 @@ describe BookmarksController, :type => :controller do
       results["bookmarkable_id"].should == article.id
       results["bookmarkable_type"].should == "Article"
     end
+
+    it "should return the bookmarkable" do
+      get :show, :id => bookmark.id
+      results = JSON.parse(response.body)
+      results["bookmarkable"]["id"].should == article.id
+      results["bookmarkable"]["title"].should == article.title
+    end
   end
 
   describe "#create" do
