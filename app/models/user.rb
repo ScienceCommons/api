@@ -15,8 +15,6 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_presence_of :email
 
-  serialize :bookmarks
-
   mapping :email, :name, :index => :not_analyzed
 
   after_save :index
