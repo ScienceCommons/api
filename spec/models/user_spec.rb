@@ -123,4 +123,15 @@ describe User do
     end
   end
 
+  describe "bookmarks" do
+    let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
+
+    it "allows a user to bookmark an article" do
+      user.bookmarks.create!(:bookmarkable => article)
+      user.reload
+      user.bookmarks.count.should == 1
+    end
+
+  end
+
 end
