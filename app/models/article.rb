@@ -1,7 +1,6 @@
 class Article < ActiveRecord::Base
 
   include ElasticMapper
-  include Commentable
 
   has_many :studies, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy

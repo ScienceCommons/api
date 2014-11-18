@@ -29,8 +29,8 @@ describe Comment do
 
   describe "comment" do
     it "allows comments to be created on comments" do
-      comment = article.add_comment(0, 'hello world')
-      comment.add_comment(0, 'i on a comment!')
+      comment = article.comments.create!(owner_id: 0, comment: 'hello world')
+      comment.comments.create!(owner_id: 0, comment: 'i on a comment!')
       comment.reload
       comment.comments.count.should == 1
       comment.comment_count.should == 1

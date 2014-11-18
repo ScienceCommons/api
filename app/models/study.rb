@@ -78,10 +78,4 @@ class Study < ActiveRecord::Base
       h
     end
   end
-
-  # we don't use commentable because study allows
-  # you to comment on specific fields.
-  def add_comment(owner_id, comment, field=nil)
-
-  end
 end

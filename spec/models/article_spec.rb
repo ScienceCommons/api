@@ -191,15 +191,14 @@ describe Article do
     end
 
     it "allows you to add a comment to an article" do
-      article.add_comment(0, "hello world!")
+      article.comments.create!(owner_id: 0, comment: "hello world!")
       article.reload
       article.comments.first.comment.should == 'hello world!'
     end
 
     it "should update comment_count when comments are created" do
-      article.add_comment(0, "hello world!")
-      article.reload
-      article.add_comment(0, "hello world!")
+      article.comments.create!(owner_id: 0, comment: "hello world!")
+      article.comments.create!(owner_id: 0, comment: "hello world!")
       article.reload
       article.comment_count.should == 2
     end

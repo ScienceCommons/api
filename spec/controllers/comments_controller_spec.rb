@@ -18,10 +18,10 @@ describe CommentsController, :type => :controller do
 
   let(:article) do
     article = Article.create(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05')
-    article.add_comment(user.id, "Foo", "fooField")
-    article.add_comment(user.id, "Bar")
-    article.add_comment(admin_user.id, "Admin comment")
-    article.comments.first.add_comment(user.id, "Nested comment")
+    article.comments.create!(owner: user, comment: "Foo", field: "fooField")
+    article.comments.create!(owner: user, comment: "Bar")
+    article.comments.create!(owner: admin_user, comment: "Admin comment")
+    article.comments.first.comments.create!(owner: user, comment: "Nested comment")
     article
   end
 
