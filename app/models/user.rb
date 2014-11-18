@@ -59,6 +59,6 @@ class User < ActiveRecord::Base
   end
 
   def can_curate?
-    true
+    self.curator || self.admin
   end
 end

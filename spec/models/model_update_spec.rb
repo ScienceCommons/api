@@ -7,7 +7,7 @@ describe ModelUpdate do
     WebMock.enable!
   end
 
-  let(:user) { User.create!({ :email => "ben@example.com" }) }
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
   let(:article) { Article.create!(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05') }
 
   it "marks the model update as approved" do

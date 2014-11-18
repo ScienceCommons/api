@@ -13,7 +13,10 @@ class ModelUpdate < ActiveRecord::Base
   after_save :notify_firebase
 
   def check_for_automatic_approval
-    self.approved = self.submitter.can_curate?
+    if self.submitter.can_curate?
+      self.approved = self.submitter.can_curate?
+      self.approver = self.submitter
+    end
   end
 
   def notify_firebase
