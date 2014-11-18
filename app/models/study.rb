@@ -11,6 +11,7 @@ class Study < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :article
   has_many :model_updates, as: :changeable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates_presence_of :article_id
   validates_numericality_of :n, greater_than: 0, only_integer: true, unless: "n.blank?"

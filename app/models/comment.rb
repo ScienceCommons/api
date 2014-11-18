@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
 
   validates_presence_of :commentable_id, :commentable_type, :comment, :owner_id
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :commentable, polymorphic: true
 
