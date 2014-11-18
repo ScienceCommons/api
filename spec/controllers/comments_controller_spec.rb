@@ -21,6 +21,7 @@ describe CommentsController, :type => :controller do
     article.add_comment(user.id, "Foo", "fooField")
     article.add_comment(user.id, "Bar")
     article.add_comment(admin_user.id, "Admin comment")
+    article.comments.first.add_comment(user.id, "Nested comment")
     article
   end
 
@@ -44,6 +45,13 @@ describe CommentsController, :type => :controller do
       results.count.should == 3
     end
 
+    it "should return nested comments" do
+      get :index, :commentable_type => "articles", :commentable_id => article.id
+      results = JSON.parse(response.body)
+      results.last['comments'].count.should == 1
+      results.last['comments'].first['comment'].should == "Nested comment"
+    end
+
     it "should return the list of comments for a field" do
       get :index, :commentable_type => "articles", :commentable_id => article.id, :field => "fooField"
       results = JSON.parse(response.body)
@@ -56,6 +64,14 @@ describe CommentsController, :type => :controller do
       comment = article.comments.first
       get :show, id: comment.id
       JSON.parse(response.body)['id'].should == comment.id
+    end
+
+    it "should return nested comments" do
+      comment = article.comments.first
+      get :show, id: comment.id
+      result = JSON.parse(response.body)
+      result['comments'].count.should == 1
+      result['comments'].first['comment'].should == "Nested comment"
     end
 
     it "should return a 404 if the comment is not found" do

@@ -3,19 +3,20 @@ class CommentsController < ApplicationController
   #before_filter :authenticate!
 
   def index
-    query = Comment.where(
+    query = {
       :commentable_type => params[:commentable_type].camelize.singularize,
       :commentable_id => params[:commentable_id].to_i
-    )
-    query.and.where(:field => params[:field].to_s) if params[:field]
-    render json: query
+    }
+    query[:field] = params[:field].to_s if params[:field]
+
+    render json: Comment.where(query).order(created_at: :asc).as_json(:comments => true)
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
   end
 
   def show
-    render json: Comment.find(params[:id].to_i)
+    render json: Comment.find(params[:id].to_i).as_json(:comments => true)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -24,7 +25,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-
     anon = params[:anonymous] ? params[:anonymous].to_bool : false
 
     comment = Comment.new(

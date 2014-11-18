@@ -12,8 +12,7 @@ class Comment < ActiveRecord::Base
 
   def as_json(opts={})
     super(opts).tap do |h|
-      h['created_at'] = h['created_at'].to_i
-      h['updated_at'] = h['updated_at'].to_i
+      h['comments'] = self.comments.as_json(opts) if opts[:comments]
       if h['anonymous']
         h.delete('owner_id')
       else
