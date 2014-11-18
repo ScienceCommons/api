@@ -75,7 +75,7 @@ class Study < ActiveRecord::Base
       h[:registrations] = self.registrations if opts[:registrations]
       h[:replications] = self.replications.as_json(opts.merge(:authors => true, :year => true)) if opts[:replications]
       h[:replication_of] = self.replication_of.as_json(opts.merge(:authors => true, :year => true)) if opts[:replication_of]
-      h[:links] = self.links
+      h[:links] = self.links.as_json(opts[:comments])
       h[:comments] = self.comments.as_json() if opts[:comments]
       h
     end
