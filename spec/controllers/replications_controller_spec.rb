@@ -68,8 +68,8 @@ describe ReplicationsController, :type => :controller do
       response.status.should == 200
       results.count.should == 2
 
-      results.should include(JSON.parse(replication_1.as_json(replications: true, authors: true).to_json))
-      results.should include(JSON.parse(replication_2.as_json(replications: true, authors: true).to_json))
+      results.should include(JSON.parse(replication_1.as_json(replications: true, authors: true, year: true).to_json))
+      results.should include(JSON.parse(replication_2.as_json(replications: true, authors: true, year: true).to_json))
     end
 
     it("returns a list of all replications for a study, if only the study_id is provided") do
@@ -78,8 +78,8 @@ describe ReplicationsController, :type => :controller do
       response.status.should == 200
       results.count.should == 2
 
-      results.should include(JSON.parse(replication_1.as_json(replications: true, authors: true).to_json))
-      results.should include(JSON.parse(replication_2.as_json(replications: true, authors: true).to_json))
+      results.should include(JSON.parse(replication_1.as_json(replications: true, authors: true, year: true).to_json))
+      results.should include(JSON.parse(replication_2.as_json(replications: true, authors: true, year: true).to_json))
     end
 
     it("returns a 404 if article_id not found") do
@@ -99,13 +99,13 @@ describe ReplicationsController, :type => :controller do
     it("should return a single replication") do
       get :show, { article_id: article.id, study_id: study.id, id: replication_1.id }
       response.status.should == 200
-      JSON.parse(response.body).should == JSON.parse(replication_1.as_json(replications: true, authors: true).to_json)
+      JSON.parse(response.body).should == JSON.parse(replication_1.as_json(replications: true, authors: true, year: true).to_json)
     end
 
     it("should return a single replication, if article_id is not provided") do
       get :show, { study_id: study.id, id: replication_1.id }
       response.status.should == 200
-      JSON.parse(response.body).should == JSON.parse(replication_1.as_json(replications: true, authors: true).to_json)
+      JSON.parse(response.body).should == JSON.parse(replication_1.as_json(replications: true, authors: true, year: true).to_json)
     end
 
     it("returns a 404 if a required id is not found") do

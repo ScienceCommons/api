@@ -9,8 +9,8 @@ class Replication < ActiveRecord::Base
 
   def as_json(opts={})
     super(opts).tap do |h|
-      h[:replicating_study] = replicating_study.as_json(:authors => opts[:authors]) if opts[:replications]
-      h[:study] = study.as_json(:authors => opts[:authors]) if opts[:replication_of]
+      h[:replicating_study] = replicating_study.as_json(:authors => opts[:authors], :year => opts[:year]) if opts[:replications]
+      h[:study] = study.as_json(:authors => opts[:authors], :year => opts[:year]) if opts[:replication_of]
       h
     end
   end
