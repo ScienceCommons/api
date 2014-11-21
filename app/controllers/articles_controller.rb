@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   def index
     author_id = params[:author_id].to_i
     if author_id != 0
-      render json: Author.find(author_id).articles
+      render json: Author.find(author_id).articles.as_json(:authors => true)
     else
       opts = {
         from: params[:from] ? params[:from].to_i : 0,
