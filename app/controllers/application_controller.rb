@@ -51,6 +51,10 @@ class ApplicationController < ActionController::Base
     raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless current_user.try(:admin)
   end
 
+  def check_can_curate
+    raise Rack::OAuth2::Server::Resource::Bearer::Unauthorized unless current_user.try(:can_curate?)
+  end
+
   # any controller can render a 401 unauthorized by
   # raising Exceptions::AuthorizationError.
   def authorization_error

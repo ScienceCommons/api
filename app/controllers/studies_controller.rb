@@ -2,6 +2,8 @@ class StudiesController < ApplicationController
   #before_action :authenticate_user!
   #before_filter :authenticate!
 
+  before_filter :check_can_curate, :only => [:create, :update, :destroy]
+
   def index
     return render_error('article_id must be provided') if params[:article_id].nil?
     article_id = params[:article_id].to_i
@@ -54,6 +56,7 @@ class StudiesController < ApplicationController
         n: !params['n'].blank? ? params['n'].to_i : nil,
         power: !params['power'].blank? ? params['power'].to_f : nil,
         number: params['number'].to_s,
+        owner: current_user
       })
 
       update_serialized_keys(study)
@@ -159,9 +162,6 @@ class StudiesController < ApplicationController
     id = params[:id].to_i
     article_id = params[:article_id].to_i
     study = Article.find(article_id).studies.find(id)
-
-    render(json: {error: 'you can only delete studies that you create'}, status: 401) and return unless (current_user == study.owner) or study.owner.nil?
-
     study.destroy!
 
     render json: {success: true, data: study}, status: 204

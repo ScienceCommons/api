@@ -2,16 +2,8 @@ require 'rails_helper'
 
 describe StudiesController, :type => :controller do
 
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :email => "christian@example.com"
-    })
-  end
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
+  let(:user_2) { User.create!({ :email => "christian@example.com", :curator => false }) }
   let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
   let!(:article_no_studies) { Article.create(doi: '1234banana', title: 'hello world') }
 
@@ -33,8 +25,7 @@ describe StudiesController, :type => :controller do
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.enable! }
   before(:each) do
-    controller.stub(:current_user).
-      and_return(user)
+    controller.stub(:current_user).and_return(user)
   end
 
   describe "#index" do
@@ -372,7 +363,17 @@ describe StudiesController, :type => :controller do
       Study.all.count.should == 2
     end
 
-    it "should not allow you to delete a study that you did not create" do
+    it "allows a curator to delete a study that they did not create" do
+      delete :destroy, {
+        article_id: article.id,
+        id: s2.id
+      }
+      response.status.should == 204
+      Study.all.count.should == 2
+    end
+
+    it "should not allow a non-curator to delete a study" do
+      controller.stub(:current_user).and_return(user_2)
       delete :destroy, {
         article_id: article.id,
         id: s2.id
