@@ -98,10 +98,10 @@ class StudiesController < ApplicationController
 
       # don't use the update method, since we
       # update effect_size and variables as well.
-      study.n = params[:n].to_i if params[:n]
-      study.power = params[:power].to_f if params[:power]
+      study.n = params[:n].to_i if params.has_key?(:n)
+      study.power = params[:power].to_f if params.has_key?(:power)
       update_serialized_keys(study)
-      study.number = params[:number] if params[:number]
+      study.number = params[:number] if params.has_key?(:number)
 
       params[:links] ||= [] if params.has_key?(:links)
       if params[:links]
@@ -141,7 +141,7 @@ class StudiesController < ApplicationController
   def update_serialized_keys(study)
     # push dependent and independent variables.
     [:dependent_variables, :independent_variables].each do |key|
-      study.send("#{key}=".to_sym, params[key].to_a) if !params[key].nil?
+      study.send("#{key}=".to_sym, params[key].to_a) if params.has_key?(key)
     end
 
     # set effect size for a specific test type.

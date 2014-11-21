@@ -87,10 +87,11 @@ class ArticlesController < ApplicationController
     ActiveRecord::Base.transaction do
       article = Article.find(params[:id].to_i)
 
-      article.abstract = params[:abstract] if params[:abstract]
-      article.title = params[:title] if params[:title]
-      article.publication_date = Date.parse(params[:publication_date]) if params[:publication_date]
-      article.tags = params[:tags] if params[:tags]
+      article.abstract = params[:abstract] if params.has_key?(:abstract)
+      article.title = params[:title] if params.has_key?(:title)
+      article.publication_date = Date.parse(params[:publication_date]) if params.has_key?(:publication_date)
+      article.tags = params[:tags] if params.has_key?(:tags)
+      article.doi = params[:doi] if params.has_key?(:doi)
 
       # add the author list, and resave.
       if params.has_key?(:authors)
