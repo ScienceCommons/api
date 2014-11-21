@@ -222,6 +222,15 @@ describe ArticlesController, :type => :controller do
       article.authors.count.should == 0
     end
 
+    it "allows the doi to be removed" do
+      post :update, {
+        id: article.id,
+        doi: nil
+      }
+      article.reload
+      article.doi.should be_nil
+    end
+
     it "should allow the abstract to be changed" do
       post :update, { id: article.id, abstract: "my wacky research" }
       article.reload
