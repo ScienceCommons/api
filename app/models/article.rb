@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   has_many :model_updates, as: :changeable, dependent: :destroy
   has_many :bookmarks, class_name: "UserBookmark", as: :bookmarkable, dependent: :destroy
 
-  validates_uniqueness_of :doi
+  validates_uniqueness_of :doi, unless: "doi.blank?"
   validates_presence_of :title
 
   serialize :authors_denormalized
