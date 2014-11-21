@@ -40,8 +40,6 @@ class Article < ActiveRecord::Base
 
   def as_json(opts={})
     super(opts).tap do |h|
-      h['created_at'] = h['created_at'].to_i
-      h['updated_at'] = h['updated_at'].to_i
       if opts[:authors]
         if self.authors.count > 0
           h['authors'] = self.authors

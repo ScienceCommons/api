@@ -63,9 +63,6 @@ class Study < ActiveRecord::Base
 
   def as_json(opts={})
     super(opts).tap do |h|
-      h['created_at'] = h['created_at'].to_i
-      h['updated_at'] = h['updated_at'].to_i
-
       # optionally serialize various amounts of
       # relational data.
       h[:authors] = self.article.authors if opts[:authors]

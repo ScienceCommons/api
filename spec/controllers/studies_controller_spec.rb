@@ -20,7 +20,7 @@ describe StudiesController, :type => :controller do
   end
   let!(:s2) { article.studies.create!({ owner_id: user_2.id }) }
   let!(:s3) { article.studies.create!() }
-  let(:time_in_past) { 1400463719 }
+  let(:time_in_past) { Time.at(1400463719) }
 
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.enable! }
@@ -70,13 +70,13 @@ describe StudiesController, :type => :controller do
       JSON.parse(response.body)['id'].should == s2.id
     end
 
-    it "should return created_at as an integer epoch" do
+    it "should return created_at as a Date" do
       get :show, article_id: article.id, id: s2.id
       study = JSON.parse(response.body)
       study['created_at'].should > time_in_past
     end
 
-    it "should return updated_at as an integer epoch" do
+    it "should return updated_at as a Date" do
       get :show, article_id: article.id, id: s2.id
       study = JSON.parse(response.body)
       study['updated_at'].should > time_in_past
