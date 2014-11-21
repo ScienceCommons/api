@@ -25,14 +25,12 @@ class CommentsController < ApplicationController
   end
 
   def create
-    anon = params[:anonymous] ? params[:anonymous].to_bool : false
-
     comment = Comment.new(
       :owner_id => current_user.id,
       :comment => params[:comment].to_s,
       :commentable_type => params[:commentable_type].camelize.singularize,
       :commentable_id => params[:commentable_id].to_i,
-      :anonymous => anon
+      :anonymous => params[:anonymous] || false
     )
     comment.field = params[:field].to_s if params[:field]
     comment.save!
