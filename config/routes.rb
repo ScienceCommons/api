@@ -9,6 +9,7 @@ PaperSearchApi::Application.routes.draw do
 
     collection do
       get 'admins'
+      get 'curators'
       get 'beta_mail_list'
     end
   end

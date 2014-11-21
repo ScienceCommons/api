@@ -44,7 +44,11 @@ class UsersController < ApplicationController
   end
 
   def admins
-    render json: User.where(admin: true).order("id DESC")
+    render json: User.where(admin: true).order("created_at DESC")
+  end
+
+  def curators
+    render json: User.where(curator: true).order("created_at DESC")
   end
 
   def toggle_admin
