@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
 
   def recent
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('updated_at DESC').limit(limit).to_a
+    render json: Article.order('updated_at DESC').limit(limit).as_json(:authors => true)
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
@@ -40,7 +40,7 @@ class ArticlesController < ApplicationController
 
   def recently_added
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('created_at DESC').limit(limit).to_a
+    render json: Article.order('created_at DESC').limit(limit).as_json(:authors => true)
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
