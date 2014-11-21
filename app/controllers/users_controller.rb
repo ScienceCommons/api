@@ -28,9 +28,9 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id].to_i)
-    render(json: {error: 'you can only edit your user'}, status: 401) and return unless current_user == user
+    return render(json: {error: 'you can only edit your user'}, status: 401) if current_user.id != params[:id]
 
+    user = User.find(params[:id].to_i)
     user.name = params[:name] if params[:name]
     user.save!
     render json: user
@@ -66,6 +66,25 @@ class UsersController < ApplicationController
     render json: {error: 'unknown error'}, status: 500
   end
 
+  def toggle_curator
+    user = User.find_by(id: params[:id].to_i)
+    new_state = params[:state]
+    if user.id == @current_user.id
+      render json: {error: "You cannot modify your own record"}, status: 404
+    elsif new_state.nil?
+      render json: {error: "State is required"}, status: 404
+    else
+      user.curator = new_state
+      user.save!
+      render json: user
+    end
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    Raven.capture_exception(ex)
+    render json: {error: 'unknown error'}, status: 500
+  end
+
   def beta_mail_list
     uri = URI('https://us7.api.mailchimp.com/2.0/lists/members.json')
     beta_params = { :apikey => ENV['MAILCHIMP_API_KEY'], :id => ENV['MAILCHIMP_ID'] }
@@ -86,6 +105,9 @@ class UsersController < ApplicationController
     else
       render json: {error: 'unknown error'}, status: 500
     end
+  rescue StandardError => ex
+    Raven.capture_exception(ex)
+    render json: {error: 'unknown error'}, status: 500
   end
 
   private
