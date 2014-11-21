@@ -4,11 +4,11 @@ describe StudiesController, :type => :controller do
 
   let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
   let(:user_2) { User.create!({ :email => "christian@example.com", :curator => false }) }
-  let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
-  let!(:article_no_studies) { Article.create(doi: '1234banana', title: 'hello world') }
+  let!(:article) { Article.create!(doi: '123banana', title: 'hello world') }
+  let!(:article_no_studies) { Article.create!(doi: '1234banana', title: 'hello world') }
 
   let!(:s1) do
-    article.studies.create.tap do |s|
+    article.studies.create!.tap do |s|
       s.add_independent_variables('health')
       s.add_dependent_variables('happiness')
       s.set_effect_size('r', 0.5)
@@ -18,8 +18,8 @@ describe StudiesController, :type => :controller do
       s.save!
     end
   end
-  let!(:s2) { article.studies.create({ owner_id: user_2.id }) }
-  let!(:s3) { article.studies.create() }
+  let!(:s2) { article.studies.create!({ owner_id: user_2.id }) }
+  let!(:s3) { article.studies.create!() }
   let(:time_in_past) { 1400463719 }
 
   before(:all) { WebMock.disable! }

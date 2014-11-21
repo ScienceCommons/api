@@ -2,34 +2,26 @@ require 'rails_helper'
 
 describe ArticlesController, :type => :controller do
 
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :email => "christian@example.com"
-    })
-  end
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
+  let(:user_2) { User.create!({ :email => "christian@example.com" }) }
 
-  let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05') }
-  let(:article_2) { Article.create(doi: '123apple', title: 'awesome article', owner_id: user_2.id, updated_at: '2007-03-05') }
-  let(:article_3) { Article.create(doi: '123mango', title: 'article 3', owner_id: user.id, updated_at: '2008-03-05') }
-  let(:article_4) { Article.create(doi: '123pear', title: 'article 4', owner_id: user_2.id, updated_at: '2010-03-05') }
-  let(:article_5) { Article.create(doi: '123guava', title: 'article 5', owner_id: user.id, updated_at: '2010-04-05') }
-  let(:article_6) { Article.create(doi: '123peach', title: 'article 6', owner_id: user_2.id, updated_at: '2010-04-06') }
+  let(:article) { Article.create!(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05') }
+  let(:article_2) { Article.create!(doi: '123apple', title: 'awesome article', owner_id: user_2.id, updated_at: '2007-03-05') }
+  let(:article_3) { Article.create!(doi: '123mango', title: 'article 3', owner_id: user.id, updated_at: '2008-03-05') }
+  let(:article_4) { Article.create!(doi: '123pear', title: 'article 4', owner_id: user_2.id, updated_at: '2010-03-05') }
+  let(:article_5) { Article.create!(doi: '123guava', title: 'article 5', owner_id: user.id, updated_at: '2010-04-05') }
+  let(:article_6) { Article.create!(doi: '123peach', title: 'article 6', owner_id: user_2.id, updated_at: '2010-04-06') }
 
   let(:author) {
-    author = Author.create({first_name: 'cat', last_name: 'dog'})
+    author = Author.create!({first_name: 'cat', last_name: 'dog'})
     author.articles << article_5
     author.articles << article_6
     author.save
     author
   }
 
-  let(:author_2) { Author.create({first_name: 'rabbit', last_name: 'dog'}) }
-  let(:author_3) { Author.create({first_name: 'horse', last_name: 'dog'}) }
+  let(:author_2) { Author.create!({first_name: 'rabbit', last_name: 'dog'}) }
+  let(:author_3) { Author.create!({first_name: 'horse', last_name: 'dog'}) }
 
   before(:all) do
     WebMock.disable!
@@ -48,8 +40,7 @@ describe ArticlesController, :type => :controller do
     ElasticMapper.index.refresh
 
     # fake :user being logged in
-    controller.stub(:current_user).
-      and_return(user)
+    controller.stub(:current_user).and_return(user)
   end
 
   describe "#index" do
@@ -225,8 +216,16 @@ describe ArticlesController, :type => :controller do
       article.abstract.should == 'my wacky research'
     end
 
-    it "should raise a 401 if user tries to update article they did not create" do
-      post :update, { id: article_2.id, abstract: "my wacky research" }
+    it "should allow a curator to update any article" do
+      post :update, { id: article_2.id, title: "my wacky research" }
+      response.status.should == 200
+      article_2.reload
+      article_2.title.should == 'my wacky research'
+    end
+
+    it "should raise a 401 if non-curator tries to update article" do
+      controller.stub(:current_user).and_return(user_2)
+      post :update, { id: article_2.id, title: "my wacky research" }
       response.status.should == 401
       article_2.reload
       article_2.title.should == 'awesome article'
@@ -251,7 +250,18 @@ describe ArticlesController, :type => :controller do
       results['total'].should == 5
     end
 
-    it "does not allow current_user to destroy another user's article" do
+    it "allows a curator to destroy any article" do
+      delete :destroy, { id: article_2.id }
+      response.status.should == 204
+
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 5
+      results['total'].should == 5
+    end
+
+    it "does not allow a non-curator to destroy any article" do
+      controller.stub(:current_user).and_return(user_2)
       delete :destroy, { id: article_2.id }
       response.status.should == 401
 
@@ -260,6 +270,7 @@ describe ArticlesController, :type => :controller do
       results['documents'].count.should == 6
       results['total'].should == 6
     end
+
 
     it "returns a 404 if article is not found" do
       delete :destroy, { id: -1 }

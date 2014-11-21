@@ -2,6 +2,8 @@ class ArticlesController < ApplicationController
   #before_action :authenticate_user!
   #before_filter :authenticate!
 
+  before_filter :check_can_curate, :only => [:create, :update, :destroy]
+
   def index
     author_id = params[:author_id].to_i
     if author_id != 0
@@ -52,7 +54,7 @@ class ArticlesController < ApplicationController
         title: params[:title],
         publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
         abstract: params[:abstract],
-        owner_id: current_user ? current_user.id : nil,
+        owner: current_user,
         tags: params[:tags]
       })
 
@@ -84,9 +86,6 @@ class ArticlesController < ApplicationController
     article = nil
     ActiveRecord::Base.transaction do
       article = Article.find(params[:id].to_i)
-
-      # you can only edit articles you have created.
-      render(json: {error: 'you can only edit articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
 
       article.abstract = params[:abstract] if params[:abstract]
       article.title = params[:title] if params[:title]
@@ -127,10 +126,6 @@ class ArticlesController < ApplicationController
 
   def destroy
     article = Article.find(params[:id].to_i)
-
-    # you can only edit articles you have created.
-    render(json: {error: 'you can only delete articles that you create'}, status: 401) and return unless current_user == article.owner || current_user.admin
-
     article.destroy!
 
     # force index to update, so that we
