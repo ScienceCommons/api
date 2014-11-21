@@ -21,9 +21,12 @@ class Article < ActiveRecord::Base
 
   after_save :index
   after_destroy :delete_from_index
+  before_save do
+    self.doi = nil if self.doi.blank?
+  end
+
   before_create do
     self.authors_denormalized = []
-    self.doi ||= ""
   end
 
   def add_author(first_name, middle_name, last_name)

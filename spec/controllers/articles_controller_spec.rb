@@ -222,10 +222,19 @@ describe ArticlesController, :type => :controller do
       article.authors.count.should == 0
     end
 
-    it "allows the doi to be removed" do
+    it "allows the doi to be removed if passed nil" do
       post :update, {
         id: article.id,
         doi: nil
+      }
+      article.reload
+      article.doi.should be_nil
+    end
+
+    it "allows the doi to be removed if passed an empty string" do
+      post :update, {
+        id: article.id,
+        doi: ""
       }
       article.reload
       article.doi.should be_nil
