@@ -4,6 +4,7 @@ PaperSearchApi::Application.routes.draw do
   resources :users, :only => [:index, :show, :create, :update] do
     member do
       post 'toggle_admin'
+      post 'toggle_curator'
     end
 
     collection do
