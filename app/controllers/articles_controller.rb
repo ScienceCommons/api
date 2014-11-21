@@ -93,8 +93,8 @@ class ArticlesController < ApplicationController
       article.tags = params[:tags] if params[:tags]
 
       # add the author list, and resave.
-      if !params[:authors].nil?
-        if params[:authors].empty?
+      if params.has_key?(:authors)
+        if params[:authors].blank?
           article.article_authors.destroy_all
         else
           ids = params[:authors].map{|author| author["id"].to_i}

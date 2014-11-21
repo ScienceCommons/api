@@ -210,6 +210,18 @@ describe ArticlesController, :type => :controller do
       article.authors.count.should == 0
     end
 
+    it "should allow the authors to be removed when passed nil" do
+      article.authors = [author]
+      article.save
+
+      post :update, {
+        id: article.id,
+        authors: nil
+      }
+      article.reload
+      article.authors.count.should == 0
+    end
+
     it "should allow the abstract to be changed" do
       post :update, { id: article.id, abstract: "my wacky research" }
       article.reload
