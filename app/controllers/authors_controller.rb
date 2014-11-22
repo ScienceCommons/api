@@ -2,6 +2,8 @@ class AuthorsController < ApplicationController
   #before_action :authenticate_user!
   #before_filter :authenticate!
 
+  before_filter :check_can_curate, :only => [:create, :update, :mark_duplicate, :destroy]
+
   UPDATEABLE_ATTRS = [
     :first_name,
     :middle_name,
@@ -56,8 +58,6 @@ class AuthorsController < ApplicationController
   def update
     author = Author.find(params[:id].to_i)
 
-    # you can only edit articles you have created.
-    render(json: {error: 'you can only edit authors that you create'}, status: 401) and return unless current_user == author.owner || current_user.admin
     ActiveRecord::Base.transaction do
       author.attributes = params.slice(*UPDATEABLE_ATTRS)
       if author.changed?
@@ -80,12 +80,30 @@ class AuthorsController < ApplicationController
     render json: {error: 'unknown error'}, status: 500
   end
 
+  def mark_duplicate
+    author = Author.find(params[:id].to_i)
+    primary_author = Author.find(params[:same_as_id].to_i)
+
+    ActiveRecord::Base.transaction do
+      author.primary_author = primary_author
+      if author.changed?
+        author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_updated)
+      end
+      author.save!
+    end
+
+    render json: author
+  rescue ActiveRecord::RecordInvalid => ex
+    render_error(ex)
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
+  rescue StandardError => ex
+    Raven.capture_exception(ex)
+    render json: {error: 'unknown error'}, status: 500
+  end
+
   def destroy
     author = Author.find(params[:id].to_i)
-
-    # you can only edit articles you have created.
-    render(json: {error: 'you can only delete authors that you create'}, status: 401) and return unless current_user == author.owner || current_user.admin
-
     author.destroy!
 
     # force index to update, so that we

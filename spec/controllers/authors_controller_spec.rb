@@ -2,17 +2,8 @@ require 'rails_helper'
 
 describe AuthorsController, :type => :controller do
 
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :email => "christian@example.com"
-    })
-  end
-
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
+  let(:user_2) { User.create!({ :email => "christian@example.com" }) }
   let(:author) { Author.create(first_name: 'cat', last_name: 'dog', owner_id: user.id) }
   let(:author_2) { Author.create(first_name: 'spot', last_name: 'dog', owner_id: user_2.id) }
 
@@ -33,8 +24,7 @@ describe AuthorsController, :type => :controller do
     ElasticMapper.index.refresh
 
     # fake :user being logged in
-    controller.stub(:current_user).
-      and_return(user)
+    controller.stub(:current_user).and_return(user)
   end
 
   describe "#index" do
@@ -112,7 +102,8 @@ describe AuthorsController, :type => :controller do
       author.last_name.should == 'my new last name'
     end
 
-    it "should raise a 401 if user tries to update an author they did not create" do
+    it "should raise a 401 if a non-curator tries to update an author" do
+      controller.stub(:current_user).and_return(user_2)
       post :update, { id: author_2.id, first_name: "scotty" }
       response.status.should == 401
       author_2.reload
@@ -127,6 +118,17 @@ describe AuthorsController, :type => :controller do
     end
   end
 
+  describe "#mark_duplicate" do
+    it "allows a curator to mark an authors as a duplicate" do
+      post :mark_duplicate, { id: author.id, same_as_id: author_2.id }
+      author.reload
+      author_2.reload
+      author.same_as_id.should == author_2.id
+      author.primary_author.should == author_2
+      author_2.duplicate_authors.should include(author)
+    end
+  end
+
   describe "#destroy" do
     it "allows an author created by current_user to be destroyed" do
       delete :destroy, { id: author.id }
@@ -138,7 +140,8 @@ describe AuthorsController, :type => :controller do
       results['total'].should == 1
     end
 
-    it "does not allow current_user to destroy another user's author" do
+    it "does not allow a non-curator to destroy an author" do
+      controller.stub(:current_user).and_return(user_2)
       delete :destroy, { id: author_2.id }
       response.status.should == 401
 

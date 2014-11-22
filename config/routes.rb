@@ -104,6 +104,10 @@ PaperSearchApi::Application.routes.draw do
   resources :findings
   resources :invites, :only => [:create]
   resources :authors, :only => [:index, :show, :create, :update, :destroy] do
+    member do
+      post 'mark_duplicate'
+    end
+
     resources :articles, :only => [:index]
   end
   resources :links, :only => [:index, :create, :update, :destroy]
