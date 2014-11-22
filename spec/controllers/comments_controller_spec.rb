@@ -7,7 +7,7 @@ describe CommentsController, :type => :controller do
   let(:article) do
     article = Article.create(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05')
     article.comments.create!(owner: user, comment: "Foo", field: "fooField")
-    article.comments.create!(owner: user, comment: "Bar")
+    article.comments.create!(owner: user, comment: "Bar", anonymous: true)
     article.comments.create!(owner: admin_user, comment: "Admin comment")
     article.comments.first.comments.create!(owner: user, comment: "Nested comment")
     article
@@ -40,6 +40,23 @@ describe CommentsController, :type => :controller do
       results.last['comments'].first['comment'].should == "Nested comment"
     end
 
+    it "does not return the owner name/id for anonymous comments" do
+      controller.stub(:current_user).and_return(admin_user)
+      get :index, :commentable_type => "articles", :commentable_id => article.id
+      results = JSON.parse(response.body)
+      results[1]['anonymous'].should be_truthy
+      results[1]['owner_id'].should be_nil
+      results[1]['name'].should be_nil
+    end
+
+    it "returns owner name/id for anonymous comments by the current user" do
+      get :index, :commentable_type => "articles", :commentable_id => article.id
+      results = JSON.parse(response.body)
+      results[1]['anonymous'].should be_truthy
+      results[1]['owner_id'].should == user.id
+      results[1]['name'].should == user.name
+    end
+
     it "should return the list of comments for a field" do
       get :index, :commentable_type => "articles", :commentable_id => article.id, :field => "fooField"
       results = JSON.parse(response.body)
@@ -59,6 +76,25 @@ describe CommentsController, :type => :controller do
       comment = article.comments.first
       get :show, id: comment.id
       JSON.parse(response.body)['id'].should == comment.id
+    end
+
+    it "does not return the owner name/id for anonymous comments" do
+      controller.stub(:current_user).and_return(admin_user)
+      comment = article.comments[1]
+      get :show, id: comment.id
+      results = JSON.parse(response.body)
+      results['anonymous'].should be_truthy
+      results['owner_id'].should be_nil
+      results['name'].should be_nil
+    end
+
+    it "returns owner name/id for anonymous comments by the current user" do
+      comment = article.comments[1]
+      get :show, id: comment.id
+      results = JSON.parse(response.body)
+      results['anonymous'].should be_truthy
+      results['owner_id'].should == user.id
+      results['name'].should == user.name
     end
 
     it "should return nested comments" do

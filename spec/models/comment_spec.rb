@@ -28,7 +28,7 @@ describe Comment do
     end
   end
 
-  describe "comment" do
+  describe ".comments" do
     it "allows comments to be created on comments" do
       comment = article.comments.create!(owner_id: 0, comment: 'hello world')
       comment.comments.create!(owner_id: 0, comment: 'i on a comment!')

@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     commentable_type = params[:commentable_type].camelize.singularize
     if commentable_type == "User"
       render status: 404 unless current_user
-      render json: current_user.comments.order(created_at: :asc).as_json(:comments => true)
+      render json: current_user.comments.order(created_at: :asc).as_json(:comments => true, :current_user_id => current_user.id)
     else
       query = {
         :commentable_type => commentable_type,
@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
       }
       query[:field] = params[:field].to_s if params[:field]
 
-      render json: Comment.where(query).order(created_at: :asc).as_json(:comments => true)
+      render json: Comment.where(query).order(created_at: :asc).as_json(:comments => true, :current_user_id => current_user.id)
     end
   rescue StandardError => ex
     Raven.capture_exception(ex)
@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
   end
 
   def show
-    render json: Comment.find(params[:id].to_i).as_json(:comments => true)
+    render json: Comment.find(params[:id].to_i).as_json(:comments => true, :current_user_id => current_user.id)
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
