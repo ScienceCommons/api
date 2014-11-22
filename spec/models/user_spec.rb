@@ -5,17 +5,8 @@ describe User do
   before(:all) { WebMock.disable! }
   after(:all) { WebMock.disable! }
 
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :invite_count => 1,
-      :email => "bob@example.com"
-    })
-  end
+  let(:user) { User.create!({ :email => "ben@example.com" }) }
+  let(:user_2) { User.create!({ :invite_count => 1, :email => "bob@example.com" }) }
 
   describe "replications" do
     let!('replication_1') do
@@ -123,7 +114,7 @@ describe User do
     end
   end
 
-  describe "bookmarks" do
+  describe ".bookmarks" do
     let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
 
     it "allows a user to bookmark an article" do
@@ -131,7 +122,16 @@ describe User do
       user.reload
       user.bookmarks.count.should == 1
     end
+  end
 
+  describe ".comments" do
+    let(:article) { Article.create(doi: '123banana', title: 'hello world', owner_id: user.id) }
+
+    it "returns the comments that the user has created" do
+      article.comments.create!(owner: user, comment: "Some user comment")
+      user.comments.count.should == 1
+      user.comments.first.comment.should == "Some user comment"
+    end
   end
 
 end

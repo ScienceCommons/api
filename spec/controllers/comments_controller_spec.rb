@@ -1,20 +1,8 @@
 require 'rails_helper'
 
 describe CommentsController, :type => :controller do
-  let(:user) do
-    User.create!({
-      :name => "bentron",
-      :email => "ben@example.com"
-    })
-  end
-
-  let(:admin_user) do
-    User.create!({
-      :name => "ben",
-      :email => "ben+admin@example.com",
-      :admin => true
-    })
-  end
+  let(:user) { User.create!({ :name => "bentron", :email => "ben@example.com" }) }
+  let(:admin_user) { User.create!({ :name => "ben", :email => "ben+admin@example.com", :admin => true }) }
 
   let(:article) do
     article = Article.create(doi: '123banana', title: 'hello world', owner_id: user.id, updated_at: '2006-03-05')
@@ -56,6 +44,13 @@ describe CommentsController, :type => :controller do
       get :index, :commentable_type => "articles", :commentable_id => article.id, :field => "fooField"
       results = JSON.parse(response.body)
       results.count.should == 1
+    end
+
+    it "should return the list of comments for the current user" do
+      article # initialize these records
+      get :index, :commentable_type => "users", :commentable_id => user.id
+      results = JSON.parse(response.body)
+      results.count.should == 3
     end
   end
 
@@ -107,6 +102,29 @@ describe CommentsController, :type => :controller do
       post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
       comment = JSON.parse(response.body)
       comment['anonymous'].should == false
+    end
+  end
+
+  describe "#set_non_anonymous" do
+    it "unanonymizes a comment owned by the current user" do
+      comment = article.comments.first
+      comment.update_attributes!(anonymous: true)
+      comment.anonymous.should be_truthy
+      post :set_non_anonymous, id: comment.id
+      response.status.should == 200
+      comment.reload
+      comment.anonymous.should be_falsy
+    end
+
+    it "does not allow an admin to unanonymize a comment for another user" do
+      controller.stub(:current_user).and_return(admin_user)
+      comment = article.comments.first
+      comment.update_attributes!(anonymous: true)
+      comment.anonymous.should be_truthy
+      post :set_non_anonymous, id: comment.id
+      response.status.should == 404
+      comment.reload
+      comment.anonymous.should be_truthy
     end
   end
 

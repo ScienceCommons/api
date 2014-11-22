@@ -88,7 +88,12 @@ PaperSearchApi::Application.routes.draw do
     resources :registrations
   end
 
-  resources :comments, :only => [:show, :destroy]
+  resources :comments, :only => [:show, :destroy] do
+    member do
+      post 'set_non_anonymous'
+    end
+  end
+
   resources :bookmarks, :only => [:index, :show, :create, :destroy]
   get ":commentable_type/:commentable_id/comments(/:field)" => "comments#index"
   post ":commentable_type/:commentable_id/comments(/:field)" => "comments#create"

@@ -2,13 +2,14 @@ require 'rails_helper'
 
 describe Comment do
   let(:article) do
-    Article.create(
+    Article.create!(
       title: 'Z Article',
       doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
       publication_date: Time.now - 3.days,
       abstract: 'hello world'
     )
   end
+
   before(:all) { WebMock.disable! }
   after(:all) do
     reset_index
