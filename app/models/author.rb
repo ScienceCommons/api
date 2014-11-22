@@ -19,4 +19,10 @@ class Author < ActiveRecord::Base
   def full_name
     [first_name, middle_name, last_name].compact.join(" ")
   end
+
+  def as_json(opts={})
+    super(opts).tap do |h|
+      h['articles'] = self.articles if opts[:articles]
+    end
+  end
 end

@@ -24,7 +24,7 @@ class AuthorsController < ApplicationController
   end
 
   def show
-    render json: Author.find(params[:id].to_i)
+    render json: Author.find(params[:id].to_i).as_json(:articles => params[:include] && params[:include].include?("articles"))
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
