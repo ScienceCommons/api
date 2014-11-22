@@ -18,6 +18,7 @@ class Pubmed
 
     # then create a job for each page of results.
     (0..@article_count).step(PER_PAGE) do |n|
+
       Resque.enqueue(Workers::PubmedWorker, @journal, @year, n / PER_PAGE, @web_env)
     end
   end
@@ -84,7 +85,7 @@ class Pubmed
   end
 
   def esearch
-    "#{ESEARCH_URL}?db=pubmed&term=#{CGI::escape(@journal)}[journal]+#{CGI::escape(@year)}[pdat]&usehistory=y&retmax=#{PER_PAGE}&email=#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
+    "#{ESEARCH_URL}?db=pubmed&term=#{CGI::escape(@journal)}[journal]+#{CGI::escape(@year.to_s)}[pdat]&usehistory=y&retmax=#{PER_PAGE}&email=#{ENV['PUBMED_KEY']}&tool=#{ENV['PUBMED_SECRET']}"
   end
 
   def get_xml(url)
