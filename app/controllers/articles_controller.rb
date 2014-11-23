@@ -16,6 +16,8 @@ class ArticlesController < ApplicationController
 
       render json: Article.search(params[:q] || '*', opts)
     end
+  rescue ActiveRecord::RecordNotFound => ex
+    render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
