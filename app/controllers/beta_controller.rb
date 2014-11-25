@@ -1,5 +1,6 @@
 class BetaController < ApplicationController
   before_action :current_user
+  before_filter :ensure_proper_subdomain, :only => "index"
 
   def index
     prefix = params[:test_js] ? "test" : "www"
@@ -38,5 +39,13 @@ class BetaController < ApplicationController
     res['documents'] = documents
 
     render json: res
+  end
+
+  private
+
+  def ensure_proper_subdomain
+    if Rails.env == 'production' && request.subdomain != 'www'
+      redirect_to subdomain: 'www', :controller => 'beta', :action => "index"
+    end
   end
 end
