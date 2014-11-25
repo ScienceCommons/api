@@ -98,8 +98,8 @@ class StudiesController < ApplicationController
 
       # don't use the update method, since we
       # update effect_size and variables as well.
-      study.n = params[:n].to_i if params.has_key?(:n)
-      study.power = params[:power].to_f if params.has_key?(:power)
+      study.n = params[:n] if params.has_key?(:n)
+      study.power = params[:power] if params.has_key?(:power)
       update_serialized_keys(study)
       study.number = params[:number] if params.has_key?(:number)
 
