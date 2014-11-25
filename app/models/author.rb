@@ -25,6 +25,7 @@ class Author < ActiveRecord::Base
   def as_json(opts={})
     super(opts).tap do |h|
       h['articles'] = self.articles if opts[:articles]
+      h['article_count'] = self.articles.count if opts[:article_count]
     end
   end
 end
