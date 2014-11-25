@@ -72,7 +72,7 @@ gem 'stretcher'
 gem 'will_paginate', '~> 3.0'
 gem 'faraday'
 gem 'nokogiri'
-gem 'elastic_mapper', '~> 0.2.1'
+gem 'elastic_mapper', '~> 0.3.0'
 gem "omniauth-google-oauth2"
 gem "aws-ses", "~> 0.5.0", :require => 'aws/ses'
 gem 'gctools'
