@@ -1,0 +1,8 @@
+Time: <%= @feedback_message.created_at %>
+<%- if @feedback_message.details['url'] -%>
+URL: <%= @feedback_message.details['url'] %>
+<%- end -%>
+
+Message:
+
+<%= @feedback_message.message %>

@@ -8,4 +8,11 @@ class UserMailer < ActionMailer::Base
     @invite_url = INVITE_URL
     mail(to: to_email, subject: "#{@from_name} has invited you to CurateScience")
   end
+
+  def feedback_email(feedback_message)
+    @feedback_message = feedback_message
+    @from_user = @feedback_message.user
+    @from_name = @from_user.name || @from_user.email
+    mail(to: "stephen@curatescience.org", from: @from_user.email, subject: "Feedback from #{@from_name}")
+  end
 end
