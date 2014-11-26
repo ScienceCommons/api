@@ -10,6 +10,7 @@ class AdminController < ApplicationController
       :authors => get_stats(Author),
       :bookmarks => get_stats(UserBookmark),
       :comments => get_stats(Comment),
+      :feedback_messages => get_stats(FeedbackMessage),
       :invites => get_stats(Invite),
       :links => get_stats(Link),
       :model_updates => get_stats(ModelUpdate),
