@@ -81,6 +81,19 @@ describe StudiesController, :type => :controller do
       study = JSON.parse(response.body)
       study['updated_at'].should > time_in_past
     end
+
+    it "should include model updates" do
+      post :update, {
+        article_id: article.id,
+        id: s2.id,
+        n: 25,
+        power: 0.1,
+        number: "2b"
+      }
+      get :show, article_id: article.id, id: s2.id, model_updates: true
+      study = JSON.parse(response.body)
+      study['model_updates'].count.should == 1
+    end
   end
 
   describe "#create" do

@@ -54,4 +54,13 @@ class ModelUpdate < ActiveRecord::Base
       return self.changeable.full_name
     end
   end
+
+  def as_json(opts={})
+    super(opts).tap do |h|
+      # optionally serialize various amounts of
+      # relational data.
+      h[:user] = self.submitter.email
+      h
+    end
+  end
 end
