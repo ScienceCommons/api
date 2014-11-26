@@ -13,6 +13,6 @@ class UserMailer < ActionMailer::Base
     @feedback_message = feedback_message
     @from_user = @feedback_message.user
     @from_name = @from_user.name || @from_user.email
-    mail(to: "stephen@curatescience.org", from: @from_user.email, subject: "Feedback from #{@from_name}")
+    mail(to: "stephen@curatescience.org", subject: "Feedback from #{@from_name}")
   end
 end
