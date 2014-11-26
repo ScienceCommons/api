@@ -88,6 +88,7 @@ PaperSearchApi::Application.routes.draw do
     resources :registrations
   end
 
+  resources :feedback_messages, :only => [:create]
   resources :comments, :only => [:show, :destroy] do
     member do
       post 'set_non_anonymous'
