@@ -1,10 +1,10 @@
-Email address: <%= @from_user.email %>
-Time: <%= @feedback_message.created_at %>
+Email address: <%= @from_user.email %><br />
+Time: <%= @feedback_message.created_at %><br />
 <%- if @feedback_message.details['url'] -%>
 URL: <a href="<%= @feedback_message.details['url'] %>"><%= @feedback_message.details['url'] %></a>
 <%- end -%>
 <br />
 <br />
-Message:
+Message:<br />
 <br />
 <%= @feedback_message.message %>
