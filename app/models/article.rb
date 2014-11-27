@@ -16,7 +16,7 @@ class Article < ActiveRecord::Base
   serialize :authors_denormalized
 
   mapping :title, :doi, :index => :not_analyzed
-  mapping :title, :abstract, :journal_title, :tags
+  mapping :title, :abstract, :authors_for_index, :authors_denormalized_for_index, :journal_title, :tags
   mapping :publication_date, :type => :date
 
   after_save :index
@@ -36,6 +36,18 @@ class Article < ActiveRecord::Base
       last_name: last_name
     )
     self
+  end
+
+  def authors_for_index
+    self.authors.map do |a|
+      "#{a.first_name} #{a.middle_name} #{a.last_name}"
+    end.join(' ')
+  end
+
+  def authors_denormalized_for_index
+    self.authors_denormalized.map do |a|
+      "#{a[:first_name]} #{a[:middle_name]} #{a[:last_name]}"
+    end.join(' ')
   end
 
   def as_json(opts={})
