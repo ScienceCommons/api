@@ -22,9 +22,6 @@ class Study < ActiveRecord::Base
   serialize :independent_variables
   serialize :dependent_variables
 
-  # effect size is stored as a serialized hash.
-  serialize :effect_size
-
   # Independent, and Dependent variables
   # are represented as an array of strings.
   before_create do
@@ -45,8 +42,9 @@ class Study < ActiveRecord::Base
 
   def set_effect_size(type, value)
     if VALID_EFFECT_SIZES.include?(type)
-      self.effect_size = {} # only one effect size per study.
-      self.effect_size[type] = value
+      hash = {}
+      hash[type] = value
+      self.effect_size = hash # only one effect size per study.
     else
       raise Exceptions::InvalidEffectSize.new("#{type} is not a valid effect size.")
     end
