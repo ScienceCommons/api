@@ -17,25 +17,16 @@ class Study < ActiveRecord::Base
   validates_numericality_of :n, greater_than: 0, only_integer: true, unless: "n.blank?"
   validates_numericality_of :power, greater_than: 0, less_than: 1, unless: "power.blank?"
 
-  # independent and dependent variables
-  # are stored as serialized arrays.
-  serialize :independent_variables
-  serialize :dependent_variables
-
-  # Independent, and Dependent variables
-  # are represented as an array of strings.
-  before_create do
-    self.independent_variables = []
-    self.dependent_variables = []
-    self.effect_size = {}
-  end
+  after_initialize :default_values
 
   def add_dependent_variables(variable)
+    self.dependent_variables_will_change!
     self.dependent_variables << variable
     self
   end
 
   def add_independent_variables(variable)
+    self.independent_variables_will_change!
     self.independent_variables << variable
     self
   end
@@ -75,5 +66,13 @@ class Study < ActiveRecord::Base
       h[:model_updates] = self.model_updates if opts[:model_updates]
       h
     end
+  end
+
+  private
+
+  def default_values
+    self.dependent_variables ||= []
+    self.independent_variables ||= []
+    self.effect_size ||= {}
   end
 end
