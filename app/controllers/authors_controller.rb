@@ -1,7 +1,7 @@
 class AuthorsController < ApplicationController
-  #before_action :authenticate_user!
   #before_filter :authenticate!
 
+  before_filter :authenticate_user!
   before_filter :check_can_curate, :only => [:create, :update, :mark_duplicate, :destroy]
 
   UPDATEABLE_ATTRS = [

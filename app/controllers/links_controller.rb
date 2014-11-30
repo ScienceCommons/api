@@ -2,6 +2,9 @@ class LinksController < ApplicationController
   #before_action :authenticate_user!
   #before_filter :authenticate!
 
+  before_filter :authenticate_user!
+  before_filter :check_can_curate, :only => [:create, :update, :destroy]
+
   def index
     return render_error('study_id must be provided') if params[:study_id].nil?
     study_id = params[:study_id].to_i
