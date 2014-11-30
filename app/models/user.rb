@@ -36,7 +36,8 @@ class User < ActiveRecord::Base
 
       user = User.create({
         name: auth["info"]["name"],
-        email: email
+        email: email,
+        curator: true
       })
     end
 
