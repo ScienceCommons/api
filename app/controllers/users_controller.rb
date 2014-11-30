@@ -30,10 +30,9 @@ class UsersController < ApplicationController
   def update
     return render(json: {error: 'you can only edit your user'}, status: 401) if current_user.id != params[:id]
 
-    user = User.find(params[:id].to_i)
-    user.name = params[:name] if params[:name]
-    user.save!
-    render json: user
+    current_user.name = params[:name] if params.has_key?(:name)
+    current_user.save!
+    render json: current_user
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
