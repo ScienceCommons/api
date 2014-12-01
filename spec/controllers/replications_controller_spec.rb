@@ -1,51 +1,27 @@
 require 'rails_helper'
 
 describe ReplicationsController, :type => :controller do
-  # creating an article indexes
-  # the article in ES which causes
-  # problems for WebMock.
-  before(:all) { WebMock.disable! }
-  after(:all) { WebMock.enable! }
-  before(:each) do
-    controller.stub(:current_user).
-      and_return(user)
-  end
-
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :email => "christian@example.com"
-    })
-  end
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
+  let(:user_2) { User.create!({ :email => "christian@example.com" }) }
   let(:article) do
-    Article.create(
+    Article.create!(
       title: 'Z Article',
       doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
       publication_date: Time.now - 3.days,
       abstract: 'hello world'
     )
   end
-  let(:study) do
-    Study.create({ article_id: article.id })
-  end
+  let(:study) { Study.create!({ article_id: article.id }) }
   let(:replicating_study_1) do
-    study = Study.create({ article_id: article.id })
+    study = Study.create!({ article_id: article.id })
     study.links << Link.new({name: "cat", url: "dog", type: "test"})
     study.save!
     study
   end
-  let(:replicating_study_2) do
-    Study.create({ article_id: article.id })
-  end
-  let(:replicating_study_3) do
-    Study.create({ article_id: article.id })
-  end
+  let(:replicating_study_2) { Study.create!({ article_id: article.id }) }
+  let(:replicating_study_3) { Study.create!({ article_id: article.id }) }
   let!(:replication_1) do
-    replication = Replication.create(
+    replication = Replication.create!(
       study_id: study.id,
       replicating_study_id: replicating_study_1.id,
       closeness: 2,
@@ -53,13 +29,24 @@ describe ReplicationsController, :type => :controller do
     )
   end
   let!(:replication_2) do
-    replication = Replication.create(
+    replication = Replication.create!(
       study_id: study.id,
       replicating_study_id: replicating_study_2.id,
       closeness: 2,
       owner_id: user_2.id
     )
   end
+
+  before(:all) do
+    WebMock.disable!
+  end
+  after(:all) do
+    WebMock.enable!
+  end
+  before(:each) do
+    controller.stub(:current_user).and_return(user)
+  end
+
 
   describe('#index') do
     it("returns a list of all replications for a study") do

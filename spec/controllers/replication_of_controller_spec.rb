@@ -1,42 +1,41 @@
 require 'rails_helper'
 
 describe ReplicationOfController, :type => :controller do
-  # creating an article indexes
-  # the article in ES which causes
-  # problems for WebMock.
-  before(:all) { WebMock.disable! }
-  after(:all) { WebMock.enable! }
-
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
   let(:article) do
-    Article.create(
+    Article.create!(
       title: 'Z Article',
       doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
       publication_date: Time.now - 3.days,
       abstract: 'hello world'
     )
   end
-  let(:study) do
-    Study.create({ article_id: article.id })
-  end
-  let(:replicating_study_1) do
-    Study.create({ article_id: article.id })
-  end
-  let(:replicating_study_2) do
-    Study.create({ article_id: article.id })
-  end
+  let(:study) { Study.create!({ article_id: article.id }) }
+  let(:replicating_study_1) { Study.create!({ article_id: article.id }) }
+  let(:replicating_study_2) { Study.create!({ article_id: article.id }) }
   let!(:replication_1) do
-    replication = Replication.create(
+    Replication.create!(
       study_id: study.id,
       replicating_study_id: replicating_study_1.id,
       closeness: 2
     )
   end
   let!(:replication_2) do
-    replication = Replication.create(
+    Replication.create!(
       study_id: study.id,
       replicating_study_id: replicating_study_2.id,
       closeness: 2
     )
+  end
+
+  before(:all) do
+    WebMock.disable!
+  end
+  after(:all) do
+    WebMock.enable!
+  end
+  before(:each) do
+    controller.stub(:current_user).and_return(user)
   end
 
   describe('#index') do

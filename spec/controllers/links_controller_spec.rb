@@ -2,31 +2,19 @@ require 'rails_helper'
 
 describe LinksController, :type => :controller do
 
-  let(:user) do
-    User.create!({
-      :email => "ben@example.com"
-    })
-  end
-  let(:user_2) do
-    User.create!({
-      :email => "christian@example.com"
-    })
-  end
-
-  let!(:article) { Article.create(doi: '123banana', title: 'hello world') }
-  let!(:study) { article.studies.create({ owner_id: user.id }) }
-  let!(:study_2) { article.studies.create({ owner_id: user_2.id }) }
-
-  let(:link) { Link.create(name: 'cat', url: 'dog', type: 'test', study_id: study.id) }
-  let(:link_2) { Link.create(name: 'spot', url: 'dog', type: 'test', study_id: study_2.id) }
+  let(:user) { User.create!({ :email => "ben@example.com", :curator => true }) }
+  let(:user_2) { User.create!({ :email => "christian@example.com" }) }
+  let!(:article) { Article.create!(doi: '123banana', title: 'hello world') }
+  let!(:study) { article.studies.create!({ owner_id: user.id }) }
+  let!(:study_2) { article.studies.create!({ owner_id: user_2.id }) }
+  let(:link) { Link.create!(name: 'cat', url: 'dog', type: 'test', study_id: study.id) }
+  let(:link_2) { Link.create!(name: 'spot', url: 'dog', type: 'test', study_id: study_2.id) }
 
   before(:all) do
     WebMock.disable!
-    Timecop.freeze(Time.local(1990))
   end
   after(:all) do
     WebMock.enable!
-    Timecop.return
   end
   before(:each) do
     # fake :user being logged in
