@@ -8,7 +8,7 @@ class StudiesController < ApplicationController
   def index
     return render_error('article_id must be provided') if params[:article_id].nil?
     article_id = params[:article_id].to_i
-    render json: Article.find(article_id).studies.map{|s| s.as_json(:replications => params[:replications], :comments => params[:comments], model_updates: params[:model_updates])}
+    render json: Article.find(article_id).studies.map{|s| s.as_json(:replications => params[:replications], :comments => params[:comments], model_updates: params[:model_updates], replication_of: params[:replication_of])}
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
@@ -31,7 +31,8 @@ class StudiesController < ApplicationController
           registrations: true,
           comments: params[:comments],
           model_updates: params[:model_updates],
-          replications: params[:replications]
+          replications: params[:replications],
+          replication_of: params[:replication_of]
         )
     else
       render json: Study.find(id)
@@ -41,7 +42,8 @@ class StudiesController < ApplicationController
           registrations: true,
           comments: params[:comments],
           model_updates: params[:model_updates],
-          replications: params[:replications]
+          replications: params[:replications],
+          replication_of: params[:replication_of]
         )
     end
   rescue ActiveRecord::RecordNotFound => ex
