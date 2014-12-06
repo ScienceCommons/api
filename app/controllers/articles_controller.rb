@@ -14,7 +14,13 @@ class ArticlesController < ApplicationController
         size: params[:size] ? params[:size].to_i : 20
       }
 
-      render json: Article.search(params[:q] || '*', opts)
+      res = Article.search(params[:q] || '*', opts)
+      documents = res['documents'].map do |doc|
+        doc.as_json(:authors => true)
+      end
+
+      res['documents'] = documents
+      render json: res
     end
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
