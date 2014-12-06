@@ -1,6 +1,11 @@
 namespace :pubmed do
   desc "index pubmed journals"
   task :index => :environment do
+    years = ENV['YEARS'] ? eval(ENV['YEARS']) : 1990..2014
+    years = Range.new(years, years) if years.is_a? Integer
+    raise "Year range starts too early. Choose a year after 1900." if years.first < 1900
+    raise "Year range ends after the the current year." if years.last > Time.now.utc.year
+
     journals = [
       "Acta Psychologica",
       "Aggress Behav",
@@ -360,7 +365,9 @@ namespace :pubmed do
       "Youth & Society",
     ]
 
-    years = 1990..2014
+    if ENV['JOURNALS']
+      journals = journals & ENV['JOURNALS'].split(",")
+    end
 
     journals.each do |journal|
       years.each do |year|
