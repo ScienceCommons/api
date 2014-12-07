@@ -4,6 +4,15 @@ class Comment < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :commentable, polymorphic: true
+  belongs_to :primary_commentable, polymorphic: true
+
+  before_create do
+    if self.commentable.is_a? Comment
+      self.primary_commentable = self.commentable.primary_commentable
+    else
+      self.primary_commentable = self.commentable
+    end
+  end
 
   after_create do
     self.commentable.update_attributes!(comment_count: self.commentable.comments.count)
