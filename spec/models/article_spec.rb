@@ -182,7 +182,7 @@ describe Article do
 
   describe "comments" do
     let(:article) do
-      Article.create(
+      Article.create!(
         title: 'Z Article',
         doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
         publication_date: Time.now - 3.days,
@@ -201,6 +201,23 @@ describe Article do
       article.comments.create!(owner_id: 0, comment: "hello world!")
       article.reload
       article.comment_count.should == 2
+    end
+  end
+
+  describe "descendant_comments" do
+    let(:article) do
+      Article.create!(
+      title: 'Z Article',
+      doi: 'http://dx.doi.org/10.6084/m9.figshare.949676',
+      publication_date: Time.now - 3.days,
+      abstract: 'hello world'
+      )
+    end
+
+    it "returns all comments under an article" do
+      comment1 = article.comments.create!(owner_id: 0, comment: "hello world!")
+      comment2 = comment1.comments.create!(owner_id: 0, comment: "hello world!")
+      article.descendant_comments.count.should == 2
     end
   end
 

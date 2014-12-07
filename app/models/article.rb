@@ -59,4 +59,8 @@ class Article < ActiveRecord::Base
       end
     end
   end
+
+  def descendant_comments
+    Comment.where(primary_commentable_id: self.id, primary_commentable_type: "Article")
+  end
 end
