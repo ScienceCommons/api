@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141127042602) do
+ActiveRecord::Schema.define(version: 20141207200531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,10 +111,12 @@ ActiveRecord::Schema.define(version: 20141127042602) do
     t.text     "comment"
     t.string   "field"
     t.integer  "owner_id"
-    t.integer  "comment_count",    default: 0
+    t.integer  "comment_count",            default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "anonymous"
+    t.integer  "primary_commentable_id"
+    t.string   "primary_commentable_type"
   end
 
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
@@ -122,6 +124,8 @@ ActiveRecord::Schema.define(version: 20141127042602) do
   add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
   add_index "comments", ["field"], name: "index_comments_on_field", using: :btree
   add_index "comments", ["owner_id"], name: "index_comments_on_owner_id", using: :btree
+  add_index "comments", ["primary_commentable_id"], name: "index_comments_on_primary_commentable_id", using: :btree
+  add_index "comments", ["primary_commentable_type"], name: "index_comments_on_primary_commentable_type", using: :btree
 
   create_table "feedback_messages", force: true do |t|
     t.integer  "user_id",          null: false
