@@ -6,7 +6,7 @@ class AdminController < ApplicationController
 
   def db_stats
     stats = {
-      :articles => get_stats(Article),
+      # :articles => get_stats(Article),
       :authors => get_stats(Author),
       :bookmarks => get_stats(UserBookmark),
       :comments => get_stats(Comment),
