@@ -60,6 +60,7 @@ class ArticlesController < ApplicationController
       article = Article.create!({
         doi: params[:doi],
         title: params[:title],
+        journal_title: params[:journal_title],
         publication_date: !params[:publication_date].blank? ? Date.parse(params[:publication_date]) : Time.now,
         abstract: params[:abstract],
         owner: current_user,
@@ -97,6 +98,7 @@ class ArticlesController < ApplicationController
 
       article.abstract = params[:abstract] if params.has_key?(:abstract)
       article.title = params[:title] if params.has_key?(:title)
+      article.journal_title = params[:journal_title] if params.has_key?(:journal_title)
       article.publication_date = Date.parse(params[:publication_date]) if params.has_key?(:publication_date)
       article.tags = params[:tags] if params.has_key?(:tags)
       article.doi = params[:doi] if params.has_key?(:doi)
