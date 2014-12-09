@@ -50,13 +50,7 @@ class Article < ActiveRecord::Base
 
   def as_json(opts={})
     super(opts).tap do |h|
-      if opts[:authors]
-        if self.authors.count > 0
-          h['authors'] = self.authors
-        else
-          h['authors'] = self.authors_denormalized
-        end
-      end
+      h['authors'] = self.authors if opts[:authors]
     end
   end
 
