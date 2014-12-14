@@ -3,9 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'webmock/rspec'
-require 'simplecov'
+# require 'simplecov'
 
-SimpleCov.start
+# SimpleCov.start
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
