@@ -43,6 +43,7 @@ describe ReplicationOfController, :type => :controller do
       get :index, { article_id: article.id, study_id: replicating_study_1.id }
       response.status.should == 200
       result = JSON.parse(response.body)
+      replication_1.reload
       result.first.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
@@ -50,6 +51,7 @@ describe ReplicationOfController, :type => :controller do
       get :index, { study_id: replicating_study_1.id}
       response.status.should == 200
       result = JSON.parse(response.body)
+      replication_1.reload
       result.first.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
@@ -65,6 +67,7 @@ describe ReplicationOfController, :type => :controller do
       get :show, { article_id: article.id, study_id: replicating_study_1.id, id: replication_1.id }
       response.status.should == 200
       result = JSON.parse(response.body)
+      replication_1.reload
       result.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 
@@ -72,6 +75,7 @@ describe ReplicationOfController, :type => :controller do
       get :show, { study_id: replicating_study_1.id, id: replication_1.id }
       response.status.should == 200
       result = JSON.parse(response.body)
+      replication_1.reload
       result.should == JSON.parse(replication_1.as_json(replication_of: true).to_json)
     end
 

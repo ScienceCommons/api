@@ -9,7 +9,7 @@ class Study < ActiveRecord::Base
   has_many :links
   has_many :replication_of, :class_name => 'Replication', :foreign_key => :replicating_study_id
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
-  belongs_to :article
+  belongs_to :article, touch: true
   has_many :model_updates, as: :changeable, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
 

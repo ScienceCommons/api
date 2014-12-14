@@ -4,7 +4,7 @@ class Replication < ActiveRecord::Base
   validate :study_id_does_not_equal_replicating_study_id
 
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
-  belongs_to :study
+  belongs_to :study, touch: true
   belongs_to :replicating_study, :class_name => 'Study', :foreign_key => :replicating_study_id
 
   def as_json(opts={})
