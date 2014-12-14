@@ -44,17 +44,21 @@ describe CommentsController, :type => :controller do
       controller.stub(:current_user).and_return(admin_user)
       get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
-      results[1]['anonymous'].should be_truthy
-      results[1]['owner_id'].should be_nil
-      results[1]['name'].should be_nil
+      anonymous_results = results.select{|res| res['anonymous'] == true}
+      anonymous_results.count.should == 1
+      res = anonymous_results[0]
+      res['owner_id'].should be_nil
+      res['name'].should be_nil
     end
 
     it "returns owner name/id for anonymous comments by the current user" do
       get :index, :commentable_type => "articles", :commentable_id => article.id
       results = JSON.parse(response.body)
-      results[1]['anonymous'].should be_truthy
-      results[1]['owner_id'].should == user.id
-      results[1]['name'].should == user.name
+      anonymous_results = results.select{|res| res['anonymous'] == true}
+      anonymous_results.count.should == 1
+      res = anonymous_results[0]
+      res['owner_id'].should == user.id
+      res['name'].should == user.name
     end
 
     it "should return the list of comments for a field" do
@@ -80,7 +84,7 @@ describe CommentsController, :type => :controller do
 
     it "does not return the owner name/id for anonymous comments" do
       controller.stub(:current_user).and_return(admin_user)
-      comment = article.comments[1]
+      comment = article.comments.where(anonymous: true).first
       get :show, id: comment.id
       results = JSON.parse(response.body)
       results['anonymous'].should be_truthy
@@ -89,7 +93,7 @@ describe CommentsController, :type => :controller do
     end
 
     it "returns owner name/id for anonymous comments by the current user" do
-      comment = article.comments[1]
+      comment = article.comments.where(anonymous: true).first
       get :show, id: comment.id
       results = JSON.parse(response.body)
       results['anonymous'].should be_truthy
