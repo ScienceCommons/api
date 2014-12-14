@@ -163,7 +163,7 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
-    redis (3.2.0)
+    redis (3.1.0)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
     resque (1.25.2)
@@ -280,7 +280,7 @@ DEPENDENCIES
   rack-oauth2
   rails (= 4.1.8)
   rails_12factor
-  redis (>= 3.0.0)
+  redis (~> 3.1.0)
   resque
   resque-pool
   resque-retry

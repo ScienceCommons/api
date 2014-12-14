@@ -60,7 +60,7 @@ end
 gem 'ar-octopus'
 gem 'rack-oauth2'
 gem 'oauth2'
-gem 'redis', '>= 3.0.0'
+gem 'redis', '~> 3.1.0'
 gem 'resque'
 gem 'resque-retry'
 gem 'resque-pool'
