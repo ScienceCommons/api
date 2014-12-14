@@ -66,7 +66,6 @@ gem 'resque-retry'
 gem 'resque-pool'
 gem 'dotenv-rails'
 gem "statsd-ruby"
-gem 'unicorn'
 gem 'puma'
 gem "sentry-raven", :git => "https://github.com/getsentry/raven-ruby.git"
 gem 'stretcher'
