@@ -20,7 +20,7 @@ describe Author do
 
       field, error = author.errors.first
       field.should == :first_name
-      error.should == "can't be blank"
+      author.errors[field].first.should == "can't be blank"
     end
   end
 
@@ -32,7 +32,7 @@ describe Author do
 
       field, error = author.errors.first
       field.should == :last_name
-      error.should == "can't be blank"
+      author.errors[field].first.should == "can't be blank"
     end
   end
 

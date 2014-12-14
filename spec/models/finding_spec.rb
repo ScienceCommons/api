@@ -13,7 +13,7 @@ describe Finding do
       finding.errors.count.should == 1
       field, error = finding.errors.first
       field.should == :study_id
-      error.should == "can't be blank"
+      finding.errors[field].first.should == "can't be blank"
     end
 
     it "should not allow a finding to be created with no name" do
@@ -25,7 +25,7 @@ describe Finding do
       finding.errors.count.should == 1
       field, error = finding.errors.first
       field.should == :name
-      error.should == "can't be blank"
+      finding.errors[field].first.should == "can't be blank"
     end
 
     it "should not allow a finding to be created with no url" do
@@ -38,7 +38,7 @@ describe Finding do
       finding.errors.count.should == 2
       field, error = finding.errors.first
       field.should == :url
-      error.should == "can't be blank"
+      finding.errors[field].first.should == "can't be blank"
     end
 
     it "should not allow article to be created with invalid url" do
@@ -51,7 +51,7 @@ describe Finding do
       finding.errors.count.should == 1
       field, error = finding.errors.first
       field.should == :url
-      error.should == 'must be valid url'
+      finding.errors[field].first.should == 'must be valid url'
     end
 
   end

@@ -16,9 +16,8 @@ describe Article do
       article.errors.count.should == 1
 
       field, error = article.errors.first
-
       field.should == :doi
-      error.should == 'has already been taken'
+      article.errors[field].first.should == 'has already been taken'
     end
 
     it "should allow an article with a nil DOI to be created" do
@@ -35,7 +34,7 @@ describe Article do
 
       field, error = article.errors.first
       field.should == :title
-      error.should == "can't be blank"
+      article.errors[field].first.should == "can't be blank"
     end
   end
 

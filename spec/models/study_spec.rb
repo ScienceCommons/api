@@ -35,7 +35,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :article_id
-      error.should == "can't be blank"
+      study.errors[field].first.should == "can't be blank"
     end
 
     it "should initialize variables as an array" do
@@ -69,7 +69,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :n
-      error.should == "must be greater than 0"
+      study.errors[field].first.should == "must be greater than 0"
     end
 
     it "should raise an error when 0" do
@@ -78,7 +78,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :n
-      error.should == "must be greater than 0"
+      study.errors[field].first.should == "must be greater than 0"
     end
 
     it "should raise an error when not an integer" do
@@ -87,7 +87,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :n
-      error.should == "must be an integer"
+      study.errors[field].first.should == "must be an integer"
     end
   end
 
@@ -98,7 +98,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :power
-      error.should == "must be greater than 0"
+      study.errors[field].first.should == "must be greater than 0"
     end
 
     it "should raise an error when above 1" do
@@ -107,7 +107,7 @@ describe Study do
       study.errors.count.should == 1
       field, error = study.errors.first
       field.should == :power
-      error.should == "must be less than 1"
+      study.errors[field].first.should == "must be less than 1"
     end
   end
 

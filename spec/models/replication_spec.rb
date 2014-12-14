@@ -30,7 +30,7 @@ describe Replication do
       replication.errors.count.should == 1
       field, error = replication.errors.first
       field.should == :study_id
-      error.should == "can't be blank"
+      replication.errors[field].first.should == "can't be blank"
     end
 
     it "should not allow replication to be created without a replicating study" do
@@ -42,7 +42,7 @@ describe Replication do
       replication.errors.count.should == 1
       field, error = replication.errors.first
       field.should == :replicating_study_id
-      error.should == "can't be blank"
+      replication.errors[field].first.should == "can't be blank"
     end
 
     it "allows an owner to be specified when creating a replication" do
@@ -66,7 +66,7 @@ describe Replication do
       replication.errors.count.should == 1
       field, error = replication.errors.first
       field.should == :replicating_study_id
-      error.should == "must be different from study_id"
+      replication.errors[field].first.should == "must be different from study_id"
     end
   end
 

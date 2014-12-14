@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
       raise Exceptions::NotOnInviteList.new unless Invite.find_by_email(email)
 
       user = User.create({
-        name: auth["info"]["name"],
+        name: auth.info.name,
         email: email,
         curator: true
       })
@@ -43,8 +43,8 @@ class User < ActiveRecord::Base
 
     # now add the account to the user!
     user.accounts.create({
-      provider: auth["provider"],
-      uid: auth["uid"]
+      provider: auth.provider,
+      uid: auth.uid
     })
 
     user

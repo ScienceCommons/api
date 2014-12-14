@@ -13,7 +13,7 @@ describe OauthSessionsController, :type => :controller do
   end
 
   before(:each) do
-    request.env["omniauth.auth"] = OpenStruct.new
+    request.env["omniauth.auth"] = {}
     Account.stub(:find_by_provider_and_uid).and_return(nil)
   end
 
