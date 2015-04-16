@@ -27,4 +27,5 @@ bundle exec rspec
 ```bash
 bundle install
 bundle exec rails s
+elasticsearch
 ```
