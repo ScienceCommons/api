@@ -1,18 +1,14 @@
 # README
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ScienceCommons/api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Dependencies:
+* ruby-2.0.0
+* Java >=1.6
+* elasticsearch
+* postgresql
+* a C compiler for your platform so you can build nokogiri
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
+## How to build and run:
 
 * Database initialization
 
@@ -30,18 +26,5 @@ bundle exec rspec
 
 ```bash
 bundle install
-foreman start
-
-or
-
-bundle install
 bundle exec rails s
 ```
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
