@@ -212,6 +212,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    seed_dump (3.2.2)
+      activerecord (~> 4)
+      activesupport (~> 4)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -287,6 +290,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0.2)
   sass-rails (~> 4.0.0)
   sdoc
+  seed_dump
   sentry-raven!
   simplecov
   statsd-ruby

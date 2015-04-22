@@ -32,6 +32,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.2'
+  gem 'seed_dump'
 end
 
 group :test do

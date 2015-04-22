@@ -6,3 +6,4 @@ log/*.log
 .env
 public/assets
 coverage/
+.dump
