@@ -6,17 +6,37 @@
 * Java >=1.6
 * elasticsearch
 * postgresql
-* a C compiler for your platform so you can build nokogiri
+* a C compiler toolchain for your platform (e.g. on Mac, xcode developer tools) so you can build nokogiri
 
 ### OAuth2
 The app uses Google OAuth2 for authentication. In order to authenticate with a local instance of the server you need to set up OAuth2 credentials and register your callback URI at [Google Developer Console](https://console.developers.google.com/), and export your credentials to your GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET environment variables.
 
 ### How to build and run:
 
+* Download and install dependencies
+```bash
+bundle install
+```
+
 * Database initialization
 
+First, migrate the database schema:
 ```bash
 bundle exec rake db:migrate
+```
+Next, fill in your e-mail address in the Invite and User seeds in db/seeds.rb so that you can authenticate:
+```ruby
+User.create!([
+  {email: "your_name@gmail.com", remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, admin: true, curator: nil, name: "Your Name Here", invite_count: 100}
+             ])
+
+Invite.create!([
+  {invite_id: nil, inviter_id: 1, email: "your_name@gmail.com"}
+])
+```
+Then, run the seed task to populate your dev database with test data:
+```bash
+bundle exec rake db:seed
 ```
 
 * How to run the test suite
@@ -32,3 +52,4 @@ bundle install
 bundle exec rails s
 elasticsearch
 ```
+elasticsearch is needed for the search box to work, but the app will otherwise run without it.
