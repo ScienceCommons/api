@@ -2,8 +2,9 @@
 
 <% if Rails.env == 'production' %>
   <script src="//cdn.ravenjs.com/1.1.16/native/raven.min.js"></script>
-
   <script type="text/javascript">
+    API_ROOT = "<%= ENV['PROD_API_ROOT'] %>";
+
     Raven.config('https://ddd00458907a4eeea7e63a633a41c85c@app.getsentry.com/31981', {
       whitelistUrls: ['curatescience.org/']
     }).install();
@@ -15,8 +16,11 @@
     ga('create', 'UA-50411070-1', 'curatescience.org');
     ga('send', 'pageview');
   </script>
+<% else %>
+  <script type="text/javascript">
+    API_ROOT = "<%= ENV['DEV_API_ROOT'] %>";
+  </script>
 <% end %>
-
 
 <script type="text/javascript">
   var CS = {};

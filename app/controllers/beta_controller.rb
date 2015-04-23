@@ -3,10 +3,10 @@ class BetaController < ApplicationController
   before_filter :ensure_proper_subdomain, :only => "index"
 
   def index
-    prefix = params[:test_js] ? "test" : "www"
-    @main_js = "//s3.amazonaws.com/#{prefix}.curatescience.org/assets/main.js"
-    if ENV["MAIN_JS_VERSION"]
-      @main_js = "//s3.amazonaws.com/#{prefix}.curatescience.org/assets/main-#{ENV["MAIN_JS_VERSION"]}.js"
+    if Rails.env == "production"
+      @main_js = ENV["PROD_MAIN_JS"]
+    else
+      @main_js = ENV["TEST_MAIN_JS"]
     end
   end
 
