@@ -1,6 +1,6 @@
 class BetaController < ApplicationController
   before_action :current_user
-  before_filter :ensure_proper_subdomain, :only => "index"
+#  before_filter :ensure_proper_subdomain, :only => "index"
 
   def index
     if Rails.env == "production"
