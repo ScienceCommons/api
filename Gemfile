@@ -39,7 +39,7 @@ group :test do
   gem 'webmock'
   gem 'timecop'
   gem 'simplecov', :require => false
-  # gem 'vcr', git: 'git@github.com:vcr/vcr.git'
+  gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
 group :production do
