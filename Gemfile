@@ -39,7 +39,7 @@ group :test do
   gem 'webmock'
   gem 'timecop'
   gem 'simplecov', :require => false
-  gem 'vcr', git: 'git@github.com:vcr/vcr.git'
+  # gem 'vcr', git: 'git@github.com:vcr/vcr.git'
 end
 
 group :production do
@@ -73,6 +73,8 @@ gem 'stretcher'
 gem 'will_paginate', '~> 3.0'
 gem 'faraday'
 gem 'nokogiri'
+gem 'crossref', '~> 0.0.4' # allow to make crossref request
+gem 'hpricot'
 gem 'elastic_mapper', '~> 0.3.0'
 gem "omniauth-google-oauth2"
 gem "aws-ses", "~> 0.5.0", :require => 'aws/ses'
