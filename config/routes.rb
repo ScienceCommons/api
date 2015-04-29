@@ -118,6 +118,9 @@ PaperSearchApi::Application.routes.draw do
       get 'recent'
       get 'recently_added'
     end
+    member do 
+      post 'find_doi'
+    end
 
     resources :studies do
       resources :replications
