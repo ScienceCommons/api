@@ -56,6 +56,7 @@ class ArticlesController < ApplicationController
 
   def create
     article = nil
+    binding.pry
     ActiveRecord::Base.transaction do
       article = Article.create!({
         doi: params[:doi],
@@ -93,6 +94,7 @@ class ArticlesController < ApplicationController
 
   def update
     article = nil
+    binding.pry
     ActiveRecord::Base.transaction do
       article = Article.find(params[:id].to_i)
       article.abstract = params[:abstract] if params.has_key?(:abstract)
@@ -146,11 +148,16 @@ class ArticlesController < ApplicationController
 
   def find_doi
     article = Article.find(params[:id].to_i)
-    article = article.find_doi(params[:doi]) 
+    article = article.find_doi(params[:doi])
+    raise ActiveRecord::RecordNotFound if article.blank?
     render json: article.as_json(:authors => true)
   rescue ActiveRecord::RecordNotFound => ex
-    article = Article.new.find_doi(params[:doi]) 
-    render json: article.as_json(:authors => true)
+    article = Article.new.find_doi(params[:doi])
+    if article.present?
+      render json: article.as_json(:authors => true)
+    else
+      render json: {error: "DOI not found"}, status: 404
+    end
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500

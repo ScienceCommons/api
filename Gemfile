@@ -35,6 +35,10 @@ group :development, :test do
   gem 'seed_dump'
 end
 
+group :development do
+  gem 'pry'
+end
+
 group :test do
   gem 'webmock'
   gem 'timecop'

@@ -59,37 +59,39 @@ class Article < ActiveRecord::Base
   end
   
   def find_doi(doi)
-    # self.as_json
     biblio_for(doi)
   end
 
   def biblio_for(doi)
     require 'rubygems'
-    require 'hpricot'
     require 'open-uri'
-    doc = Hpricot(open("http://www.crossref.org/openurl/?id=doi:#{doi}&noredirect=true&pid=etienne.lebel@gmail.com&format=unixref"))
-    journal = (doc/"abbrev_title").inner_html
-    abstract = (doc/"abstract").inner_html
-    year = (doc/"journal_issue/publication_date/year").first.inner_html
-    (doc/"journal_issue/publication_date/month").present? ? month = (doc/"journal_issue/publication_date/month").first.inner_html : month = "01"
-    (doc/"journal_issue/publication_date/day").present? ? day = (doc/"journal_issue/publication_date/day").first.inner_html : day = "01"
-    date = (day + "." + month +"." + year).to_date
-    title = (doc/"title").inner_html
-    authors_count = (doc/"person_name").count
-    self.doi = doi
-    self.title = title
-    self.journal_title = journal
-    self.publication_date = date
-    self.abstract = abstract
-    for i in 0...authors_count
-      given_name = (doc/"given_name")[i].inner_html.split(" ")
-      first_name = given_name[0]
-      middle_name = given_name[1]
-      last_name = (doc/"surname")[i].inner_html if (doc/"surname")[i].present?
-      author = Author.create(first_name: first_name, middle_name: middle_name, last_name: last_name)
-      author.save
-      self.authors << author
+    doc = Nokogiri::XML(open("http://www.crossref.org/openurl/?id=doi:#{doi}&noredirect=true&pid=etienne.lebel@gmail.com&format=unixref"))
+    if (doc/"doi_record").present? && (doc/"error").blank?
+      journal = (doc/"abbrev_title").inner_html
+      abstract = (doc/"abstract").inner_html
+      year = (doc/"journal_issue/publication_date/year").first.inner_html
+      (doc/"journal_issue/publication_date/month").present? ? month = (doc/"journal_issue/publication_date/month").first.inner_html : month = "01"
+      (doc/"journal_issue/publication_date/day").present? ? day = (doc/"journal_issue/publication_date/day").first.inner_html : day = "01"
+      date = (day + "." + month +"." + year).to_date
+      title = (doc/"title").inner_html
+      authors_count = (doc/"person_name").count
+      self.doi = doi
+      self.title = title
+      self.journal_title = journal
+      self.publication_date = date
+      self.abstract = abstract
+      for i in 0...authors_count
+        given_name = (doc/"given_name")[i].inner_html.split(" ")
+        first_name = given_name[0]
+        middle_name = given_name[1]
+        last_name = (doc/"surname")[i].inner_html if (doc/"surname")[i].present?
+        author = Author.create(first_name: first_name, middle_name: middle_name, last_name: last_name)
+        author.save
+        self.authors << author
+      end
+      self
+    else
+      nil
     end
-    self
   end
 end
