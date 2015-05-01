@@ -24,6 +24,31 @@ describe Article do
       article = Article.create(doi: nil, title: 'hello world')
       article.errors.count.should == 0
     end
+    it "should find article info when enter correct DOI" do
+      article = Article.new.find_doi("10.1177/1948550612448196")
+      article.errors.count.should == 0
+      article.title.should include("The Interactive Role")
+      article.journal_title.should include("Social Psychological")
+      article.publication_date.year.should == 2013
+    end
+    it "should return nil when enter incorrect DOI" do
+      article = Article.new.find_doi("incorrect/doi")
+      article.should == nil
+    end
+    it "should return article with abstract when enter DOI that has available abstract" do
+      article = Article.new.find_doi("10.1017/S0140525X13000290")
+      article.abstract.should include("We propose")
+    end
+    it "should return article without abstract when enter DOI that hasn't available abstract" do
+      article = Article.new.find_doi("10.1177/1948550612448196")
+      article.abstract.should_not include("We propose")
+
+    end
+    it "should return article with few authors when enter DOI that has few authors" do
+      article = Article.new.find_doi("10.1177/1948550612448196")
+      article.authors.first[:last_name].should == "LeBel"
+      article.authors.second[:last_name].should == "Campbell"
+    end
   end
 
   context "title" do
