@@ -56,7 +56,6 @@ class ArticlesController < ApplicationController
 
   def create
     article = nil
-    binding.pry
     ActiveRecord::Base.transaction do
       article = Article.create!({
         doi: params[:doi],
@@ -94,7 +93,6 @@ class ArticlesController < ApplicationController
 
   def update
     article = nil
-    binding.pry
     ActiveRecord::Base.transaction do
       article = Article.find(params[:id].to_i)
       article.abstract = params[:abstract] if params.has_key?(:abstract)
@@ -127,36 +125,22 @@ class ArticlesController < ApplicationController
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
-    article = Article.new
-    article.abstract = params[:abstract] if params.has_key?(:abstract)
-    article.title = params[:title] if params.has_key?(:title)
-    article.journal_title = params[:journal_title] if params.has_key?(:journal_title)
-    article.publication_date = Date.parse(params[:publication_date]) if params.has_key?(:publication_date)
-    article.tags = params[:tags] if params.has_key?(:tags)
-    article.doi = params[:doi] if params.has_key?(:doi)
-    ids = params[:authors].map{|author| author["id"].to_i}
-    ids.each{|id| article.authors << Author.find(id)}
-    if article.save
-      render json: article.as_json(:authors => true)
-    else  
-      render json: {error: "article didn't save"}, status: 404
-    end
+    render json: {error: ex.to_s}, status: 404  
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
   def find_doi
-    article = Article.find(params[:id].to_i)
-    article = article.find_doi(params[:doi])
-    raise ActiveRecord::RecordNotFound if article.blank?
-    render json: article.as_json(:authors => true)
-  rescue ActiveRecord::RecordNotFound => ex
-    article = Article.new.find_doi(params[:doi])
-    if article.present?
-      render json: article.as_json(:authors => true)
+    if params[:doi].present?
+      article = Article.new.find_doi(params[:doi])
+      if article.present?
+        render json: article.as_json(:authors => true)
+      else
+        render json: {error: "DOI not found"}, status: 404
+      end
     else
-      render json: {error: "DOI not found"}, status: 404
+      render json: {error: "DOI field is blank"}, status: 404
     end
   rescue StandardError => ex
     Raven.capture_exception(ex)
