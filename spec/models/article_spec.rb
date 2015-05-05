@@ -41,7 +41,7 @@ describe Article do
     end
     it "should return article without abstract when enter DOI that hasn't available abstract" do
       article = Article.new.find_doi("10.1177/1948550612448196")
-      article.abstract.should_not include("We propose")
+      article.abstract.should == ""
 
     end
     it "should return article with few authors when enter DOI that has few authors" do
