@@ -35,6 +35,10 @@ group :development, :test do
   gem 'seed_dump'
 end
 
+group :development do
+  gem 'pry'
+end
+
 group :test do
   gem 'webmock'
   gem 'timecop'
@@ -73,6 +77,7 @@ gem 'stretcher'
 gem 'will_paginate', '~> 3.0'
 gem 'faraday'
 gem 'nokogiri'
+gem 'crossref', '~> 0.0.4' # allow to make crossref request
 gem 'elastic_mapper', '~> 0.3.0'
 gem "omniauth-google-oauth2"
 gem "aws-ses", "~> 0.5.0", :require => 'aws/ses'

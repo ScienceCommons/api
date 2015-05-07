@@ -95,15 +95,12 @@ class ArticlesController < ApplicationController
     article = nil
     ActiveRecord::Base.transaction do
       article = Article.find(params[:id].to_i)
-
       article.abstract = params[:abstract] if params.has_key?(:abstract)
       article.title = params[:title] if params.has_key?(:title)
       article.journal_title = params[:journal_title] if params.has_key?(:journal_title)
       article.publication_date = Date.parse(params[:publication_date]) if params.has_key?(:publication_date)
       article.tags = params[:tags] if params.has_key?(:tags)
       article.doi = params[:doi] if params.has_key?(:doi)
-
-      # add the author list, and resave.
       if params.has_key?(:authors)
         if params[:authors].blank?
           article.article_authors.destroy_all
@@ -118,31 +115,45 @@ class ArticlesController < ApplicationController
       if article.changed?
         article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_updated)
       end
-      article.save!
+      if article.save
+        render json: article.as_json(:authors => true)
+        ElasticMapper.index.refresh
+      else
+        render_error(ex)  
+      end
     end
-
-    # force index to update, so that we
-    # can immediately query the update.
-    ElasticMapper.index.refresh
-
-    render json: article.as_json(:authors => true)
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
-    render json: {error: ex.to_s}, status: 404
+    render json: {error: ex.to_s}, status: 404  
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
   end
 
-  def destroy
+  def find_doi
+    if params[:doi].present?
+      article = Article.new.find_doi(params[:doi])
+      if article.present?
+        render json: article.as_json(:authors => true)
+      else
+        render json: {error: "DOI not found"}, status: 404
+      end
+    else
+      render json: {error: "DOI field is blank"}, status: 404
+    end
+  rescue StandardError => ex
+    Raven.capture_exception(ex)
+    render json: {error: 'unknown error'}, status: 500
+  end
+
+def destroy
     article = Article.find(params[:id].to_i)
     article.destroy!
 
     # force index to update, so that we
     # can immediately query the update.
     ElasticMapper.index.refresh
-
     render json: {success: true, data: article}, status: 204
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404

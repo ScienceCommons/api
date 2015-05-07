@@ -115,8 +115,9 @@ PaperSearchApi::Application.routes.draw do
 
   resources :articles do
     collection do
-      get 'recent'
-      get 'recently_added'
+      get  'recent'
+      get  'recently_added'
+      post 'find_doi'
     end
 
     resources :studies do

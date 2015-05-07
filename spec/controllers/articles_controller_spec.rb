@@ -269,6 +269,30 @@ describe ArticlesController, :type => :controller do
     end
   end
 
+  describe "#find_doi" do
+    it "should find article when doi correct" do
+      post :find_doi, {
+        doi: "10.1177/1948550612448196"
+      }
+      response.status.should == 200
+      results = JSON.parse(response.body)
+      results['journal_title'].should include("Social Psychological")
+    end
+    it "should return error when doi incorrect" do
+      post :find_doi, {
+        doi: "incorrect/doi"
+
+      }
+      response.status.should == 404
+    end
+    it "should return error when doi is blank" do
+      post :find_doi, {
+        doi: ""
+      }
+      response.status.should == 404
+    end
+  end
+
   describe "#destroy" do
     it "allows an article created by current_user to be destroyed" do
       delete :destroy, { id: article.id }
