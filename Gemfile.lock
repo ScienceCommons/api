@@ -91,7 +91,6 @@ GEM
     gctools (0.2.3)
     hashie (3.3.2)
     hike (1.2.3)
-    hpricot (0.8.6)
     httpclient (2.5.3.3)
     i18n (0.6.11)
     jbuilder (1.5.3)
@@ -284,7 +283,6 @@ DEPENDENCIES
   faraday
   firebase
   gctools
-  hpricot
   jbuilder (~> 1.2)
   jquery-rails
   nokogiri
