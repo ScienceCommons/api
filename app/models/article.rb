@@ -86,7 +86,6 @@ class Article < ActiveRecord::Base
         middle_name = given_name[1]
         last_name = (doc/"surname")[i].inner_html if (doc/"surname")[i].present?
         author = Author.new(first_name: first_name, middle_name: middle_name, last_name: last_name)
-        # author.save
         self.authors << author
       end
       self
