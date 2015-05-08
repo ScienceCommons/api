@@ -69,9 +69,9 @@ class Article < ActiveRecord::Base
     if (doc/"doi_record").present? && (doc/"error").blank?
       journal = (doc/"abbrev_title").inner_html
       abstract = (doc/"abstract").inner_html
-      year = (doc/"journal_issue/publication_date/year").first.inner_html
-      (doc/"journal_issue/publication_date/month").present? ? month = (doc/"journal_issue/publication_date/month").first.inner_html : month = "01"
-      (doc/"journal_issue/publication_date/day").present? ? day = (doc/"journal_issue/publication_date/day").first.inner_html : day = "01"
+      year = (doc/"journal_issue/publication_date/year").present? ? (doc/"journal_issue/publication_date/year").first.inner_html : Date.today.year.to_s
+      month = (doc/"journal_issue/publication_date/month").present? ? (doc/"journal_issue/publication_date/month").first.inner_html : "01"
+      day = (doc/"journal_issue/publication_date/day").present? ? (doc/"journal_issue/publication_date/day").first.inner_html : "01"
       date = (day + "." + month +"." + year).to_date
       title = (doc/"title").inner_html
       authors_count = (doc/"person_name").count
@@ -85,8 +85,8 @@ class Article < ActiveRecord::Base
         first_name = given_name[0]
         middle_name = given_name[1]
         last_name = (doc/"surname")[i].inner_html if (doc/"surname")[i].present?
-        author = Author.create(first_name: first_name, middle_name: middle_name, last_name: last_name)
-        author.save
+        author = Author.new(first_name: first_name, middle_name: middle_name, last_name: last_name)
+        # author.save
         self.authors << author
       end
       self

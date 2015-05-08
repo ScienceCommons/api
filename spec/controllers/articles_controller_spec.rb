@@ -163,6 +163,24 @@ describe ArticlesController, :type => :controller do
       article.model_updates.count.should == 1
       article.model_updates.first.operation.should == "model_created"
     end
+    it "should save new authors" do
+      post :find_doi, {
+        doi: "10.1177/1948550612448196"
+      }
+      results = JSON.parse(response.body)  
+      authors = results['authors']
+      doi = results['doi']
+      title = results['title']
+      authors.count.should == 2
+      post :create, { 
+        doi: doi,
+        title: title,
+        authors: authors
+      }
+      article = Article.find_by_doi('10.1177/1948550612448196')
+      article.authors.count.should == 2
+      expect(article.authors[0]).not_to be_new_record  
+    end 
   end
 
   describe '#update' do
@@ -290,6 +308,14 @@ describe ArticlesController, :type => :controller do
         doi: ""
       }
       response.status.should == 404
+    end
+    it "should not save authors when get metadata by doi" do
+      post :find_doi, {
+        doi: "10.1177/1948550612448196"
+      }
+      results = JSON.parse(response.body) 
+      results['authors'][0]['id'].should == nil
+      results['authors'][0]['last_name'].should == "LeBel"
     end
   end
 
