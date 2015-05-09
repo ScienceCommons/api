@@ -48,6 +48,7 @@ describe Article do
       article = Article.new.find_doi("10.1177/1948550612448196")
       article.authors.first[:last_name].should == "LeBel"
       article.authors.second[:last_name].should == "Campbell"
+      expect(article.authors[0]).to be_new_record 
     end
   end
 
