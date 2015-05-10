@@ -56,10 +56,6 @@ class ArticlesController < ApplicationController
 
   def create
     article = nil
-    start_time = DateTime.now
-    Rails.logger.debug do
-      'saving started at ' + start_time.to_s
-    end
     ActiveRecord::Base.transaction do
       article = Article.create!({
         doi: params[:doi],
@@ -90,10 +86,6 @@ class ArticlesController < ApplicationController
     # force index to update, so that we
     # can immediately query the update.
     ElasticMapper.index.refresh
-    Rails.logger.debug do
-      'finished in' + (DateTime.now.to_i - start_time.to_i).to_s + 'seconds'
-    end
-
     render json: article.as_json(:authors => true), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
