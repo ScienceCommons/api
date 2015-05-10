@@ -58,3 +58,11 @@ production:
   pool: 5
   username: science_commons_api
   password:
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: science_commons_api_production
+  pool: 5
+  username: science_commons_api
+  password:
