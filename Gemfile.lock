@@ -1,15 +1,15 @@
 GIT
-  remote: git@github.com:vcr/vcr.git
-  revision: 480304be6d73803e6c4a0eb21a4ab4091da558d8
-  specs:
-    vcr (2.9.3)
-
-GIT
   remote: https://github.com/getsentry/raven-ruby.git
   revision: 43bb3c696fcb8eda482076be5b052ff9314db410
   specs:
     sentry-raven (0.12.1)
       faraday (>= 0.7.6)
+
+GIT
+  remote: https://github.com/vcr/vcr.git
+  revision: 480304be6d73803e6c4a0eb21a4ab4091da558d8
+  specs:
+    vcr (2.9.3)
 
 GEM
   remote: https://rubygems.org/
