@@ -37,6 +37,7 @@ end
 
 group :development do
   gem 'pry'
+  gem 'travis'
 end
 
 group :test do

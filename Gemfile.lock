@@ -51,6 +51,7 @@ GEM
       mail (> 2.2.5)
       mime-types
       xml-simple
+    backports (3.6.4)
     builder (3.2.2)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -89,7 +90,15 @@ GEM
       json
       typhoeus (>= 0.6.1)
     gctools (0.2.3)
+    gh (0.14.0)
+      addressable
+      backports
+      faraday (~> 0.8)
+      multi_json (~> 1.0)
+      net-http-persistent (>= 2.7)
+      net-http-pipeline
     hashie (3.3.2)
+    highline (1.7.2)
     hike (1.2.3)
     httpclient (2.5.3.3)
     i18n (0.6.11)
@@ -101,6 +110,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     jwt (1.2.0)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
@@ -111,6 +122,8 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
+    net-http-persistent (2.9.4)
+    net-http-pipeline (1.0.1)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     oauth2 (1.0.0)
@@ -137,6 +150,9 @@ GEM
       slop (~> 3.4)
     puma (2.10.2)
       rack (>= 1.1, < 2.0)
+    pusher-client (0.6.0)
+      json
+      websocket (~> 1.0)
     rack (1.5.2)
     rack-oauth2 (1.0.8)
       activesupport (>= 2.3)
@@ -254,6 +270,17 @@ GEM
     thread_safe (0.3.4)
     tilt (1.4.1)
     timecop (0.7.1)
+    travis (1.6.9)
+      addressable (~> 2.3)
+      backports
+      faraday (~> 0.8.7)
+      faraday_middleware (~> 0.9)
+      gh (~> 0.13)
+      highline (~> 1.6)
+      launchy (~> 2.1)
+      pry (~> 0.9)
+      pusher-client (~> 0.4)
+      typhoeus (~> 0.6)
     trollop (1.16.2)
     typhoeus (0.6.9)
       ethon (>= 0.7.1)
@@ -267,6 +294,7 @@ GEM
     webmock (1.20.4)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+    websocket (1.2.2)
     will_paginate (3.0.7)
     xml-simple (1.1.4)
 
@@ -307,6 +335,7 @@ DEPENDENCIES
   statsd-ruby
   stretcher
   timecop
+  travis
   uglifier (>= 1.3.0)
   vcr!
   webmock
