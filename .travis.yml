@@ -12,3 +12,4 @@ addons:
   postgresql: "9.3"
 services:
   - elasticsearch
+  - redis-server
