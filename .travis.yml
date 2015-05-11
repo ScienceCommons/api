@@ -1,3 +1,11 @@
 language: ruby
 rvm:
   - 2.0.0
+env:
+  - DB=postgres
+before_script:
+  - psql -c 'create database science_commons_test' -U postgres
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rake
