@@ -44,7 +44,7 @@ describe Pubmed do
       VCR.use_cassette('doi_article') do
         article.find_doi('10.1126/science.1163233')
       end
-      VCR.use_cassette('pubmed_articles') do
+      VCR.use_cassette('pubmed_articles', :record => :new_episodes) do
         pubmed = Pubmed.new(
           "science",
           "2008"
