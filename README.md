@@ -22,7 +22,12 @@ bundle install
 
 * Database initialization
 
-First, migrate the database schema:
+The app uses postgresql, version >=9.3
+First, create the database
+```bash
+psql -c 'create database science_commons_development' -U postgres
+```
+Then, migrate the database schema:
 ```bash
 bundle exec rake db:migrate
 ```
