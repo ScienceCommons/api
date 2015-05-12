@@ -74,6 +74,7 @@ class ArticlesController < ApplicationController
             author = Author.create!({
               owner_id: current_user ? current_user.id : nil
             }.merge(params[:authors][i]))
+            author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_created)
             id = author.id
           end 
           article.authors << Author.find(id)
