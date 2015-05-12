@@ -1,5 +1,5 @@
 # CurateScience API Server
-Master: [![Travis](https://travis-ci.org/ScienceCommons/api.svg?branch=master)](https://travis-ci.org/ScienceCommons/api.svg?branch=master)
+[![Travis](https://travis-ci.org/ScienceCommons/api.svg?branch=master)](https://travis-ci.org/ScienceCommons/api.svg?branch=master)
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ScienceCommons/api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
