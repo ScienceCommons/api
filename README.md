@@ -22,6 +22,7 @@ bundle install
 ```
 
 * Database initialization
+
 First, create the database
 ```bash
 psql -c 'create database science_commons_development' -U postgres
