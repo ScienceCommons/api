@@ -6,6 +6,7 @@
 ### Dependencies:
 * ruby-2.0.0
 * Java >=1.6
+* postgresql >=9.3
 * elasticsearch
 * postgresql
 * a C compiler toolchain for your platform (e.g. on Mac, xcode developer tools) so you can build nokogiri
@@ -21,8 +22,6 @@ bundle install
 ```
 
 * Database initialization
-
-The app uses postgresql, version >=9.3
 First, create the database
 ```bash
 psql -c 'create database science_commons_development' -U postgres
