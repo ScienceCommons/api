@@ -57,7 +57,7 @@ class Article < ActiveRecord::Base
   def descendant_comments
     Comment.where(primary_commentable_id: self.id, primary_commentable_type: "Article")
   end
-  
+
   def find_doi(doi)
     biblio_for(doi)
   end
@@ -69,6 +69,7 @@ class Article < ActiveRecord::Base
     if (doc/"doi_record").present? && (doc/"error").blank?
       journal = (doc/"abbrev_title").inner_html
       abstract = (doc/"abstract").inner_html
+      journal_issn = (doc/'issn[media_type="electronic"]').inner_html
       year = (doc/"journal_issue/publication_date/year").present? ? (doc/"journal_issue/publication_date/year").first.inner_html : Date.today.year.to_s
       month = (doc/"journal_issue/publication_date/month").present? ? (doc/"journal_issue/publication_date/month").first.inner_html : "01"
       day = (doc/"journal_issue/publication_date/day").present? ? (doc/"journal_issue/publication_date/day").first.inner_html : "01"
@@ -78,6 +79,7 @@ class Article < ActiveRecord::Base
       self.doi = doi
       self.title = title
       self.journal_title = journal
+      self.journal_issn = journal_issn
       self.publication_date = date
       self.abstract = abstract
       for i in 0...authors_count

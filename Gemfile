@@ -37,13 +37,14 @@ end
 
 group :development do
   gem 'pry'
+  gem 'travis'
 end
 
 group :test do
   gem 'webmock'
   gem 'timecop'
   gem 'simplecov', :require => false
-  gem 'vcr', git: 'git@github.com:vcr/vcr.git'
+  gem 'vcr', git: 'https://github.com/vcr/vcr.git'
 end
 
 group :production do

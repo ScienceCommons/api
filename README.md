@@ -1,9 +1,12 @@
 # CurateScience API Server
+[![Travis](https://travis-ci.org/ScienceCommons/api.svg?branch=master)](https://travis-ci.org/ScienceCommons/api.svg?branch=master)
+
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ScienceCommons/api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### Dependencies:
 * ruby-2.0.0
 * Java >=1.6
+* postgresql >=9.3
 * elasticsearch
 * postgresql
 * a C compiler toolchain for your platform (e.g. on Mac, xcode developer tools) so you can build nokogiri
@@ -20,7 +23,11 @@ bundle install
 
 * Database initialization
 
-First, migrate the database schema:
+First, create the database
+```bash
+psql -c 'create database science_commons_development' -U postgres
+```
+Then, migrate the database schema:
 ```bash
 bundle exec rake db:migrate
 ```
