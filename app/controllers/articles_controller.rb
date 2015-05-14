@@ -66,38 +66,27 @@ class ArticlesController < ApplicationController
         owner: current_user,
         tags: params[:tags]
       })
-
       # add the author list, and resave.
       if params[:authors]
         ids = params[:authors].map{|author| author["id"].to_i}
-        if (ids.include? 0)
-          ids.each_with_index do |id, i|
-            if (id == 0)
-              author = Author.create!({
-                owner_id: current_user ? current_user.id : nil
-              }.merge(params[:authors][i]))
-              author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_created)
-              id = author.id
-            end 
-            article.authors << Author.find(id)
-            article.save
-            article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
-          end
-        else
-          article.authors = Author.find(ids)
-          ids.each_with_index do |id, i|
-            article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
-          end
+        ids.each_with_index do |id, i|
+          if (id == 0)
+            author = Author.create!({
+              owner_id: current_user ? current_user.id : nil
+            }.merge(params[:authors][i]))
+            author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_created)
+            id = author.id
+          end 
+          article.authors << Author.find(id)
+          article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
         end
       end
       article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_created)
       article.save!
     end
-
     # force index to update, so that we
     # can immediately query the update.
     ElasticMapper.index.refresh
-
     render json: article.as_json(:authors => true), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
