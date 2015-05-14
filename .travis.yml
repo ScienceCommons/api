@@ -17,6 +17,7 @@ deploy:
   provider: heroku
   api_key:
     secure: NWuhDAyAPwrwHhR9LhY8lcJaQ2PnaZ/aNP4XJ8cZ9L5NCND/dgW7bCybeeq7/8yQ6TK4T5a22Ub1nj1swNzLHmy6lm+MhLcTCe367nu+6pDBaaZ0belKnk0ZUoho5VcwsqVeVrcuB8lolJjrHSQiomXtnio+TSGXyf2X28vkrKo=
+  skip_cleanup: true
   app:
     master: curatescience
     staging: curatescience-staging
