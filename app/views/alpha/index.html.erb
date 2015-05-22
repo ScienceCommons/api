@@ -50,13 +50,13 @@
         <div class="wrapper">
           <div class="well">
       <p class="about"><font size="4px">
-        Replicability is a cornerstone of science, but evidence of independent replications is currently disorganized, making it difficult to gauge the reliability of empirical findings. Independent verification of data and analyses is another hallmark of science, yet is currently challenging in practice because data/syntax are difficult to track down.
+        Independent verification is the cornerstone of science, however, in practice, the independent verification of published findings is difficult and not rewarded. Hence, gauging the reliability and validity of published scientific findings is typically very difficult (if not impossible). <b>Curate Science</b> is a web application that aims to help in these regards by facilitating and incentivizing the independent verification of published scientific findings in several respects. 
       </font></p>
       <p class="about"><font size="4px">
-        Curate Science aims to solve both of these problems by providing an online platform that substantially facilitates these two crucial processes of science. Independent replication information and available data/syntax files will automatically be aggregated from pre-existing sources (e.g., from <a href="http://PsychFileDrawer.org">PsychFileDrawer.org</a>, <a href="http://www.figshare.com">Figshare.com</a>). Registered users will be able to add, modify, and update such information, including in-line commenting directed at specific elements of an article and in-browser analyses for articles with available <a href="http://en.wikipedia.org/wiki/R_(programming_language)">R</a> syntax files.
+        Independent verification is facilitated by enabling researchers to (1) link independent replications to original studies (and eventually linking conceptual replication studies meta-analytically), (2) curate available data/syntax to verify reproducibility of results within the browser, and (3) critically evaluate the interpretation/validity of findings via in-line comments (i.e., post-publication peer review on stereoids given evaluation done in the context of available data and replicability information).
       </font></p>
       <p class="about"><font size="4px">
-        Our vision is that building such a platform will accelerate the growth of cumulative knowledge and innovation by facilitating and incentivizing independent replications and verification, but also by facilitating the post-publication critique, evaluation, extension, re-analysis, and interpretation of findings (see <a href="#section-3">Features</a>, for a flowchart of our core features).
+        Curate Science will incentivize independent verififation by (1) prominently displaying recent user contributions on the homepage to reward researchers and (2) offering unique high-utility features that motivate users to regularly use and engage with site content (e.g., notifications of new replications, new activity on articles a user has contributed to, and discovery of new related articles). Furthermore, knowing that other researchers can benefit from one's independent verification activities acts as an incentive to actually engage in those activities. For example, a researcher is more likely to verify the reproducibility of a study's results if they know other researchers' may benefit from those activities (e.g., researchers wanting to re-analyze a study's data from a different theoretical perspective can greatly benefit from a researcher who curated a study's data files to verify reproducibility) See <a href="#section-3">Features</a>, for a flowchart of our core features.
       </font></p>
     </div>
   </div>
@@ -229,7 +229,7 @@
       </a>
 
       <h3 class="text-center features">Innovative Search Results Page</h3>
-      <p class="features">Easily find relevant and interesting articles via our novel indicator icons that depict availability of key article information such as replicability information, available data/syntax, reproducibility, pre-registration information, and more. Looking for articles that have specific components available? Use custom filters to only display those articles (e.g., only display articles with available data/syntax)! </p>
+      <p class="features">Easily find relevant articles via icons that indicate availability of data/syntax, materials, replication studies, reproducibility info, and pre-registration info. Looking for articles that have specific components available? Use custom filters to only display those articles (e.g., only display articles with available data/syntax)! </p>
       <a href="<%=path_to_image('alpha_images/2-search-results.png')%>">
         <%= image_tag('alpha_images/2-search-results.png', class: 'features') %>
       </a>
@@ -238,7 +238,7 @@
       </a>
 
       <h3 class="text-center features">Article Page: Putting it all Together</h3>
-      <p class="features">Our flagship feature is the consolidation and curation of key information about published articles, which all comes together on the article page. The screen will feature <a href="alpha_images/simonsohnApproachFigure.png">dynamically updating effect size graphs</a>, <a href="alpha_images/in-browser-analyses.png">in-browser R analyses</a> to verify to reproducibility of results, editable fields so registered users can add, modify, or update article information, and element-specific in-line commenting.</p>
+      <p class="features">Our flagship feature is the consolidation and curation of key information about published articles, which all come together on the article page. The page will feature <a href="alpha_images/simonsohnApproachFigure.png">automatically updating effect size graphs</a>, <a href="alpha_images/in-browser-analyses.png">in-browser R analyses</a> to verify to reproducibility of results, editable fields to add, modify, or update study information, and element-specific in-line commenting.</p>
       <a href="<%=path_to_image('alpha_images/3-article-page-03-full-length.png')%>">
         <%= image_tag('alpha_images/3-article-page-03.png', class: 'features') %>
       </a>
@@ -247,7 +247,7 @@
       </a>
 
       <h3 class="text-center features">User Profile Dashboard Page</h3>
-      <p class="features">The user dashboard will display a user's recent contributions, a list of their own articles, reading and analyses history, recent activities by other users, and customization of notifications and other user settings. In the near future, users will also be able to easily pre-register a new study and post data/syntax for a working paper on this screen. </p>
+      <p class="features">The user dashboard will display a user's recent contributions, a list of their own articles, reading and analyses history, recent activities by other users, and notifications customization. </p>
       <a href="<%=path_to_image('alpha_images/4-profile-dashboard.png')%>">
         <%= image_tag('alpha_images/4-profile-dashboard.png', class: 'features') %>
       </a>
@@ -274,13 +274,7 @@
               <td width="20%"><a href="http://etiennelebel.com" class="thumbnail">
                 <%= image_tag('alpha_images/team/lebel.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
-              <td width="20%"><a href="http://christianbattista.com/" class="thumbnail">
-                <%= image_tag('alpha_images/team/battista.jpg', class: 'team', width: '115', height: '155') %>
-              </a></td>
-              <td width="20%"><a href="https://github.com/bcoe" class="thumbnail">
-                <%= image_tag('alpha_images/team/coe.jpg', class: 'team', width: '115', height: '155') %>
-              </a></td>
-              <td width="20%"><a href="https://github.com/sdemjanenko" class="thumbnail">
+              <td width="20%"><a href="https://github.com/alexkyllo" class="thumbnail">
                 <%= image_tag('alpha_images/team/demjanenko.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td width="20%"><a href="http://fredhasselman.com/" class="thumbnail">
@@ -288,10 +282,8 @@
               </a></td>
             </tr>
             <tr>
-              <td class="text-center"><font size="4px"><strong>Etienne P. LeBel</strong></font><br>Founder and Lead</td>
-              <td class="text-center"><font size="4px"><strong>Christian Battista</strong></font><br>Chief Operational Officer</td>
-              <td class="text-center"><font size="4px"><strong>Ben Coe</strong></font><br>Technical Advisor</td>
-              <td class="text-center"><font size="4px"><strong>Stephen Demjanenko</strong></font><br>Technical Advisor</td>
+              <td class="text-center"><font size="4px"><strong>Etienne P. LeBel</strong></font><br>Founder &amp; Lead</td>
+              <td class="text-center"><font size="4px"><strong>Alex Kyllo</strong></font><br>Technical Advisor</td>
               <td class="text-center"><font size="4px"><strong>Fred Hasselman</strong></font><br>Lead Statistician</td>
             </tr>
 
@@ -427,6 +419,32 @@
       <td class="text-center" style="vertical-align:top"><font size="4px"><strong>Jan De Houwer</strong></font><br><i>Ghent University</i></td>
       </tr>
 
+
+<tr>
+              <td><p></p><p></p><br>
+                <font size="5px"><strong>Foundational Members</strong></font>
+              </td>
+            </tr>
+            <tr>
+              <td width="20%"><a href="http://christianbattista.com/" class="thumbnail">
+                <%= image_tag('alpha_images/team/battista.jpg', class: 'team', width: '115', height: '155') %>
+              </a></td>
+              <td width="20%"><a href="https://github.com/bcoe" class="thumbnail">
+                <%= image_tag('alpha_images/team/coe.jpg', class: 'team', width: '115', height: '155') %>
+              </a></td>
+              <td width="20%"><a href="https://github.com/sdemjanenko" class="thumbnail">
+                <%= image_tag('alpha_images/team/demjanenko.jpg', class: 'team', width: '115', height: '155') %>
+              </a></td>
+              
+            </tr>
+            <tr>
+              <td class="text-center" style="vertical-align:top"><font size="4px"><strong>Christian Battista</strong></font><br><i>Technical Advisor</i></td>
+              <td class="text-center" style="vertical-align:top"><font size="4px"><strong>Ben Coe</strong></font><br><i>Technical Advisor</i></td>
+              <td class="text-center" style="vertical-align:top"><font size="4px"><strong>Stephen Demjanenko</strong></font><br><i>Technical Advisor</i></td>
+              
+            </tr>
+
+
           </tbody>
         </table>
 
@@ -497,14 +515,14 @@
         </div>
         <div class="faq-item">
           <div class="question">
-            Is it really feasible to organize and curate information for all scientific articles? In other words,
+            Is it really feasible to organize and curate information for scientific articles? In other words,
             why would researchers be willing to spend their precious time curating information on Curate Science?
           </div>
           <div class="answer">
             Our view is that researchers should be highly motivated to add and update information regarding published
             articles in their own area of research because there is an intrinsic interest to update the scientific record
             to more accurately reflect the totality of the evidence. We also expect -- just like what happened with
-            Wikipedia --that more prominent and/or controversial articles will be curated first given that a large
+            Wikipedia -- that more influential and/or controversial articles will be curated first given that a large
             number of researchers are interested in these articles. Other articles will likely be curated commensurate
             to the level of interest commanded by the market, though of course article authors are free to curate their
             own articles as much as they want (and for good reasons, e.g. available data citation advantage,
@@ -519,7 +537,7 @@
             We will soon be incorporating as a non-profit organization. Curate Science organizes and curates
             fundamental information about unpublished and published scientific articles and we see this information
             as a public good that belongs to the community of scientists. Consequently, information organized on
-            Curate Science is and will forever remain a free public good accessible to anyone with an Internet connection.
+            Curate Science is and will forever remain a free public good accessible to anyone with an internet connection.
           </div>
         </div>
         <div class="faq-item">
@@ -527,8 +545,7 @@
             Who is funding Curate Science?
           </div>
           <div class="answer">
-            We are currently applying for funding from the Sloan Foundation, Templeton Foundation, Knight Foundation,
-            Shuttleworth Foundation, and Open Society Foundation.
+            We have received a $10,000 USD seed grant from the Center for Open Science to help with initial development. Wellspring Advisors LCC have confirmed that they have allocated funds to support Curate Science as part of a renewal grant to be given to the Center for Open Science. Templeton Foundation has accepted our initial grant proposal and we will soon be submitting a full proposal to them.  We are also currently in discussions with Sloan Foundation.
           </div>
         </div>
         <div class="faq-item">
@@ -536,8 +553,7 @@
             Is Curate Science associated with the Open Science Framework hosted by the Center for Open Science?
           </div>
           <div class="answer">
-            No. Though we will be linking available data, materials, and pre-registration information from the <a href="http:osf.io">Open Science Framework</a>, we are an independent group of researchers in no way formally associated with the
-            Open Science Framework.
+            Though Curate Science has formed an informal partnership with the Center for Open Science (with respect to funding, see above), our web application is completely independent from the Open Science Framework (though we will of course be linking to available data, materials, and pre-registration information from the OSF).
           </div>
         </div>
         <div class="faq-item">
@@ -584,7 +600,7 @@
           <div class="answer">
             Yes, eventually. Our current focus is to organize and curate the available data/materials
             that are already hosted by the many public repositories that already exist. However, in our quest to
-            radically simplify the fundamental scientific practice of sharing data/materials, we are working on forging a partnership with a major data repository website so that users can easily drag-and-drop data for their articles via our interface using our partner's infrastructure.
+            radically simplify the fundamental scientific practice of sharing data/materials, we are working on forging a partnership with a major data repository website so that users can easily drag-and-drop data for their articles via our interface using our partner's infrastructure (indeed, we're currently in discussions with Figshare.com and the OSF in this regard).
           </div>
         </div>
         <div class="faq-item">
@@ -592,7 +608,7 @@
             Will I be able to post unpublished manuscripts on Curate Science?
           </div>
           <div class="answer">
-            Yes, eventually. Our initial focus is on organizing and curating information for published articles,
+            Yes, this is possible because many independent replications are not published. That being said, our initial focus is on organizing and curating information for published articles,
             however, we will eventually allow researchers to post working papers with corresponding data/syntax and
             materials files as a way to significantly facilitate the pre-publication peer review approach that has
             been so successful in physics and mathematics (i.e., arxiv.org).
@@ -605,7 +621,7 @@
           <div class="answer">
             Registered users will be able to add/modify information once we launch our Beta
             (a "Beta" is a stage of software development where a product has implemented all of its core features
-            and is ready for testing by a small number of users). Our projected Beta launch is May-June 2014. If
+            and is ready for testing by a small number of users). Our projected Beta launch is June 2015. If
             you're interested in being one of the first Science Curators, you can sign up
             <a href="#section-6">below</a> to be automatically notified
             when our Beta website version is ready!
