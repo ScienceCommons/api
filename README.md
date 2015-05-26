@@ -52,6 +52,15 @@ bundle exec rake db:seed
 bundle exec rspec
 ```
 
+* Environment Variables
+```bash
+export TEST_MAIN_JS=(location of the main.js file built by the www app, e.g. ../www/build/production/public/assets/main.js)
+export DEV_API_ROOT=http://localhost:5000/
+export ELASTIC_SEARCH_URL=http://127.0.0.1:9200
+export GOOGLE_CLIENT_ID=(your google client id)
+export GOOGLE_CLIENT_SECRET=(your google client secret)
+```
+
 * Services (job queues, cache servers, search engines, etc.)
 
 ```bash
@@ -59,6 +68,4 @@ bundle install
 bundle exec rails s -b localhost -p 5000
 elasticsearch
 ```
-Visit /login or /beta to log in with Google.
-
-elasticsearch is needed for the search box to work, but the app will otherwise run without it. ELASTIC_SEARCH_URL env var is used to tell the Rails app the address of the elasticsearch server to query, it defaults to http://127.0.0.1:9200
+Visit /login or /beta to log in with Google OAuth2.
