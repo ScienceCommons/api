@@ -13,22 +13,31 @@ sudo apt-get install -y openjdk-6-jre
 
 #install ElasticSearch
 wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.7.deb
-dpkg -i elasticsearch-0.90.7.deb
+sudo dpkg -i elasticsearch-0.90.7.deb
 
 #install postgresql
-sudo apt-get install -y postgresql postgresql-contrib
+sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 
 #create database
 sudo -u postgres bash -c "psql -c \"CREATE DATABASE science_commons_development;\""
+
+#create role in database
+sudo -u postgres bash -c "psql -c \"CREATE ROLE $USER LOGIN;\""
+
+#install nodejs javascript runtime
+sudo apt-get install -y nodejs npm
+
+#install bundler
+gem install bundler
 
 #install gems
 bundle install
 
 #migrate database
-rake db:migrate
+bundle exec rake db:migrate
 
 #seed database
-rake db:seed
+bundle exec rake db:seed
 
 #launch app
 rails s -b localhost -p 5000
