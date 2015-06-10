@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  
+
   include ElasticMapper
 
   has_many :studies, dependent: :destroy
@@ -51,6 +51,7 @@ class Article < ActiveRecord::Base
   def as_json(opts={})
     super(opts).tap do |h|
       h['authors'] = self.authors if opts[:authors]
+
     end
   end
 
@@ -95,4 +96,22 @@ class Article < ActiveRecord::Base
       nil
     end
   end
+
+  def recent_updated_by_author
+    if last_model_update && last_model_update.submitter.author
+      last_model_update.submitter.author
+    end
+  end
+
+  def recent_updated_at
+    last_model_update.updated_at if last_model_update
+  end
+
+  private
+    def last_model_update
+      search_objects = []
+      search_objects << self
+      search_objects += self.studies
+      ModelUpdate.where(changeable: search_objects).last
+    end
 end

@@ -42,7 +42,7 @@ class ArticlesController < ApplicationController
     limit = params[:limit] ? params[:limit].to_i : 3
     render json: Article.order('updated_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
-      .as_json(:authors => true)
+      .as_json(:authors => true, methods: [:recent_updated_by_author, :recent_updated_at])
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
@@ -52,7 +52,7 @@ class ArticlesController < ApplicationController
     limit = params[:limit] ? params[:limit].to_i : 3
     render json: Article.order('created_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
-      .as_json(:authors => true)
+      .as_json(:authors => true, methods: [:recent_updated_by_author, :recent_updated_at])
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
