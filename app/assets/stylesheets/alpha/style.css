@@ -280,10 +280,10 @@ h3.tritary{
 /* Billboard */
 
 .billboard{
-    background:rgba(41, 128, 185,1.0);
+    background:#0B3040;
     }
     .billboard h2{
-        padding: 10% 0;
+        padding: 5% 0;
         font-size: 6.0em;
         font-weight:100;
         color: rgba(255,255,255,0.0);
