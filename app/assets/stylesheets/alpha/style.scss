@@ -1,17 +1,51 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,300);
-@import url(//fonts.googleapis.com/css?family=Oswald:400,700,300);
+@font-face {
+    font-family: "Gibson";
+    src: font-url("gibson.woff") format("woff"),
+         font-url("gibson.ttf") format("truetype"),
+         font-url("gibson.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-italic";
+    src: font-url("gibson-italic.woff") format("woff"),
+         font-url("gibson-italic.ttf") format("truetype"),
+         font-url("gibson-italic.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-semibold";
+    src: font-url("gibson-semibold.woff") format("woff"),
+         font-url("gibson-semibold.ttf") format("truetype"),
+         font-url("gibson-semibold.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-semibold-italic";
+    src: font-url("gibson-semibold-italic.woff") format("woff"),
+         font-url("gibson-semibold-italic.ttf") format("truetype"),
+         font-url("gibson-semibold-italic.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body, input {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Gibson', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .navbar .brand {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Gibson-semibold', sans-serif;
   text-transform: uppercase;
   font-weight: 700;
 }
 
 body{
-    font-family: "museo-sans-rounded","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
+    font-family: "Gibson","museo-sans-rounded","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
     margin:0px;
     padding: 0px;
     color:#555;
