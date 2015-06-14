@@ -40,7 +40,7 @@ body, input {
 
 h1, h2, h3, h4, h5, h6, .navbar .brand {
   font-family: 'Gibson-semibold', sans-serif;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-weight: 700;
 }
 
@@ -245,7 +245,7 @@ h3.tritary{
              font-size: 1.4em;
              font-weight:300;
              color:rgba(255, 255, 255, 0.7);
-             margin: 15px 20px 0;
+             margin: 20px 20px 0;
              padding: 2px 0 ;
              -webkit-transition: all 0.4s ease-out;
              -moz-transition: all 0.4s ease-out;
@@ -345,7 +345,7 @@ h3.tritary{
     position: relative;
     }
 .billboard .wrapper {
-    min-height: 850px;
+    min-height: 700px;
     max-height: 964px;
     position: relative;
     }
@@ -678,6 +678,7 @@ and (min-width : 1224px) {
 h1.billboard {
   font-size: 36px;
   line-height: 50px;
+  color: #FFF;
 }
 p.about {
   line-height: 30px;
