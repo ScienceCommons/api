@@ -745,3 +745,17 @@ table.articles {
 	width: 100%;
 	margin-bottom: 0px;
 }
+
+ul.badges {
+    width: 300px;
+    height: 50px;
+    margin: auto;
+}
+
+ul.badges>li {
+    display: inline-block;
+    width: 20%;
+    padding: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
