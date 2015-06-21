@@ -343,7 +343,7 @@ h3.tritary{
     position: relative;
     }
 .billboard .wrapper {
-    min-height: 700px;
+    min-height: 800px;
     max-height: 964px;
     position: relative;
     }
@@ -752,7 +752,7 @@ ul.badges {
     margin: auto;
 }
 
-ul.badges>li {
+td.badges {
     display: inline-block;
     width: 20%;
     padding: 5px;
@@ -761,6 +761,24 @@ ul.badges>li {
     margin-right: 0px;
     margin-left: 0px;
     height: 50px;
+    vertical-align:top;
+    horizontal-align:center;
+}
+
+tr.badge-labels {
+    height: 5%;
+    line-height:5%;
+}
+
+td.badge-label {
+    display: inline-block;
+    width: 20%;
+    padding: 0px;
+    margin: 0px;
+    vertical-align:top;
+    horizontal-align:center;
+    text-align:center;
+    font-size: 14px;
 }
 
 object {
