@@ -39,6 +39,9 @@ module PaperSearchApi
     config.autoload_paths << File.join(Rails.root, 'lib')
     config.action_controller.permit_all_parameters = true
 
+    # add fonts directory to asset pipeline
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
     # OAuth2 Resource Server
     require 'rack/oauth2'
     config.middleware.use Rack::OAuth2::Server::Resource::Bearer, 'Rack::OAuth2 Article Search API' do |req|

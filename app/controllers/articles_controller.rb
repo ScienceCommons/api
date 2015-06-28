@@ -40,7 +40,9 @@ class ArticlesController < ApplicationController
 
   def recent
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('updated_at DESC').limit(limit).as_json(:authors => true)
+    render json: Article.order('updated_at DESC')
+      .paginate(:page => params[:page], :per_page => limit)
+      .as_json(:authors => true, methods: [:recent_updated_by_author, :recent_updated_at])
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
@@ -48,7 +50,9 @@ class ArticlesController < ApplicationController
 
   def recently_added
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('created_at DESC').limit(limit).as_json(:authors => true)
+    render json: Article.order('created_at DESC')
+      .paginate(:page => params[:page], :per_page => limit)
+      .as_json(:authors => true, methods: [:recent_updated_by_author, :recent_updated_at])
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: ex.to_s}, status: 500
@@ -76,7 +80,7 @@ class ArticlesController < ApplicationController
             }.merge(params[:authors][i]))
             author.model_updates.create!(:submitter => current_user, :model_changes => author.changes, :operation => :model_created)
             id = author.id
-          end 
+          end
           article.authors << Author.find(id)
           article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
         end
@@ -123,13 +127,13 @@ class ArticlesController < ApplicationController
         render json: article.as_json(:authors => true)
         ElasticMapper.index.refresh
       else
-        render_error(ex)  
+        render_error(ex)
       end
     end
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
   rescue ActiveRecord::RecordNotFound => ex
-    render json: {error: ex.to_s}, status: 404  
+    render json: {error: ex.to_s}, status: 404
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500

@@ -1,22 +1,55 @@
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,700,300);
-@import url(//fonts.googleapis.com/css?family=Oswald:400,700,300);
+@font-face {
+    font-family: "Gibson";
+    src: font-url("gibson.woff") format("woff"),
+         font-url("gibson.ttf") format("truetype"),
+         font-url("gibson.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-italic";
+    src: font-url("gibson-italic.woff") format("woff"),
+         font-url("gibson-italic.ttf") format("truetype"),
+         font-url("gibson-italic.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-semibold";
+    src: font-url("gibson-semibold.woff") format("woff"),
+         font-url("gibson-semibold.ttf") format("truetype"),
+         font-url("gibson-semibold.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Gibson-semibold-italic";
+    src: font-url("gibson-semibold-italic.woff") format("woff"),
+         font-url("gibson-semibold-italic.ttf") format("truetype"),
+         font-url("gibson-semibold-italic.woff") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body, input {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Gibson', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .navbar .brand {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
+  font-family: 'Gibson-semibold', sans-serif;
+  /* text-transform: uppercase; */
   font-weight: 700;
 }
 
 body{
-    font-family: "museo-sans-rounded","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
+    font-family: "Gibson","museo-sans-rounded","HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial;
     margin:0px;
     padding: 0px;
     color:#555;
-    background:rgba(41, 128, 185,1.0);
-
+    background-color:#0B3040;
 }
 .main-container {
     float: left;
@@ -53,9 +86,6 @@ img{
 }
 img.team{
     width: 40%;
-}
-img.billboard{
-    width: 90%;
 }
 img.articles{
     width: 15%;
@@ -211,7 +241,7 @@ h3.tritary{
              font-size: 1.4em;
              font-weight:300;
              color:rgba(255, 255, 255, 0.7);
-             margin: 15px 20px 0;
+             margin: 20px 20px 0;
              padding: 2px 0 ;
              -webkit-transition: all 0.4s ease-out;
              -moz-transition: all 0.4s ease-out;
@@ -280,10 +310,10 @@ h3.tritary{
 /* Billboard */
 
 .billboard{
-    background:rgba(41, 128, 185,1.0);
+    background:#0B3040;
     }
     .billboard h2{
-        padding: 10% 0;
+        padding: 5% 0;
         font-size: 6.0em;
         font-weight:100;
         color: rgba(255,255,255,0.0);
@@ -298,6 +328,7 @@ h3.tritary{
       .billboard h2.complete{
            left: 0px;
            color: rgba(255,255,255,0.9);
+             top: 15px;
       }
     .billboard h3.secondary{
         top: -33px;
@@ -311,7 +342,7 @@ h3.tritary{
     position: relative;
     }
 .billboard .wrapper {
-    min-height: 850px;
+    min-height: 800px;
     max-height: 964px;
     position: relative;
     }
@@ -642,8 +673,12 @@ and (min-width : 1224px) {
   background:none no-repeat;
 }
 h1.billboard {
-  font-size: 36px;
-  line-height: 50px;
+  font-size: 26px;
+  line-height: 30px;
+  color: #FFF;
+  margin-left: 11.1%;
+  margin-right: 11.1%;
+  margin-bottom: 7%;
 }
 p.about {
   line-height: 30px;
@@ -708,4 +743,44 @@ h3.features {
 table.articles {
 	width: 100%;
 	margin-bottom: 0px;
+}
+
+ul.badges {
+    width: 300px;
+    height: 50px;
+    margin: auto;
+}
+
+td.badges {
+    display: inline-block;
+    width: 20%;
+    padding: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    height: 50px;
+    vertical-align:top;
+    horizontal-align:center;
+}
+
+tr.badge-labels {
+    height: 5%;
+    line-height:5%;
+}
+
+td.badge-label {
+    display: inline-block;
+    width: 20%;
+    padding: 0px;
+    margin: 0px;
+    vertical-align:top;
+    horizontal-align:center;
+    text-align:center;
+    font-size: 14px;
+}
+
+object {
+    height: 100%;
+    width: 100%
 }

@@ -1,30 +1,29 @@
 <header class="pull-center" id="masthead">
-  <nav class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-    <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <a class="brand brand-appland" href="#">
-      Curate Science
-      <span></span>
-      </a>
-    </a>
-    <div class="nav-collapse">
-      <ul class="nav">
-      <li><a class="brand brand-appland" href="#">Curate Science<span></span></a></li>
-        <li><a href="#section-1">About</a></li>
-        <li><a href="#section-2">Articles</a></li>
-        <li><a href="#section-3">Features</a></li>
-        <li><a href="#section-4">Team</a></li>
-        <li><a href="#section-5">FAQ</a></li>
-        <li><a href="#section-6">Sign-up</a></li>
-      </ul>
+  <nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="navbar-inner">
+      <div class="container">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <a class="brand brand-appland" href="#">
+              <%= image_tag('alpha_images/navbar-icon.png', alt: 'Curate Science') %>
+            </a>
+          </a>
+        <div class="nav-collapse">
+          <ul class="nav navbar-nav">
+            <li><a class="brand brand-appland" href="#"><%= image_tag('alpha_images/navbar-icon.png') %></a></li>
+            <li><a href="#section-1">About</a></li>
+            <li><a href="#section-2">Articles</a></li>
+            <li><a href="#section-3">Features</a></li>
+            <li><a href="#section-4">Team</a></li>
+            <li><a href="#section-5">FAQ</a></li>
+            <li><a href="#section-6">Sign Up</a></li>
+            <li><a href="/beta">Log In</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
-
   </nav>
 </header>
 
@@ -33,7 +32,7 @@
   <section class="billboard" id="home">
     <div class="wrapper text-center">
       <h2 class="complete">
-        <%= image_tag('alpha_images/billboard.png', class: 'billboard') %>
+        <%= image_tag('alpha_images/billboard.png', class: 'billboard', alt: 'Curate Science') %>
       </h2>
       <h1 class="billboard">
         Accelerating the growth of cumulative knowledge and innovation by facilitating and incentivizing the independent verification of published scientific findings.
@@ -56,7 +55,7 @@
         Independent verification is facilitated by enabling researchers to (1) link independent replications to original studies (and eventually linking conceptual replication studies meta-analytically), (2) curate available data/syntax to verify reproducibility of results within the browser, and (3) critically evaluate the interpretation/validity of findings via in-line comments (i.e., post-publication peer review on stereoids given evaluation done in the context of available data and replicability information).
       </font></p>
       <p class="about"><font size="4px">
-        Curate Science will incentivize independent verififation by (1) prominently displaying recent user contributions on the homepage to reward researchers and (2) offering unique high-utility features that motivate users to regularly use and engage with site content (e.g., notifications of new replications, new activity on articles a user has contributed to, and discovery of new related articles). Furthermore, knowing that other researchers can benefit from one's independent verification activities acts as an incentive to actually engage in those activities. For example, a researcher is more likely to verify the reproducibility of a study's results if they know other researchers' may benefit from those activities (e.g., researchers wanting to re-analyze a study's data from a different theoretical perspective can greatly benefit from a researcher who curated a study's data files to verify reproducibility). See <a href="#section-3">Features</a>, for a flowchart of our core features.
+        Curate Science will incentivize independent verification by (1) prominently displaying recent user contributions on the homepage to reward researchers and (2) offering unique high-utility features that motivate users to regularly use and engage with site content (e.g., notifications of new replications, new activity on articles a user has contributed to, and discovery of new related articles). Furthermore, knowing that other researchers can benefit from one's independent verification activities acts as an incentive to actually engage in those activities. For example, a researcher is more likely to verify the reproducibility of a study's results if they know other researchers' may benefit from those activities (e.g., researchers wanting to re-analyze a study's data from a different theoretical perspective can greatly benefit from a researcher who curated a study's data files to verify reproducibility). See <a href="#section-3">Features</a>, for a flowchart of our core features.
       </font></p>
     </div>
   </div>
@@ -72,129 +71,252 @@
 
           <div class="list-group">
 
-			<a href='/schnalletal.html' class="list-group-item">
+			<a href='https://www.curatescience.org/beta/#/articles/335238' class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
+                    <td width="60%">
                       With a clean conscience: Cleanliness reduces the severity of moral judgments<br>
                       Schnall, Benton, & Harvey (2008)
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_bem.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data_active.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td></td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-			<a href='/tversky_kahneman.html' class="list-group-item">
+			<a href='https://www.curatescience.org/beta/#/articles/335240' class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
+                    <td width="60%">
                       The framing of decisions and the psychology of choice<br>
                       Tversky & Kahneman (1981)
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_tversky.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td></td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href='/arielyetal.html' class="list-group-item">
+            <a href='https://www.curatescience.org/beta/#/articles/335241' class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
+                    <td width="60%">
                       Coherent arbitrariness: Stable demand curves without stable preferences<br>
                       Ariely et al. (2003)
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_ariely.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td></td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href='/bem.html' class="list-group-item">
+            <a href='https://www.curatescience.org/beta/#/articles/107910' class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">Feeling the future: Experimental evidence for anomalous retroactive influences on cognition and affect<br>
-					Bem (2011)
+                    <td width="60%">Feeling the future: Experimental evidence for anomalous retroactive influences on cognition and affect</td>
+ <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
-                    <td  width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_bem.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td>Bem (2011)</td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href='/barghetal.html' class="list-group-item">
+            <a href="https://www.curatescience.org/beta/#/articles/60040" class="list-group-item">
 
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
-                      Automaticity of social behavior: Direct effects of trait construct and stereotype activation on action<br>
-                      Bargh, Chen, &amp; Burrows (1996)
+                    <td width="60%">
+                      Automaticity of social behavior: Direct effects of trait construct and stereotype activation on action
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_bargh.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td>Bargh, Chen, &amp; Burrows (1996)</td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href="/matzkeetal.html" class="list-group-item">
+            <a href="https://www.curatescience.org/beta/#/articles/93558" class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
-                      Two birds with one stone: A preregistered adversarial collaboration on horizontal eye movements in free recall<br>
-                      Matzke, Nieuwenhuis, van Rijn, Slagter, van der Molen, & Wagenmakers (2013)
+                    <td width="60%">
+                      Two birds with one stone: A preregistered adversarial collaboration on horizontal eye movements in free recall</td>
+                     <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data_active.svg" type="image/svg+xml"></object>
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_matzke.png') %>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials_active.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations_active.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td>Matzke, Nieuwenhuis, van Rijn, Slagter, van der Molen, & Wagenmakers (2013)</td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href="/zhongetal.html" class="list-group-item">
+            <a href="https://www.curatescience.org/beta/#/articles/335227" class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
+                    <td width="60%">
                       Washing away your sins: Threatened morality and physical cleansing<br>
                       Zhong &amp; Liljenquist (2006)
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_zhong.png') %>
+                     <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td></td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
             </a>
 
-            <a href="/husnu_crisp.html" class="list-group-item">
+            <a href="https://www.curatescience.org/beta/#/articles/108506" class="list-group-item">
               <table class="articles">
                 <thead>
                   <tr>
-                    <td width="55%">
+                    <td width="60%">
                       Elaboration enhances the imagined contact effect<br>
                       Husnu & Crisp (2010)
                     </td>
-                    <td width="45%" style="vertical-align:top">
-                      <%= image_tag('alpha_images/indicators_husnu.png') %>
+                     <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_data.svg" type="image/svg+xml"></object>
                     </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_materials.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                       <object data="images/alpha_images/badge_registrations.svg" type="image/svg+xml"></object>
+                    </td>
+                    <td width="10%" style="vertical-align:top" class="badges">
+                      <object data="images/alpha_images/badge_disclosures.svg" type="image/svg+xml"></object>
+                    </td>
+                  </tr>
+                  <tr class="badge-labels">
+                    <td></td>
+                    <td width="10%" class="badge-label">Data</td>
+                    <td width="10%" class="badge-label">Materials</td>
+                    <td width="10%" class="badge-label">Registrations</td>
+                    <td width="10%" class="badge-label">Disclosures</td>
                   </tr>
                 </thead>
               </table>
@@ -272,13 +394,13 @@
           <tbody>
             <tr>
               <td width="20%"><a href="http://etiennelebel.com" class="thumbnail">
-                <%= image_tag('alpha_images/team/lebel.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/lebel_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td width="20%"><a href="https://github.com/alexkyllo" class="thumbnail">
-                <%= image_tag('alpha_images/team/kyllo.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/kyllo_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td width="20%"><a href="http://fredhasselman.com/" class="thumbnail">
-                <%= image_tag('alpha_images/team/hasselman.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/hasselman_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
             </tr>
             <tr>
@@ -294,19 +416,19 @@
             </tr>
             <tr>
               <td><a href="https://sites.google.com/site/borsboomdenny/dennyborsboom" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/borsboom.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/borsboom_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><a href="http://www.pashler.com/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/pashler.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/pashler_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><a href="http://www.dansimons.com/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/simons.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/simons_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><a href="http://www.psych.usyd.edu.au/staff/alexh/lab/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/holcombe.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/holcombe_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><a href="http://www.ejwagenmakers.com/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/wagenmakers.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/wagenmakers_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
             </tr>
             <tr>
@@ -319,27 +441,27 @@
             <tr>
               <td><br>
                 <a href="http://www.psychology.illinois.edu/people/bwrobrts" class="thumbnail">
-                  <%= image_tag('alpha_images/advisors/roberts.jpg', class: 'team', width: '115', height: '155') %>
+                  <%= image_tag('alpha_images/advisors/roberts_o.jpg', class: 'team', width: '115', height: '155') %>
                 </a>
               </td>
               <td><br>
                 <a href="http://www.psych.ubc.ca/faculty/profile/index.psy?fullname=Eich,%20Eric&area=Cognitive%20Science&designation=core" class="thumbnail">
-                  <%= image_tag('alpha_images/advisors/eich.jpg', class: 'team', width: '115', height: '155') %>
+                  <%= image_tag('alpha_images/advisors/eich_o.jpg', class: 'team', width: '115', height: '155') %>
                 </a>
               </td>
               <td><br>
                 <a href="http://rogierkievit.com/" class="thumbnail">
-                  <%= image_tag('alpha_images/advisors/kievit.jpg', class: 'team', width: '115', height: '155') %>
+                  <%= image_tag('alpha_images/advisors/kievit_o.jpg', class: 'team', width: '115', height: '155') %>
                 </a>
               </td>
               <td><br>
                 <a href="http://www.hbs.edu/faculty/Pages/profile.aspx?facId=589473" class="thumbnail">
-                  <%= image_tag('alpha_images/advisors/john.jpg', class: 'team', width: '115', height: '155') %>
+                  <%= image_tag('alpha_images/advisors/john_o.jpg', class: 'team', width: '115', height: '155') %>
                 </a>
               </td>
               <td><br>
                 <a href="http://www.bep.ox.ac.uk/our_people/brian_earp" class="thumbnail">
-                  <%= image_tag('alpha_images/advisors/earp.jpg', class: 'team', width: '115', height: '155') %>
+                  <%= image_tag('alpha_images/advisors/earp_o.jpg', class: 'team', width: '115', height: '155') %>
                 </a>
               </td>
             </tr>
@@ -353,19 +475,19 @@
 
             <tr>
               <td><br><a href="http://www.psych.utoronto.ca/users/spa/faculty/schimmack.php" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/schimmack.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/schimmack_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="http://www.simine.com/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/vazire.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/vazire_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="http://srsc.ulb.ac.be/axcwww/axc.html" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/cleeremans.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/cleeremans_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="http://psychology.msu.edu/Faculty/FacultyMember.aspx?netid=donnel59" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/donnellan.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/donnellan_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="https://www.msu.edu/~lucasri/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/lucas.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/lucas_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
             </tr>
             <tr>
@@ -379,19 +501,19 @@
 
       <tr>
               <td><br><a href="http://apollo.psico.unimib.it/shared/psychoscope/site/perugini.htm" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/perugini.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/perugini_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="https://sites.google.com/site/brandtmj/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/brandt.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/brandt_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="https://uwaterloo.ca/psychology/people-profiles/igor-grossmann" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/grossmann.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/grossmann_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="http://faculty.wcas.northwestern.edu/eli-finkel/" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/finkel.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/finkel_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td><br><a href="https://www.msu.edu/~cesario/index.html" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/cesario.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/cesario_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
             </tr>
             <tr>
@@ -404,13 +526,13 @@
 
       <tr>
               <td><br><a href="http://www.unconsciouslab.com/index.php?subpage=Ap%20Dijksterhuis&page=People" class="thumbnail">
-                <%= image_tag('alpha_images/advisors/dijksterhuis.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/advisors/dijksterhuis_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
       <td><br><a href="https://www.psych.umn.edu/people/facultyprofile.php?UID=simps108" class="thumbnail">
-        <%= image_tag('alpha_images/advisors/simpson.jpg', class: 'team', width: '115', height: '155') %>
+        <%= image_tag('alpha_images/advisors/simpson_o.jpg', class: 'team', width: '115', height: '155') %>
       </a></td>
       <td><br><a href="http://users.ugent.be/~jdhouwer/" class="thumbnail">
-        <%= image_tag('alpha_images/advisors/dehouwer.jpg', class: 'team', width: '115', height: '155') %>
+        <%= image_tag('alpha_images/advisors/dehouwer_o.jpg', class: 'team', width: '115', height: '155') %>
       </a></td>
       </tr>
             <tr>
@@ -427,15 +549,14 @@
             </tr>
             <tr>
               <td width="20%"><a href="http://christianbattista.com/" class="thumbnail">
-                <%= image_tag('alpha_images/team/battista.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/battista_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td width="20%"><a href="https://github.com/bcoe" class="thumbnail">
-                <%= image_tag('alpha_images/team/coe.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/coe_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
               <td width="20%"><a href="https://github.com/sdemjanenko" class="thumbnail">
-                <%= image_tag('alpha_images/team/demjanenko.jpg', class: 'team', width: '115', height: '155') %>
+                <%= image_tag('alpha_images/team/demjanenko_o.jpg', class: 'team', width: '115', height: '155') %>
               </a></td>
-              
             </tr>
             <tr>
               <td class="text-center" style="vertical-align:top"><font size="4px"><strong>Christian Battista</strong></font><br><i>Technical Advisor</i></td>
