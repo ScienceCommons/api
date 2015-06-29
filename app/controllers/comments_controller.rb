@@ -1,6 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
-  #before_filter :authenticate!
 
   def index
     commentable_type = params[:commentable_type].camelize.singularize

@@ -1,5 +1,4 @@
 class FeedbackMessagesController < ApplicationController
-  before_action :authenticate_user!
 
   def create
     feedback_message = current_user.feedback_messages.create!(message: params[:message], details: params[:details])
