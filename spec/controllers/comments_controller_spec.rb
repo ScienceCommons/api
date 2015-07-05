@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe CommentsController, :type => :controller do
-  let(:user) { User.create!({ :name => "bentron", :email => "ben@example.com" }) }
+  let(:user) { User.create!({ :name => "bentron", :email => "ben@example.com", :curator => true}) }
   let(:admin_user) { User.create!({ :name => "ben", :email => "ben+admin@example.com", :admin => true }) }
 
   let(:article) do

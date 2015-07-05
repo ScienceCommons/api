@@ -8,7 +8,8 @@ describe MaterialsController, :type => :controller do
 
   let(:user) do
     User.create!({
-      :email => "ben@example.com"
+      :email => "ben@example.com",
+      :curator => true
     })
   end
   let(:user_2) do
