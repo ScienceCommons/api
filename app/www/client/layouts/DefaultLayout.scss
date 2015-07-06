@@ -1,0 +1,70 @@
+@import "../variables.scss";
+
+.DefaultLayout {
+  position: absolute;
+  width: 100%;
+
+  & > header {
+    margin-bottom: 20px;
+    line-height: 28px;
+
+    .banner {
+      width: 100%;
+      background-color: $dark;
+      padding: 10px 20px 10px 10px;
+      position: relative;
+    }
+
+    .bannerLogo {
+      width: 200px;
+    }
+
+    .bannerUserBar{
+      width: 70px;
+      padding-right: 30px;
+    }
+
+    .Search {
+      position: relative;
+      margin-right: 50px;
+
+      input {
+        height: 45px;
+        font-size: 24px;
+        width: 93%;
+        box-sizing: border-box;
+      }
+    }
+
+    .logoLink {
+      text-decoration: none;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .Logo {
+      width: 200px;
+      height: 100px;
+      display: inline-block;
+
+      text {
+        fill: white;
+      }
+    }
+
+    .Notifications {
+      height: 32px;
+      width: 32px;
+      display: inline-block;
+    }
+  }
+
+  .pageContent {
+    position: relative;
+    min-height: 100px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+}

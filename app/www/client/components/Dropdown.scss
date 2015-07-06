@@ -1,0 +1,23 @@
+@import "../mixins.scss";
+
+.Dropdown {
+  display: inline-block;
+  position: relative;
+
+  & > button {
+    white-space: nowrap;
+
+    .arrow {
+      margin-left: 5px;
+    }
+  }
+
+  .dropdownContent {
+    @include dropdown;
+    box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
+
+    ul {
+      list-style: none;
+    }
+  }
+}

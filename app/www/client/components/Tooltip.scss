@@ -1,0 +1,64 @@
+@import "../variables.scss";
+
+$tooltip_arrow_width: 5px;
+
+.Tooltip {
+  border-radius: $btn_radius;
+  position: absolute;
+  border: 1px solid $dark;
+  z-index: 100;
+  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  transition: opacity 300ms ease;
+  background-color: white;
+
+  &.closing {
+    opacity: 0;
+  }
+
+  .tooltipArrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+  }
+
+  &.bottom {
+    margin-top: 3px;
+
+    .tooltipArrow {
+      top: -$tooltip_arrow_width;
+      left: 50%;
+      margin-left: -$tooltip_arrow_width;
+      border-width: 0 $tooltip_arrow_width $tooltip_arrow_width;
+      border-bottom-color: $dark;
+    }
+
+    &.titled .tooltipArrow {
+      left: 10%;
+    }
+  }
+
+  &:not(.titled) {
+    background-color: $dark;
+    color: white;
+  }
+
+  .tooltipContent {
+    padding: 5px;
+  }
+
+  &.titled {
+    min-width: 150px;
+    min-height: 100px;
+
+    header {
+      background-color: $light_gray;
+      font-size: 20px;
+      border-top-left-radius: $btn_radius;
+      border-top-right-radius: $btn_radius;
+      padding: 5px;
+    }
+  }
+}

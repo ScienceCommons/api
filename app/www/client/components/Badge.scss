@@ -1,0 +1,38 @@
+@import "../variables.scss";
+
+.Badge {
+  stroke: $gray;
+  stroke-width: 2px;
+  transition: fill 0.5s ease;
+  fill: white;
+
+  .svg_icon {
+    transform: matrix(0.8, 0, 0, 0.8, 3.2, 3.2);
+    fill: $gray;
+    stroke: $gray;
+    stroke-width: 0.1px;
+    transition: all 0.5s ease;
+  }
+
+  &.active {
+    fill: $blue;
+    stroke: $blue;
+
+    .svg_icon {
+      stroke: white;
+      fill: white;
+    }
+  }
+
+  &:not(.active) {
+    stroke-dasharray: 5, 5;
+  }
+}
+
+ul.badges {
+  & > li {
+    display: inline-block;
+    width: 25%;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,53 @@
+@import "../variables.scss";
+
+$popover_arrow_width: 5px;
+
+.Popover {
+  border-radius: $btn_radius;
+  position: absolute;
+  border: 1px solid $dark;
+  z-index: 100;
+  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  transition: opacity 300ms ease;
+  background-color: white;
+
+  min-width: 150px;
+  min-height: 100px;
+
+  header {
+    background-color: $light_gray;
+    font-size: 20px;
+    border-top-left-radius: $btn_radius;
+    border-top-right-radius: $btn_radius;
+    padding: 5px;
+  }
+
+  &.closing {
+    opacity: 0;
+  }
+
+  .popoverArrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+  }
+
+  &.bottom {
+    margin-top: 3px;
+
+    .popoverArrow {
+      top: -$popover_arrow_width;
+      margin-left: -$popover_arrow_width;
+      border-width: 0 $popover_arrow_width $popover_arrow_width;
+      border-bottom-color: $dark;
+      left: 10%;
+    }
+  }
+
+  .popoverContent {
+    padding: 5px;
+  }
+}

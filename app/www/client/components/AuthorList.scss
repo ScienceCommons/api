@@ -1,0 +1,26 @@
+.AuthorList {
+  .Spinner {
+    position: initial;
+    height: 20px;
+    width: 20px;
+    margin: 0;
+
+    li {
+      width: 5px;
+      height: 5px;
+      margin-right: 1px;
+      box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .newAuthorModal {
+    .modalContent {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  ul.affiliations {
+    list-style: none;
+  }
+}

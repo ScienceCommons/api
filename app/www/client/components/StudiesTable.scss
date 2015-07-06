@@ -1,0 +1,407 @@
+@import "../variables.scss";
+$column_width: 300px;
+
+.StudiesTable {
+  white-space: nowrap;
+  position: relative;
+
+  header, .studies, .study, .cellContents {
+    display: inline-block;
+  }
+
+  .icon_comment {
+    color: $purple;
+    margin-right: 5px;
+  }
+
+  .study {
+    position: relative;
+    width: 200px;
+    vertical-align: top;
+    white-space: normal;
+  }
+
+  .saveButtons {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .deleteStudy, .unlinkReplication {
+    display: none;
+  }
+
+  .study:hover {
+    .deleteStudy, .unlinkReplication {
+      display: initial;
+    }
+  }
+
+  .btn.addStudy {
+    position: absolute;
+    top: 0;
+    margin-left: 10px;
+  }
+
+  .cell {
+    border-bottom: 1px solid $gray;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .icon_replication {
+    cursor: pointer;
+  }
+
+  header .cell, .cell.replication_path {
+    cursor: auto;
+  }
+
+  .study .cell:not(.replication_path) {
+    border-right: 1px solid $gray;
+  }
+
+  .cellContents {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    transition: all 0.3s ease;
+    overflow: hidden;
+
+    & > .icon_comment {
+      position: absolute;
+      right: -2px;
+      top: 2px;
+    }
+  }
+
+  .study.replication .cell:not(.replication_path) .cellContents {
+    background-color: $replication_background;
+  }
+
+  .study:not(.replication) {
+    z-index: 1;
+
+    &.expanded .cellGroup {
+      box-shadow: 5px 0 5px -2px $gray;
+    }
+  }
+
+  .study.active {
+    z-index: 2;
+  }
+
+  .study.replication + .study:not(.replication) .cellGroup {
+    box-shadow: -5px 0 5px -2px $gray;
+  }
+
+  .cell:not(.replication_path):not(.badges) .cellContents:hover {
+    background-color: $light_blue;
+    color: white;
+  }
+
+  .cell.active:not(.replication_path):not(.badges) .cellContents {
+    background-color: $blue;
+    color: white;
+  }
+
+  header .cell, .cellContents {
+    padding: 10px 20px;
+  }
+
+  & > header {
+    background-color: $light_gray;
+    border-left: 1px solid $gray;
+    border-right: 1px solid $gray;
+    float: left;
+
+    .cell {
+      text-align: right;
+    }
+  }
+
+  .replication_path {
+    height: 64px;
+    background-color: $light_gray;
+    border-top: 1px solid $gray;
+  }
+
+  .cell.number, .cell.badges {
+    height: 70px;
+  }
+
+  .cell.independent_variables, .cell.dependent_variables, .cell.n, .cell.power, .cell.effect_size {
+    height: 60px;
+  }
+
+  .cell .Modal {
+    position: absolute;
+    top: -1px;
+    left: 100%;
+    right: auto;
+    bottom: auto;
+    width: 350px;
+    margin-left: 4px;
+
+    .modalContent {
+      .inputs {
+        padding: 20px;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .modalContent > .CommentList {
+      margin-top: 0;
+      padding: 10px;
+      overflow-y: auto;
+      height: 274px;
+
+      .Comment {
+        background-color: $light_gray;
+        padding: 5px 10px;
+        border-radius: $btn_radius;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        p {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  .study .replication_path {
+    white-space: nowrap;
+    position: relative;
+    z-index: 0;
+    background-image: url("../images/subway_study.png"), url("../images/subway_path.png");
+    background-repeat: no-repeat;
+    background-position: 50% 30px, right 0 top 30px;
+    background-size: auto auto, 100% 7px;
+
+    .add_replication {
+      background-image: url("../images/subway_add.png");
+      background-repeat: no-repeat;
+      position: absolute;
+      width: 25px;
+      height: 38px;
+      right: 40px;
+      top: 30px;
+      cursor: pointer;
+    }
+
+    .count {
+      background: $blue;
+      color: #FFF;
+      line-height: 24px;
+      text-align: center;
+      width: 30px;
+      border-radius: $btn_radius;
+      position: absolute;
+      right: 8px;
+    }
+
+    .replicationsCount {
+      position: absolute;
+      text-decoration: none;
+      height: 44px;
+      top: 20px;
+      right: -8px;
+      background-repeat: no-repeat;
+
+      &:before {
+        border: solid;
+        border-color: $blue transparent;
+        border-width: 6px 6px 0 6px;
+        border-width: 6px 6px 0 6px;
+        bottom: 24px;
+        content: "";
+        left: 0;
+        position: absolute;
+      }
+
+      &.closed {
+        background-image: url("../images/subway_replication_closed.png"), url("../images/subway_path.png");
+        background-position: -2px 20px;
+        width: 30px;
+      }
+    }
+  }
+
+  .study.replication {
+    .replication_path {
+      height: 74px;
+      background-repeat: no-repeat, repeat-x;
+      background-position: 50% 30px, 0 30px;
+      position: relative;
+      background-image: url("../images/subway_replication_open.png"), url("../images/subway_path.png");
+      height: 74px;
+    }
+
+    .number {
+      height: 60px;
+    }
+
+    &:not(:last-child) .cell {
+      border-right: none;
+    }
+  }
+
+  .study:last-child .replication_path {
+    background-position: 50% 30px, right 60px top 30px;
+    border-right: 1px solid $gray;
+  }
+
+  .study.replication:last-child .replication_path {
+    background-position: 50% 30px, right 112px top 30px;
+    background-repeat: no-repeat;
+  }
+
+  .studies > .study:first-child > .replication_path {
+    background-size: auto auto, 50% 7px;
+  }
+
+  .study.replication+.study .cell:not(.replication_path) {
+    border-left: 1px solid $gray;
+  }
+
+  .cell.badges {
+    .cellContents {
+      padding: 0;
+    }
+
+    .dropdown {
+      position: absolute;
+      border: 1px solid $gray;
+      border-radius: $btn_radius;
+      width: 105%;
+      left: -3%;
+      background-color: white;
+      z-index: 10;
+      top: 65px;
+      text-align: left;
+      box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
+
+      header, footer {
+        width: 100%;
+        padding: 10px;
+      }
+
+      header {
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 1px solid $gray;
+      }
+
+      footer {
+        background-color: $light_gray;
+        border-top: 1px solid $gray;
+        border-bottom-left-radius: $btn_radius;
+        border-bottom-right-radius: $btn_radius;
+      }
+
+      .body {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .files {
+        width: 100%;
+
+        tr:not(.noFiles):hover {
+          background-color: $light_blue;
+
+          td.fileName {
+            color: white;
+          }
+        }
+
+        tr.active {
+          background-color: $blue;
+
+          td.fileName {
+            color: white;
+          }
+        }
+
+        td {
+          padding: 5px;
+          height: 38px;
+        }
+
+        .fileName {
+          width: 100%;
+          word-break: break-word;
+        }
+
+        .buttons {
+          text-align: right;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  ul.badges {
+    &.active {
+      background-color: $light_gray;
+    }
+
+    & > li {
+      height: 69px; // 70-1 otherwise the bottom border looks weird
+      position: relative;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $light_blue;
+      }
+
+      &.active {
+        background-color: white;
+        z-index: 11;
+        height: 66px;
+        vertical-align: top;
+
+        &:not(:first-child) {
+          border-left: 1px solid $gray;
+        }
+
+        &:not(:last-child) {
+          border-right: 1px solid $gray;
+        }
+      }
+    }
+  }
+
+  .CommentForm {
+    border: none;
+    padding: 0;
+
+    td.commentSubmit {
+
+      button {
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  ul.commentsAndHistory {
+    margin: 10px;
+
+    & > li {
+      background: $light_gray;
+      border-radius: $btn_radius;
+      padding: 10px;
+      margin: 10px
+    }
+  }
+}

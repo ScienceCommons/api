@@ -1,0 +1,103 @@
+@import "../variables.scss";
+
+#ArticlePage {
+  .StudiesTable .errors > li {
+    padding: 0;
+  }
+
+  .articleHeader {
+    .articleTitle {
+      margin-top: 0;
+    }
+  }
+
+  .field:empty {
+    height: 1em;
+  }
+
+  .authors .PillList .pill {
+    color: black;
+    background: none;
+    border: 1px solid $gray;
+    font-size: 16px;
+    min-width: 40px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .journal, .doi, .tags, .peerReview {
+    h5 {
+      color: $gray;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .editButtons {
+    float: right;
+  }
+
+  ul.reviewers {
+    list-style: none;
+  }
+
+  p.abstract {
+    line-height: 22px;
+  }
+
+  .label {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    text-align: right;
+  }
+  .form_field {
+    display: inline-block;
+    vertical-align: middle !important;
+    margin-left: 30px !important;
+    min-width: 300px;
+    text-align: left;
+    min-height: 30px !important;
+    font-size: 18px;
+  }
+  .button_find {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .require_label {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+  }
+  .button_save {
+    margin-left: 230px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    text-align: center;
+  }
+  .button_discard {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 50px;
+    text-align: center;
+    font-size: 18px;
+    width: 100px;
+  }
+}
+
+.subway_add_icon {
+  background-image: url("../images/subway_add.png");
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 38px;
+  display: inline-block;
+  vertical-align: top;
+}

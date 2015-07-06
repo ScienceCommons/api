@@ -1,0 +1,22 @@
+.ContentEditable {
+  display: inline-block;
+  position: relative;
+
+  input {
+    font: inherit;
+  }
+
+  .controls {
+    position: absolute;
+    width: 30px;
+    margin: 0 auto;
+    top: -35px;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    &.editing {
+      width: 60px;
+    }
+  }
+}

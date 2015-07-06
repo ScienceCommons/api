@@ -1,0 +1,68 @@
+@import "../variables.scss";
+
+.SearchResults {
+  width: 100%;
+
+  .sort {
+    float: right;
+    margin-right: 10px;
+  }
+
+  .more {
+    text-align: center;
+  }
+
+  .searchResult {
+    border-bottom: 1px solid $light_gray;
+
+    & > td {
+      &:not(.badges) {
+        padding: 20px;
+      }
+
+      &:first-child {
+        width: 100%;
+      }
+
+      & > header .pill {
+        margin-left: 10px;
+      }
+    }
+
+    ul.badges {
+      white-space: nowrap;
+      margin-right: 10px;
+
+      li {
+        display: inline-block;
+      }
+    }
+
+    .Badge {
+      display: inline-block;
+      height: 50px;
+      width: 50px;
+      padding: 0 10px;
+    }
+  }
+
+  li.search_nav {
+    .btn {
+      padding: 5px;
+
+      .icon {
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 25px;
+      }
+
+      &:hover {
+        background-color: #EEE;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

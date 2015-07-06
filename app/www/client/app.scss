@@ -1,0 +1,236 @@
+@import "./normalize.scss";
+@import "./icons.css";
+@import "./variables.scss";
+@import "./mixins.scss";
+@import "./fonts/gibson.scss";
+@import "./grid.scss";
+@import "./fonts/glyphicons-halflings.scss";
+
+body {
+  font-family:"Gibson", sans-serif;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  font-family: "Gibson-semibold", sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+h1, .h1 {
+  font-size: 36px;
+}
+
+h2, .h2 {
+  font-size: 30px;
+}
+
+h3, .h3 {
+  font-size: 24px;
+}
+
+h4, .h4 {
+  font-size: 18px;
+}
+
+h5, .h5 {
+  font-size: 14px;
+}
+
+h6, .h6 {
+  font-size: 12px;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.text_right {
+  text-align: right;
+}
+
+.dim {
+  opacity: 0.5;
+}
+
+.pull_right {
+  float: right !important;
+}
+
+.inline_block {
+  display: inline-block !important;
+}
+
+.link {
+  text-decoration: underline !important;
+}
+
+.hide {
+  display:none !important;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown_menu {
+  position: absolute;
+  min-width: 90%;
+  background-color: #FFFFFF;
+  border: 1px solid #000000;
+
+  li:hover {
+    background-color: #EEEEEE;
+  }
+}
+
+.page .content {
+  padding: 0 40px;
+}
+
+// Buttons
+.btn {
+  border: 1px solid $gray;
+  background: $light_gray;
+  border-radius: $btn_radius;
+  min-width: 30px;
+  padding: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background: $dark;
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.btn_group {
+  & > .btn {
+    display: inline-block;
+    margin: 0;
+
+    &:not(:first-child) {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: 0;
+    }
+
+    &:not(:last-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+.btn_subtle {
+  @include subtle;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+[contenteditable=false] {
+  border: 1px solid transparent;
+}
+
+[contenteditable=true] {
+  border: 1px solid $gray;
+  font-style: italic;
+  margin-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  &:empty:before{
+    content: attr(placeholder);
+    color: $gray;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button .icon {
+  line-height: 0;
+}
+
+button.bookmark.active {
+  color: $blue;
+}
+
+// similar to bootstrap alert styling
+.errors {
+  list-style: none;
+
+  & > li {
+    color: #a94442;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: $btn_radius;
+    padding: 15px;
+  }
+}
+
+.pill {
+  white-space: nowrap;
+  border-radius: 4px;
+  background-color: $blue;
+  color: white;
+  padding: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  margin: 2px;
+
+  &.placeholder {
+    border: none !important;
+    padding-left: 0;
+  }
+}
+
+.feedbackToggle {
+  transform-origin: right bottom 0;
+  background-color: $dark;
+  color: white;
+  border-radius: $btn_radius $btn_radius 0 0;
+  transform: rotate(-90deg);
+  position: fixed;
+  right: 0;
+  top: 60%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.feedbackModal {
+  .modalContent {
+    padding: 20px;
+    text-align: center;
+  }
+}

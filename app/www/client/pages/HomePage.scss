@@ -1,0 +1,78 @@
+@import "../variables.scss";
+
+#HomePage {
+  & > header {
+    margin-bottom: 0;
+  }
+
+  .aboutLink {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: white;
+  }
+
+  .Search {
+    padding: 10px 5%;
+    background-color: $dark;
+
+    input {
+      text-align: center;
+      height: 45px;
+      font-size: 24px;
+      width: 93%;
+    }
+  }
+
+  .articleView {
+    margin: 0 40px;
+    padding: 20px 0 30px;
+    cursor: pointer;
+
+    .title {
+      display: -webkit-box;
+      max-width: 400px;
+      height: 32px;
+      margin: 0 auto;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .authors {
+      height: 16px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &:hover {
+      background-color: $light_gray;
+    }
+
+    ul.badges {
+      width: 200px;
+      height: 45px;
+      padding: 5px 0;
+      margin: auto;
+    }
+  }
+
+  .updatedBy {
+    margin-top: -25px;
+    font-size: 13px;
+    a {
+      color: $blue;
+      text-decoration: none;
+    }
+  }
+
+  .articleView:not(:last-child) {
+    border-bottom: 2px solid $light_gray;
+  }
+
+  .articles {
+    position: relative;
+    min-height: 200px;
+  }
+}

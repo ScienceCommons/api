@@ -1,0 +1,51 @@
+@import "../variables.scss";
+
+.CommentForm {
+  border-radius: 8px;
+  border: 1px solid $gray;
+  background: $light_gray;
+  padding: 15px;
+
+  & > table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    td {
+      vertical-align: top;
+    }
+
+    td.commentBodyTextarea {
+      border: 1px solid $gray;
+      border-radius: $btn_radius;
+      background: white;
+
+      textarea {
+        padding: 17px 10px 10px 10px;
+        width: 100%;
+        border: 0;
+        resize: none;
+        max-height: 150px;
+        border-radius: $btn_radius;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    td.commentSubmit {
+      width: 110px;
+      padding-left: 10px;
+
+      button {
+        padding: 12px 20px;
+        width: 100%;
+      }
+
+      .toggleAnonymous {
+        margin-top: 10px;
+      }
+    }
+  }
+}

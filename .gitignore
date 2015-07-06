@@ -7,3 +7,16 @@ log/*.log
 public/assets
 coverage/
 .dump
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+node_modules/
+.tmp
+app/assets/javascripts/beta
+npm-debug.log

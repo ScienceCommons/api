@@ -1,0 +1,54 @@
+@import "../variables.scss";
+
+#ProfilePage {
+  .details {
+    background: $light_gray;
+
+    .editOrFollow {
+      float: right;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .contacts {
+      .section:not(:first-child) {
+        margin-top: 10px;
+      }
+
+      .icon {
+        color: white;
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+        border-radius: 10px;
+        font-size: 25px;
+        text-align: center;
+        margin-right: 10px;
+      }
+
+      .icon_twitter {
+        background: $light_blue;
+      }
+
+      .icon_facebook {
+        background: $blue;
+      }
+
+      .icon_mail {
+        background: $green;
+      }
+
+      .icon_comment {
+        background: $purple;
+      }
+    }
+  }
+
+  .articles {
+  }
+
+  .editButtons {
+    position: absolute;
+    right: 0;
+  }
+}

@@ -1,0 +1,41 @@
+@import "../variables.scss";
+
+.FullLayout {
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+
+  & > header {
+    background-color: $dark;
+    line-height: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  a.logo {
+    text-decoration: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .Logo {
+    height: 256px;
+
+    text {
+      fill: white;
+    }
+  }
+
+  .UserBar {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+  }
+
+  .pageContent {
+    position: relative;
+    text-align: center;
+  }
+}

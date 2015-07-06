@@ -1,0 +1,43 @@
+
+{
+    "name": "curate_science_client",
+    "version": "0.0.0",
+    "src": "src",
+    "test": "test",
+    "dist": "dist",
+    "mainOutput": "main",
+    "dependencies": {
+        "mithril": "0.1.25",
+        "underscore": "1.7.0",
+        "jquery": "1.11.3",
+        "vague-time": "1.1.0",
+        "fastclick": "1.0.3",
+        "moment": "2.10.3"
+    },
+    "devDependencies": {
+        "grunt": "0.4.5",
+        "load-grunt-tasks": "0.6.0",
+        "grunt-contrib-watch": "0.6.1",
+        "grunt-contrib-connect": "0.8.0",
+        "connect-livereload": "0.5.0",
+        "webpack": "1.4.13",
+        "grunt-webpack": "1.0.8",
+        "style-loader": "0.8.1",
+        "sass-loader": "0.2.0",
+        "url-loader": "0.5.5",
+        "css-loader": "0.9.0",
+        "webpack-dev-server": "1.6.5",
+        "grunt-open": "0.2.3",
+        "jshint-loader": "0.8.0",
+        "grunt-contrib-copy": "0.6.0",
+        "file-loader": "0.7.2",
+        "grunt-aws-s3": "0.9.4",
+        "grunt-preprocess": "4.0.0",
+        "grunt-env": "0.4.1",
+        "grunt-webfont": "0.4.8",
+        "grunt-s3": "0.2.0-alpha.3",
+        "grunt-contrib-clean": "0.6.0",
+        "msx-loader": "0.1.0",
+        "autoprefixer-loader": "1.0.0"
+    }
+}

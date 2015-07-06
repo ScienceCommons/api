@@ -1,0 +1,72 @@
+@import "../variables.scss";
+
+// .modal_open {
+//   overflow: hidden;
+// }
+
+.Modal {
+  background-color: white;
+  width: 500px;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 1px solid $gray;
+  border-radius: $btn_radius;
+  white-space: normal;
+  outline: 0;
+  z-index: 100;
+  box-shadow: 5px 15px 20px rgba(0, 0, 0, 0.25);
+
+  & > table, & > .modalWrapper > table {
+    table-layout: fixed;
+    width: 100%;
+    height: 100%;
+
+    & > thead {
+      background-color: $light_gray;
+      & > tr > th {
+        border-bottom: 1px solid $gray;
+        border-radius: $btn_radius $btn_radius 0 0;
+
+        td.modalHeading {
+          width: 100%;
+          padding: 10px 0px 10px 20px;
+          word-break: break-word;
+
+          &:last-child {
+            padding-right: 20px;
+          }
+        }
+        td.modalActions {
+          vertical-align: top;
+          padding: 5px;
+        }
+      }
+    }
+
+    & > tfoot {
+      background-color: $light_gray;
+
+      & > tr > td {
+        border-top: 1px solid $gray;
+        padding: 10px;
+        border-radius: 0 0 $btn_radius $btn_radius;
+      }
+    }
+
+    & > tbody {
+      & > tr > td {
+        vertical-align: top;
+      }
+    }
+
+    div.modalContent {
+      overflow: auto;
+      max-height: 459px;
+      min-height: 150px;
+      border-radius: $btn_radius;
+    }
+  }
+}

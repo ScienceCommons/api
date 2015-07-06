@@ -1,0 +1,23 @@
+.Notifications {
+
+  .notifications_icon {
+    path.background {
+      fill: red;
+    }
+
+    path.icon {
+      fill: white;
+    }
+
+    text {
+      fill: white;
+      text-anchor: start;
+    }
+  }
+
+  ul.notifications {
+    .unread {
+      background-color: red;
+    }
+  }
+}

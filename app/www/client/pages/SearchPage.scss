@@ -1,0 +1,52 @@
+@import "../variables.scss";
+
+#SearchPage {
+  height: 100%;
+  min-width: 600px;
+
+  .pageContent {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 20px;
+  }
+
+  table.filterAndResults {
+    width: 100%;
+
+    & > thead {
+      text-align: left;
+      border-bottom: 1px solid $gray;
+
+      th {
+        padding: 10px 20px;
+      }
+
+      ul.sortBy {
+        float: right;
+
+        li {
+          display: inline-block;
+          padding: 3px 5px;
+
+          &:not(:first-child) {
+            cursor: pointer;
+          }
+
+          &.active {
+            background: $blue;
+            color: white;
+            border-radius: $btn_radius;
+          }
+        }
+      }
+    }
+
+    & > tbody > tr > td {
+      vertical-align: top;
+
+      &:last-child {
+        width: 100%;
+      }
+    }
+  }
+}
