@@ -1,5 +1,7 @@
 class BaseLinkController < ApplicationController
 
+  before_filter :check_can_curate, :only => [:create, :update, :destroy]
+
   def index
     [:study_id].each do |k|
       raise "#{k} must be provided" if params[k].nil?

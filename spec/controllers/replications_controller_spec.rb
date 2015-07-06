@@ -139,6 +139,17 @@ describe ReplicationsController, :type => :controller do
       post :create, { article_id: article.id, study_id: -1, replicating_study_id: -1 }
       response.status.should == 404
     end
+
+    it "raises a 401 if the user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+       post :create, {
+        article_id: article.id,
+        study_id: study.id,
+        replicating_study_id: replicating_study_3.id,
+        closeness: 3
+      }
+      response.status.should == 401
+    end
   end
 
   describe("#update") do
@@ -172,6 +183,12 @@ describe ReplicationsController, :type => :controller do
       response.status.should == 404
       post :update, { article_id: article.id, study_id: study.id, id: -1 }
       response.status.should == 404
+    end
+
+     it "raises a 401 if the user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+      post :update, { article_id: article.id, study_id: -1, id: replication_1.id }
+      response.status.should == 401
     end
 
   end

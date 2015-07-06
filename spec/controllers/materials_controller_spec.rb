@@ -8,7 +8,8 @@ describe MaterialsController, :type => :controller do
 
   let(:user) do
     User.create!({
-      :email => "ben@example.com"
+      :email => "ben@example.com",
+      :curator => true
     })
   end
   let(:user_2) do
@@ -103,6 +104,19 @@ describe MaterialsController, :type => :controller do
       }
       response.status.should == 500
     end
+
+    it "should raise 401 if an unauthenticated user tries to create a new material" do
+       controller.stub(:current_user).and_return(nil)
+       post :create, {
+        article_id: article.id,
+        study_id: s1.id,
+        url: 'www.zombocom.com',
+        name: 'awesome.txt'
+      }
+
+      response.status.should == 401
+    end
+
   end
 
   describe '#update' do

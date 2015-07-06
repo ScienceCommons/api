@@ -55,6 +55,16 @@ describe StudiesController, :type => :controller do
       get :index
       response.status.should == 500
     end
+
+    it "should still return all studies for a given article even if the user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+      get :index, article_id: article.id
+      response.status.should == 200
+      studies = JSON.parse(response.body)
+      studies.count.should == 3
+      studies.should include(JSON.parse(s1.to_json))
+      studies.should include(JSON.parse(s2.to_json))
+    end
   end
 
   describe "#show" do
@@ -197,6 +207,13 @@ describe StudiesController, :type => :controller do
       study.model_updates.count.should == 1
       study.model_updates.first.operation.should == "model_created"
     end
+
+    it "should raise 401 if the user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, {article_id: article.id, links: [{name: "foo", url: "foobar", type: "test"}]}
+      response.status.should == 401
+    end
+
   end
 
   describe '#update' do
@@ -355,6 +372,18 @@ describe StudiesController, :type => :controller do
       s1.model_updates.count.should == 1
       s1.model_updates.first.operation.should == "model_updated"
     end
+
+    it "should raise 401 if user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+       post :update, {
+        article_id: article.id,
+        id: s1.id,
+        dependent_variables: ['banana'],
+        effect_size: {'d' => 0.9},
+        links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
+      }
+      response.status.should == 401
+    end
   end
 
   describe "#destroy" do
@@ -387,6 +416,16 @@ describe StudiesController, :type => :controller do
 
     it "should not allow a non-curator to delete a study" do
       controller.stub(:current_user).and_return(user_2)
+      delete :destroy, {
+        article_id: article.id,
+        id: s2.id
+      }
+      response.status.should == 401
+      Study.all.count.should == 3
+    end
+
+    it "should not allow an unauthenticated user to delete a study" do
+      controller.stub(:current_user).and_return(nil)
       delete :destroy, {
         article_id: article.id,
         id: s2.id
