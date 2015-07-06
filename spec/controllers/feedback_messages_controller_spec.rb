@@ -39,5 +39,12 @@ describe FeedbackMessagesController, :type => :controller do
       post :create, :message => "Foobar", :details => {url: '/articles/123'}
       response.status.should == 201
     end
+
+    it "should raise 401 if the user is not authenticated" do
+      controller.stub(:current_user).and_return(nil)
+      UserMailer.stub(:feedback_email).and_return(double('null object').as_null_object)
+      post :create, :message => "Foobar", :details => {url: '/articles/123'}
+      response.status.should == 401
+    end
   end
 end

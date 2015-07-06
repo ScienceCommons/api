@@ -56,12 +56,24 @@ describe BookmarksController, :type => :controller do
       results["bookmarkable_type"].should == "Article"
       results["user_id"].should == user.id
     end
+
+    it "should raise a 401 if an unauthenticated user tries to add a bookmark" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, :bookmarkable_type => "article", :bookmarkable_id => article2.id
+      response.status.should == 401
+    end
   end
 
   describe "#destroy" do
     it "should remove a bookmark" do
       delete :destroy, :id => bookmark.id
       response.status.should == 204
+    end
+
+    it "should raise a 401 if an unauthenticated user tries to remove a bookmark" do
+      controller.stub(:current_user).and_return(nil)
+      delete :destroy, :id => bookmark.id
+      response.status.should == 401
     end
   end
 end

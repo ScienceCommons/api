@@ -56,6 +56,14 @@ describe ArticlesController, :type => :controller do
       results = JSON.parse(response.body)
       results.count.should == 2
     end
+
+    it "should return the list of articles to an unauthenticated user" do
+      controller.stub(:current_user).and_return(nil)
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 6
+      results['total'].should == 6
+    end
   end
 
   describe "#show" do
@@ -64,6 +72,12 @@ describe ArticlesController, :type => :controller do
       JSON.parse(response.body)['id'].should == article.id
     end
 
+    it "should return the article corresponding to the id even if the user is not logged in" do
+      controller.stub(:current_user).and_return(nil)
+      get :show, id: article.id
+      JSON.parse(response.body)['id'].should == article.id
+    end
+    
     it "should return a 404 if article not found" do
       get :show, id: -1
       response.status.should == 404
@@ -103,6 +117,20 @@ describe ArticlesController, :type => :controller do
 
       results['documents'].count.should == 7
       results['total'].should == 7
+    end
+
+    it "should raise 401 when an unauthenticated user tries to create an article" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, { title: 'my awesome title', doi: 'abc555' }
+      response.status.should == 401
+
+      # we should have already indexed article in ES,
+      # and be able to grab it.
+      get :index
+      results = JSON.parse(response.body)
+
+      results['documents'].count.should == 6
+      results['total'].should == 6
     end
 
     it "should allow publication_date to be set when creating an article" do
@@ -279,6 +307,14 @@ describe ArticlesController, :type => :controller do
       article_2.title.should == 'awesome article'
     end
 
+    it "should raise a 401 if an unauthenticated user tries to update article" do
+      controller.stub(:current_user).and_return(nil)
+      post :update, { id: article_2.id, title: "my wacky research" }
+      response.status.should == 401
+      article_2.reload
+      article_2.title.should == 'awesome article'
+    end
+
     it "should log changes to model_updates" do
       post :update, { id: article.id, title: "my wacky research" }
       article.reload
@@ -351,6 +387,16 @@ describe ArticlesController, :type => :controller do
       results['total'].should == 6
     end
 
+     it "does not allow an unauthenticated user to destroy any article" do
+      controller.stub(:current_user).and_return(nil)
+      delete :destroy, { id: article_2.id }
+      response.status.should == 401
+
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 6
+      results['total'].should == 6
+    end
 
     it "returns a 404 if article is not found" do
       delete :destroy, { id: -1 }

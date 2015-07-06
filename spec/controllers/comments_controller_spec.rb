@@ -143,6 +143,12 @@ describe CommentsController, :type => :controller do
       comment = JSON.parse(response.body)
       comment['anonymous'].should == false
     end
+
+    it "should raise 401 if an unauthenticated user tries to post a comment" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
+      response.status.should == 401
+    end
   end
 
   describe "#set_non_anonymous" do
@@ -192,6 +198,17 @@ describe CommentsController, :type => :controller do
 
     it "does not allow current_user to destroy another user's article" do
       comment = article.comments.last
+      delete :destroy, id: comment.id
+      response.status.should == 401
+
+      get :index, :commentable_type => "articles", :commentable_id => article.id
+      results = JSON.parse(response.body)
+      results.count.should == 3
+    end
+
+    it "does not allow an unauthenticated user to destroy a comment" do
+      controller.stub(:current_user).and_return(nil)
+      comment = article.comments.first
       delete :destroy, id: comment.id
       response.status.should == 401
 
