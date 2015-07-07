@@ -47,11 +47,12 @@ class Article < ActiveRecord::Base
       "#{a[:first_name]} #{a[:middle_name]} #{a[:last_name]}"
     end.join(' ')
   end
-
+  
+  # Related data to be sent with json response
   def as_json(opts={})
     super(opts).tap do |h|
       h['authors'] = self.authors if opts[:authors]
-
+      h['studies'] = self.studies       
     end
   end
 
@@ -97,9 +98,10 @@ class Article < ActiveRecord::Base
     end
   end
 
+  # Return Author name who last updated else User's Name
   def recent_updated_by_author
     if last_model_update && last_model_update.submitter.author
-      last_model_update.submitter.author
+        last_model_update.submitter.author    
     end
   end
 
@@ -108,7 +110,7 @@ class Article < ActiveRecord::Base
   end
 
   private
-    def last_model_update
+    def last_model_update      
       search_objects = []
       search_objects << self
       search_objects += self.studies
