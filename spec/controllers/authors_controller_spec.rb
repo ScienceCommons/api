@@ -82,6 +82,13 @@ describe AuthorsController, :type => :controller do
       author.model_updates.count.should == 1
       author.model_updates.first.operation.should == "model_created"
     end
+
+    it "should raise a 401 if a non-curator tries to create an author" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, { first_name: 'rabbit', last_name: 'dog' }
+      response.status.should == 401
+    end
+
   end
 
   describe '#update' do
@@ -104,6 +111,14 @@ describe AuthorsController, :type => :controller do
 
     it "should raise a 401 if a non-curator tries to update an author" do
       controller.stub(:current_user).and_return(user_2)
+      post :update, { id: author_2.id, first_name: "scotty" }
+      response.status.should == 401
+      author_2.reload
+      author_2.first_name.should == 'spot'
+    end
+
+    it "should raise a 401 if an unauthenticated user tries to update an author" do
+      controller.stub(:current_user).and_return(nil)
       post :update, { id: author_2.id, first_name: "scotty" }
       response.status.should == 401
       author_2.reload
@@ -142,6 +157,17 @@ describe AuthorsController, :type => :controller do
 
     it "does not allow a non-curator to destroy an author" do
       controller.stub(:current_user).and_return(user_2)
+      delete :destroy, { id: author_2.id }
+      response.status.should == 401
+
+      get :index
+      results = JSON.parse(response.body)
+      results['documents'].count.should == 2
+      results['total'].should == 2
+    end
+
+     it "does not allow an unauthenticated user to destroy an author" do
+      controller.stub(:current_user).and_return(nil)
       delete :destroy, { id: author_2.id }
       response.status.should == 401
 

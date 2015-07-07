@@ -123,6 +123,16 @@ describe LinksController, :type => :controller do
       results.count.should == 1
     end
 
+    it "does not allow an unauthenticated user to destroy another user's link" do
+      controller.stub(:current_user).and_return(nil)
+      delete :destroy, { id: link_2.id }
+      response.status.should == 401
+
+      get :index, study_id: study_2.id
+      results = JSON.parse(response.body)
+      results.count.should == 1
+    end
+
     it "returns a 404 if link is not found" do
       delete :destroy, { id: -1 }
       response.status.should == 404

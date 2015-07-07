@@ -1,6 +1,5 @@
 class BookmarksController < ApplicationController
   before_action :authenticate_user!
-  #before_filter :authenticate!
 
   def index
     render json: current_user.bookmarks.map{|bookmark| bookmark.as_json(bookmarkable: true)}

@@ -8,7 +8,8 @@ describe FindingsController, :type => :controller do
 
   let(:user) do
     User.create!({
-      :email => "ben@example.com"
+      :email => "ben@example.com",
+      :curator => true
     })
   end
   let(:user_2) do
@@ -144,6 +145,17 @@ describe FindingsController, :type => :controller do
       }
       response.status.should == 500
     end
+
+    it "should raise a 401 if user is not authenticated" do
+      controller.stub(:current_user).and_return(nil)
+      post :create, {
+        article_id: article.id,
+        study_id: s1.id,
+        url: 'www.zombocom.com',
+        name: 'awesome.txt'
+      }
+      response.status.should == 401
+    end
   end
 
   describe '#update' do
@@ -213,6 +225,17 @@ describe FindingsController, :type => :controller do
       f1.name.should == 'finding.txt'
     end
 
+    it "should raise a 401 if user is not authenticated" do
+      controller.stub(:current_user).and_return(nil)
+      post :update, {
+        article_id: article.id,
+        study_id: s1.id,
+        id: f1.id,
+        url: 'www.zombocom.com',
+        name: 'awesome.txt'
+      }
+      response.status.should == 401
+    end
   end
 
   describe '#destroy' do

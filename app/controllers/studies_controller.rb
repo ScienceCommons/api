@@ -1,8 +1,5 @@
 class StudiesController < ApplicationController
-  #before_action :authenticate_user!
-  #before_filter :authenticate!
 
-  before_filter :authenticate_user!
   before_filter :check_can_curate, :only => [:create, :update, :destroy]
 
   def index
