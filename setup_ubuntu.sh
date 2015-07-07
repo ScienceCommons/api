@@ -21,6 +21,9 @@ sudo apt-get install -y postgresql postgresql-contrib libpq-dev
 #create database
 sudo -u postgres bash -c "psql -c \"CREATE DATABASE science_commons_development;\""
 
+#create test database
+sudo -u postgres bash -c "psql -c \"CREATE DATABASE science_commons_test;\""
+
 #create role in database
 sudo -u postgres bash -c "psql -c \"CREATE ROLE $USER LOGIN;\""
 
@@ -35,6 +38,9 @@ bundle install
 
 #migrate database
 bundle exec rake db:migrate
+
+#migrate test database
+bundle exec rake db:migrate RAILS_ENV=test
 
 #seed database
 bundle exec rake db:seed

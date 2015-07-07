@@ -4,12 +4,14 @@ describe InvitesController, :type => :controller do
   let(:user) do
     User.create!({
       :email => "ben@example.com",
-      :invite_count => 3
+      :invite_count => 3,
+      :curator => true
     })
   end
   let(:user2) do
     User.create!({
-      :email => "christian@example.com"
+      :email => "christian@example.com",
+      :curator => true
     })
   end
 

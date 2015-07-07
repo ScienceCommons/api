@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
-  #before_filter :authenticate!
+
+  before_filter :check_can_curate, :only => [:create, :set_non_anonymous, :update, :destroy]
 
   def index
     commentable_type = params[:commentable_type].camelize.singularize

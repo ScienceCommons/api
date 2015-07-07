@@ -7,3 +7,11 @@ log/*.log
 public/assets
 coverage/
 .dump
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
