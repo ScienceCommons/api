@@ -51,7 +51,7 @@ class Article < ActiveRecord::Base
   def as_json(opts={})
     super(opts).tap do |h|
       h['authors'] = self.authors if opts[:authors]
-
+      h['studies'] = self.studies       
     end
   end
 
@@ -96,11 +96,11 @@ class Article < ActiveRecord::Base
       nil
     end
   end
-
+  
   def recent_updated_by_author
     if last_model_update && last_model_update.submitter.author
-      last_model_update.submitter.author
-    end
+        last_model_update.submitter.author
+    end    
   end
 
   def recent_updated_at
@@ -108,7 +108,7 @@ class Article < ActiveRecord::Base
   end
 
   private
-    def last_model_update
+    def last_model_update      
       search_objects = []
       search_objects << self
       search_objects += self.studies
