@@ -97,10 +97,13 @@ class Article < ActiveRecord::Base
     end
   end
   
+  # Return Author name who last updated else User's Name
   def recent_updated_by_author
     if last_model_update && last_model_update.submitter.author
         last_model_update.submitter.author
-    end    
+    elsif last_model_update && last_model_update.submitter.name
+        last_model_update.submitter.name
+    end
   end
 
   def recent_updated_at
