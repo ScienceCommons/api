@@ -21965,7 +21965,7 @@
             var recentlyAddedArticlesContent;
             var recentlyAddedArticlesLoadMore;
             
-            // Changes for Load More functionality and displaying the loader
+            // Changes for Load More functionality and displaying the loader for both Recently Added and Updated
             if(ctrl.recentlyAddedArticles.size() == 0){
                 recentlyAddedArticlesContent = Spinner.view();
             }else{
