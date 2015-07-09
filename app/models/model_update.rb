@@ -23,7 +23,7 @@ class ModelUpdate < ActiveRecord::Base
     if !defined?(FIREBASE_CLIENT).nil? && self.approved
       # FIREBASE_CLIENT.push("ModelUpdates", self)
       data = {
-        user: self.submitter.email,
+        user: self.submitter.name,
         fields: self.model_changes.keys.sort,
         changeable_id: self.changeable_id,
         changeable_type: self.changeable_type,
@@ -59,7 +59,7 @@ class ModelUpdate < ActiveRecord::Base
     super(opts).tap do |h|
       # optionally serialize various amounts of
       # relational data.
-      h[:user] = self.submitter.email
+      h[:user] = self.submitter.name
       h
     end
   end
