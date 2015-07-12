@@ -1,3 +1,11 @@
+<% if flash[:error] -%>
+  <% flash.each do |name, msg| -%>
+  <p style="text-align: center;">
+      <%= msg %>
+    </p>
+  <% end -%>
+<% end -%>
+
 <div id="page"></div>
 
 <% if Rails.env == 'production' %>

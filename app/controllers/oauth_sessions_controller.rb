@@ -15,7 +15,8 @@ class OauthSessionsController < ApplicationController
     session[:user_id] = user.id
     redirect_to "/beta/#/"
   rescue Exceptions::NotOnInviteList => ex
-    redirect_to "/#section-6"
+    flash[:error] = "You are attempting to log in using an email address that has not been invited. Please use the email address with which you were invited into the system or register to be notified when our public Beta will be ready."
+   redirect_to "/beta/#/login"
   end
 
   def current_user
