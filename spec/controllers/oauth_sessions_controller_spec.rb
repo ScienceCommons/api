@@ -18,11 +18,11 @@ describe OauthSessionsController, :type => :controller do
   end
 
   describe "#create" do
-    it "should redirect to request invite page if email not in invite list" do
+    it "should redirect to login page if email not in invite list" do
       User.should_receive(:create_with_omniauth)
         .and_raise(Exceptions::NotOnInviteList.new)
       post :create
-      response.should redirect_to('/#section-6')
+      response.should redirect_to('/beta/#/login')
     end
 
     it "should redirect to beta page if session is created successfully" do
