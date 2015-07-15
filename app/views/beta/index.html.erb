@@ -1,10 +1,19 @@
 <% if flash[:error] -%>
   <% flash.each do |name, msg| -%>
-  <p id="flash" style="text-align: center;" onclick="this.parentNode.removeChild(this)">
+  <div id="flash" style="text-align: center;" onclick="this.parentNode.removeChild(this)">
       <%= msg %>
-    </p>
+      <span style="margin-left:5px;">✖</span>
+  </div>
   <% end -%>
 <% end -%>
+
+<script>
+  window.onload = function(){
+    window.setTimeout(function(){
+      var flash = document.getElementById("flash");
+      flash.parentNode.removeChild(flash);}, 5000);
+  }
+</script>
 
 <div id="page"></div>
 
