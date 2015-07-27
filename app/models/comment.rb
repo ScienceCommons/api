@@ -1,10 +1,14 @@
 class Comment < ActiveRecord::Base
-
   validates_presence_of :commentable_id, :commentable_type, :comment, :owner_id
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :owner, :class_name => 'User', :foreign_key => :owner_id
   belongs_to :commentable, polymorphic: true
   belongs_to :primary_commentable, polymorphic: true
+
+  before_validation do
+    sanitizer = Rails::Html::WhiteListSanitizer.new
+    self.comment = sanitizer.sanitize(self.comment, tags: %w(a), attributes: %w(href target))
+  end
 
   before_create do
     if self.commentable.is_a? Comment
