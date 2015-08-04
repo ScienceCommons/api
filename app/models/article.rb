@@ -21,6 +21,12 @@ class Article < ActiveRecord::Base
 
   after_save :index
   after_destroy :delete_from_index
+
+  before_validation do
+    sanitizer = Rails::Html::WhiteListSanitizer.new
+    self.abstract = sanitizer.sanitize(self.abstract, tags: %w(a), attributes: %w(href target))
+  end
+
   before_save do
     self.doi = nil if self.doi.blank?
   end

@@ -84,3 +84,4 @@ gem "omniauth-google-oauth2"
 gem "aws-ses", "~> 0.5.0", :require => 'aws/ses'
 gem 'gctools'
 gem 'firebase'
+gem 'rails-html-sanitizer', '~> 1.0.2'
