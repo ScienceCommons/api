@@ -107,17 +107,7 @@ class Article < ActiveRecord::Base
     end
   end
 
-  def recent_updated_by_author
-    if last_model_update && last_model_update.submitter.author
-      last_model_update.submitter.author
-    end
+  def last_model_update
+    ModelUpdate.where(changeable_id: self.id, changeable_type: "Article").last
   end
-
-  def recent_updated_at
-    last_model_update.updated_at if last_model_update
-  end
-
-    def last_model_update
-      ModelUpdate.where(changeable_id: self.id, changeable_type: "Article").last
-    end
 end
