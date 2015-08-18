@@ -110,4 +110,11 @@ class Article < ActiveRecord::Base
   def last_model_update
     ModelUpdate.where(changeable_id: self.id, changeable_type: "Article").last
   end
+
+  def badges
+    studies = self.studies
+    studies.flat_map do |study|
+      study.links.map{|l| l.type}
+    end
+  end
 end
