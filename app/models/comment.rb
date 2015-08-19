@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
 
   before_validation do
     sanitizer = Rails::Html::WhiteListSanitizer.new
-    self.comment = sanitizer.sanitize(self.comment, tags: %w(a), attributes: %w(href target))
+    self.comment = sanitizer.sanitize(self.comment, tags: %w(a br), attributes: %w(href target))
   end
 
   before_create do

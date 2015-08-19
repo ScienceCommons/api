@@ -24,7 +24,7 @@ class Article < ActiveRecord::Base
 
   before_validation do
     sanitizer = Rails::Html::WhiteListSanitizer.new
-    self.abstract = sanitizer.sanitize(self.abstract, tags: %w(a), attributes: %w(href target))
+    self.abstract = sanitizer.sanitize(self.abstract, tags: %w(a br), attributes: %w(href target))
   end
 
   before_save do
