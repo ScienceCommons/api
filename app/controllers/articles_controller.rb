@@ -38,7 +38,7 @@ class ArticlesController < ApplicationController
 
   def recent
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('updated_at DESC')
+    render json: Article.eager_load(:authors, :studies => :links).order('articles.updated_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
       .as_json(:authors => true, methods: [:badges])
   rescue StandardError => ex
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
 
   def recently_added
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.order('created_at DESC')
+    render json: Article.eager_load(:authors, :studies => :links).order('articles.created_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
       .as_json(:authors => true, methods: [:badges])
   rescue StandardError => ex
