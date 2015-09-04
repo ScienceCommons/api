@@ -57,11 +57,6 @@ class Article < ActiveRecord::Base
   def as_json(opts={})
     super(opts).tap do |h|
       h['authors'] = self.authors if opts[:authors]
-      last_update = self.last_model_update
-      submitter = if last_update then last_update.submitter else self.owner end
-      update_author = if submitter then submitter.author else nil end
-      h['updated_by_name'] = if submitter then submitter.name else nil end
-      h['updated_by_author_id'] = if update_author then update_author.id else nil end
     end
   end
 
