@@ -31,9 +31,6 @@ class User < ActiveRecord::Base
     # if no user is associated with this
     # email address create one.
     unless user
-      # only allow invited users to create accounts.
-      raise Exceptions::NotOnInviteList.new unless Invite.find_by_email(email)
-
       user = User.create({
         name: auth.info.name,
         email: email,
