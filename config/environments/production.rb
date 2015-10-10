@@ -81,4 +81,17 @@ PaperSearchApi::Application.configure do
 
   # environment-specific globals.
   INVITE_URL = 'https://api.curatescience.org/login'
+
+  # Mandrill SMTP settings
+  config.action_mailer.smtp_settings = {
+    address: ENV["SMTP_ADDRESS"],
+    authentication: :plain,
+    domain: ENV["SMTP_DOMAIN"],
+    enable_starttls_auto: true,
+    password: ENV["SMTP_PASSWORD"],
+    port: 587,
+    user_name: ENV["SMTP_USERNAME"]
+  }
+  config.action_mailer.default_url_options = { host: ENV["SMTP_DOMAIN"] }
+
 end
