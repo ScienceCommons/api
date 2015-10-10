@@ -36,8 +36,9 @@ class User < ActiveRecord::Base
         email: email,
         curator: true
       })
-
-      MandrillMailer.welcome(user).deliver!
+      unless Rails.env == "test"
+        MandrillMailer.welcome(user).deliver!
+      end
     end
 
     # now add the account to the user!
