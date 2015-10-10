@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
         email: email,
         curator: true
       })
+
+      MandrillMailer.welcome(user).deliver!
     end
 
     # now add the account to the user!

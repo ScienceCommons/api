@@ -116,6 +116,9 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    mandrill-api (1.0.53)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.1)
@@ -317,6 +320,7 @@ DEPENDENCIES
   gctools
   jbuilder (~> 1.2)
   jquery-rails
+  mandrill-api
   nokogiri
   oauth2
   omniauth-google-oauth2
