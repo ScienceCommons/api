@@ -119,10 +119,11 @@ class StudiesController < ApplicationController
         study.links(true)
       end
 
+      study.article.updater = current_user if current_user
+
       if study.changed?
         study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
       end
-
       study.save!
     end
 
