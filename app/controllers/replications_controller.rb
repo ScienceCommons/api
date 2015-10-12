@@ -74,6 +74,9 @@ class ReplicationsController < ApplicationController
       closeness,
       current_user
     )
+
+    Article.find(article_id).update(updater: current_user) if current_user
+
     render json: replication.as_json(authors: true, replications: true), status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
@@ -99,6 +102,7 @@ class ReplicationsController < ApplicationController
       replication = Article.find(article_id)
         .studies.find(study_id)
         .replications.find(id)
+      Article.find(article_id).update(updater: current_user) if current_user
     else
       replication = Study.find(study_id)
         .replications.find(id)

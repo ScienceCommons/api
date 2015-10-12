@@ -83,6 +83,7 @@ class ArticlesController < ApplicationController
           article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
         end
       end
+      article.updater = current_user if current_user
       article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_created)
       article.save!
     end
