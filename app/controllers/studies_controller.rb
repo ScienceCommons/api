@@ -123,9 +123,9 @@ class StudiesController < ApplicationController
 
       if study.changed?
         study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
-        study.article.update(updater: current_user) if current_user
       end
       study.save!
+      study.article.update(updater: current_user) if current_user
     end
 
     render json: study.as_json()
@@ -166,7 +166,6 @@ class StudiesController < ApplicationController
     id = params[:id].to_i
     article_id = params[:article_id].to_i
     study = Article.find(article_id).studies.find(id)
-    study.article.update(updater: current_user) if current_user
     study.destroy!
 
     render json: {success: true, data: study}, status: 204
