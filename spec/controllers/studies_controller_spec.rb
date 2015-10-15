@@ -214,6 +214,13 @@ describe StudiesController, :type => :controller do
       response.status.should == 401
     end
 
+    it "should set the parent article's updater to current user" do
+      controller.stub(:current_user).and_return(user)
+      article.updater.should == nil
+      post :create, {article_id: article.id}
+      article.reload
+      article.updater.should == user
+    end
   end
 
   describe '#update' do
@@ -383,6 +390,20 @@ describe StudiesController, :type => :controller do
         links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
       }
       response.status.should == 401
+    end
+
+    it "should set the parent article's updater to current user" do
+      controller.stub(:current_user).and_return(user)
+      article.updater.should == nil
+      post :update, {
+        article_id: article.id,
+        id: s1.id,
+        dependent_variables: ['banana'],
+        effect_size: {'d' => 0.9},
+        links: [{id: s1.links.first.id, name: "foo", url: "foobar", type: "test"}]
+      }
+      article.reload
+      article.updater.should == user
     end
   end
 

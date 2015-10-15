@@ -24,8 +24,6 @@ class LinksController < ApplicationController
       type: params['type']
     })
 
-    study.article.update(updater: current_user) if current_user
-
     render json: link, status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
@@ -44,7 +42,6 @@ class LinksController < ApplicationController
     link.type = params[:type] if params[:type]
 
     link.save!
-    link.study.article.update(updater: current_user) if current_user
     render json: link
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)

@@ -149,6 +149,27 @@ describe CommentsController, :type => :controller do
       post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "my comment"
       response.status.should == 401
     end
+
+    it "should set the ancestor article's updater to current user" do
+      controller.stub(:current_user).and_return(user)
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "hi"
+      article.reload
+      article.updater.should == user
+    end
+
+    it "should set the ancestor article's updater to nil if the comment is anonymous" do
+      controller.stub(:current_user).and_return(user)
+      post :create, :commentable_type => "articles", :commentable_id => article.id, :comment => "hi", :anonymous => true
+      article.reload
+      article.updater.should == nil
+    end
+
+    it "should set the article's updater to current user even when commenting on a comment" do
+      controller.stub(:current_user).and_return(user)
+      post :create, :commentable_type => "comments", :commentable_id => article.comments.first.id, :comment => "hi"
+      article.reload
+      article.updater.should == user
+    end
   end
 
   describe "#set_non_anonymous" do
@@ -171,6 +192,15 @@ describe CommentsController, :type => :controller do
       response.status.should == 404
       comment.reload
       comment.anonymous.should be_truthy
+    end
+
+    it "sets the ancestor article's updater to the user if the user deanonymizes the comment" do
+      comment = article.comments.first
+      comment.update_attributes!(anonymous: true)
+      comment.anonymous.should be_truthy
+      post :set_non_anonymous, id: comment.id
+      article.reload
+      article.updater.should == user
     end
   end
 
