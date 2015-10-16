@@ -21,3 +21,6 @@ deploy:
   app:
     master: curatescience
     staging: curatescience-staging
+  run:
+    - "rake db:migrate"
+    - restart
