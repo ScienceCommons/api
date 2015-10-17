@@ -40,7 +40,6 @@ class LinksController < ApplicationController
     link.name = params[:name] if params[:name]
     link.url = params[:url] if params[:url]
     link.type = params[:type] if params[:type]
-
     link.save!
     render json: link
   rescue ActiveRecord::RecordInvalid => ex

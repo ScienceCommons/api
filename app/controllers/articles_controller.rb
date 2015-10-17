@@ -38,7 +38,7 @@ class ArticlesController < ApplicationController
 
   def recent
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.eager_load(:authors, :studies => :links).order('articles.updated_at DESC')
+    render json: Article.eager_load(:authors, :updater => :author, :studies => :links).order('articles.updated_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
       .as_json(:authors => true, methods: [:badges])
   rescue StandardError => ex
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
 
   def recently_added
     limit = params[:limit] ? params[:limit].to_i : 3
-    render json: Article.eager_load(:authors, :studies => :links).order('articles.created_at DESC')
+    render json: Article.eager_load(:authors, :updater => :author, :studies => :links).order('articles.created_at DESC')
       .paginate(:page => params[:page], :per_page => limit)
       .as_json(:authors => true, methods: [:badges])
   rescue StandardError => ex
@@ -83,6 +83,7 @@ class ArticlesController < ApplicationController
           article.article_authors.find_by(:author_id => id).update_attributes!(:number => i)
         end
       end
+      article.updater = current_user if current_user
       article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_created)
       article.save!
     end
@@ -118,6 +119,9 @@ class ArticlesController < ApplicationController
           end
         end
       end
+
+      article.updater = current_user if current_user
+
       if article.changed?
         article.model_updates.create!(:submitter => current_user, :model_changes => article.changes, :operation => :model_updated)
       end
@@ -153,7 +157,7 @@ class ArticlesController < ApplicationController
     render json: {error: 'unknown error'}, status: 500
   end
 
-def destroy
+  def destroy
     article = Article.find(params[:id].to_i)
     article.destroy!
 

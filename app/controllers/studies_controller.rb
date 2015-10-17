@@ -71,6 +71,8 @@ class StudiesController < ApplicationController
         end
       end
 
+      study.article.update(updater: current_user) if current_user
+
       study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_created)
       study.save!
     end
@@ -122,8 +124,8 @@ class StudiesController < ApplicationController
       if study.changed?
         study.model_updates.create!(:submitter => current_user, :model_changes => study.changes, :operation => :model_updated)
       end
-
       study.save!
+      study.article.update(updater: current_user) if current_user
     end
 
     render json: study.as_json()

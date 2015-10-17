@@ -207,8 +207,19 @@ describe ArticlesController, :type => :controller do
       }
       article = Article.find_by_doi('10.1177/1948550612448196')
       article.authors.count.should == 2
-      expect(article.authors[0]).not_to be_new_record  
-    end 
+      expect(article.authors[0]).not_to be_new_record
+    end
+
+    it "should set the updater to current user" do
+      controller.stub(:current_user).and_return(user)
+      post :create, {
+        doi: "abc123",
+        title: "title",
+        authors: [{id: author.id}]
+      }
+      article = Article.find_by_doi("abc123")
+      article.updater.should == user
+    end
   end
 
   describe '#update' do
@@ -320,6 +331,14 @@ describe ArticlesController, :type => :controller do
       article.reload
       article.model_updates.count.should == 1
       article.model_updates.first.operation.should == "model_updated"
+    end
+
+    it "should set the updater to current user" do
+      controller.stub(:current_user).and_return(user)
+      article.updater.should == nil
+      post :update, { id: article.id, title: "my wacky research" }
+      article.reload
+      article.updater.should == user
     end
   end
 

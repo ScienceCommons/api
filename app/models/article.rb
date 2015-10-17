@@ -9,6 +9,7 @@ class Article < ActiveRecord::Base
   has_many :authors, -> {order 'article_authors.number ASC'}, :through => :article_authors
   has_many :model_updates, as: :changeable, dependent: :destroy
   has_many :bookmarks, class_name: "UserBookmark", as: :bookmarkable, dependent: :destroy
+  belongs_to :updater, :class_name => 'User', :foreign_key => :updater_id
 
   validates_uniqueness_of :doi, unless: "doi.blank?"
   validates_presence_of :title
@@ -57,6 +58,8 @@ class Article < ActiveRecord::Base
   def as_json(opts={})
     super(opts).tap do |h|
       h['authors'] = self.authors if opts[:authors]
+      h['updater_name'] = self.try(:updater).try(:name)
+      h['updater_author_id'] = self.try(:updater).try(:author).try(:id)
     end
   end
 

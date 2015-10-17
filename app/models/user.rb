@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :bookmarks, class_name: "UserBookmark", dependent: :destroy
   has_many :comments, :foreign_key => :owner_id
   has_many :feedback_messages
+  has_many :updated_articles, :class_name => 'Article', :foreign_key => :updater_id
 
   validates_uniqueness_of :email
   validates_presence_of :email

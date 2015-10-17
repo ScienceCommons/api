@@ -40,6 +40,11 @@ class CommentsController < ApplicationController
     )
     comment.field = params[:field].to_s if params[:field]
     comment.save!
+    if comment.anonymous?
+      set_article_updater comment, nil
+    else
+      set_article_updater comment, current_user
+    end
     render json: comment, status: 201
   rescue ActiveRecord::RecordInvalid => ex
     render_error(ex)
@@ -51,6 +56,7 @@ class CommentsController < ApplicationController
   def set_non_anonymous
     comment = current_user.comments.find(params[:id].to_i)
     comment.update_attributes!(anonymous: false)
+    set_article_updater comment, current_user
     render json: comment, status: 200
   rescue ActiveRecord::RecordNotFound => ex
     render json: {error: ex.to_s}, status: 404
@@ -72,5 +78,17 @@ class CommentsController < ApplicationController
   rescue StandardError => ex
     Raven.capture_exception(ex)
     render json: {error: 'unknown error'}, status: 500
+  end
+
+  private
+  def set_article_updater(comment, user)
+    case comment.primary_commentable_type
+    when "Article"
+      comment.primary_commentable.update(updater: user)
+    when "Study"
+      comment.primary_commentable.article.update(updater: user)
+    when "Link"
+      comment.primary_commentable.study.article.update(updater: user)
+    end
   end
 end
